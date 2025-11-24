@@ -1,0 +1,50 @@
+//temp file for people database
+#include "../header/people_database_temp.hpp"
+#include <string>
+#include <iostream>
+
+peopleDatabase::~peopleDatabase()
+{
+    for (auto people_main : people)
+    {
+        delete people_main;
+    }
+}
+
+void peopleDatabase::addPerson(person *people_main)
+{
+    people.push_back(people_main);
+}
+
+person* peopleDatabase::findByID(const std::string &ID_main)
+{
+    for (auto people_main: people)
+    {
+        if(people_main->getID() == ID_main)
+        {
+            return people_main;
+        }
+    }
+    return nullptr;
+}
+
+void peopleDatabase::listAll() const
+{
+    int i = 0;
+    for (auto people_main: people)
+    {
+        std::cout << "Person " << i + 1 << std::endl;
+        people[i]->displayInformation();
+        std::cout << std::endl;
+    }
+}
+
+size_t peopleDatabase::size() const
+{
+    return people.size();
+}
+
+person* peopleDatabase::get(size_t i) const
+{
+    return people[i];
+}
