@@ -1,0 +1,20 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build All",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "source/*.cpp",
+                "-Iheader",
+                "-o",
+                "main.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

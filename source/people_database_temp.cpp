@@ -43,7 +43,7 @@ void peopleDatabase::listAll() const
     string line;
 
     //Open a file in read mode.
-    ifstream inFile("../database/people_database.txt");
+    ifstream inFile("database/people_database.txt");
     if (!inFile) {
         cerr << "Unable to open file people_database.txt";
         exit(1); // terminate with error
