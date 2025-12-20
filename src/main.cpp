@@ -7,6 +7,7 @@
 #include "../header/member.hpp"
 #include "../header/guest.hpp"
 #include "../header/librarian.hpp"
+#include "../header/library_service.hpp"
 
 //temp user struct
 struct TempUser
@@ -58,33 +59,86 @@ TempUser* login(std::vector<TempUser>& users)
 
 void guestMenu(const TempUser& user)
 {
-    std::cout << "\nWelcome, Guest: " << user.name << "\n";
-    std::cout << "Allowed actions:\n";
-    std::cout << "1. Search books by title\n";
-    std::cout << "2. Search books by author\n";
-    std::cout << "3. Search books by genre\n";
+    int choice;
+    do
+    {
+        std::cout << "guest menu" << std::endl;
+        std::cout << "1. search book" << std::endl;
+        std::cin >> choice;
+
+        if (choice == 1)
+        {}
+        else if (choice == 0)
+        {
+            break;
+        }
+    } while (choice != 0);
 }
 
 void memberMenu(const TempUser& user)
 {
-    std::cout << "\nWelcome, Member: " << user.name << "\n";
-    std::cout << "Allowed actions:\n";
-    std::cout << "1. Search books\n";
-    std::cout << "2. Borrow book\n";
-    std::cout << "3. Return book\n";
-    std::cout << "4. View borrowed books\n";
+    int choice;
+    do
+    {
+        std::cout << "\nWelcome, Member: " << user.name << std::endl;
+        std::cout << "Allowed actions:" << std::endl;
+        std::cout << "1. Search books" << std::endl;
+        std::cout << "2. Borrow book" << std::endl;
+        std::cout << "3. Return book" << std::endl;
+        std::cout << "4. View borrowed books" << std::endl;
+        std::cin >> choice;
+
+        if (choice == 1)
+        {}
+        else if (choice == 2)
+        {}
+        else if (choice == 3)
+        {}
+        else if (choice == 0)
+        {
+            break;
+        }
+    } while (choice != 0);
+    
+    std::cout << "Thank you for using" << std::endl;
+    return;
 }
 
 void librarianMenu(const TempUser& user)
 {
-    std::cout << "\nWelcome, Librarian: " << user.name << "\n";
-    std::cout << "Allowed actions:\n";
-    std::cout << "1. Add book\n";
-    std::cout << "2. Remove book\n";
-    std::cout << "3. Register member\n";
-    std::cout << "4. Remove member\n";
-    std::cout << "5. Borrow / return book\n";
-    std::cout << "6. Fine calculation\n";
+    int choice;
+    do
+    {
+        std::cout << "\nWelcome, librarian: " << user.name << std::endl;
+        std::cout << "1. Add book" << std::endl;
+        std::cout << "2. Remove book" << std::endl;
+        std::cout << "3. Register member" << std::endl;
+        std::cout << "4. Remove member" << std::endl;
+        std::cout << "5. Borrow book" << std::endl;
+        std::cout << "6. Return book" << std::endl;
+        std::cout << "7. Fine calculation" << std::endl;
+        std::cin >> choice;
+
+        if (choice == 1)
+        {}
+        else if (choice == 2)
+        {}
+        else if (choice == 3)
+        {}
+        else if (choice == 4)
+        {}
+        else if (choice == 5)
+        {}
+        else if (choice == 6)
+        {}
+        else if (choice == 7)
+        {}
+        else if (choice == 0)
+        {
+            break;
+        }
+    } while (choice != 0);
+
 }
 
 int main()
