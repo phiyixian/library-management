@@ -57,7 +57,6 @@ TempUser* login(std::vector<TempUser>& users)
 
 
 //user menu
-
 void guestMenu(const TempUser& user, LibraryService& library)
 {
     int choice;
