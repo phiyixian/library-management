@@ -1,0 +1,117 @@
+library services
+
+1. accessible by: guest, member, librarian
+
+searchByTitle
+    user enters Title keyword
+    system checks book database
+    if (found)
+        display book information
+    else (not found)
+        display no books found
+
+searchByAuthor
+    user enters author keyword
+    system checks book database
+    if (found)
+        display book information
+    else (not found)
+        display no books found
+
+searchByGenre
+    user enters genre keyword
+    system checks book database
+    if (found)
+        display book information
+    else (not found)
+        display no books found
+
+2. accessible by: member, librarian
+
+borrowBook
+    user enters book ID
+
+    if book does not exist
+        display error
+        return
+
+    if book is not available
+        display error
+        return
+
+    if user borrowing limit exceeded
+        display error
+        return
+
+    // maybe
+    set book status = borrowed
+    assign due date
+    save borrowing record
+    if validation success
+        book status update to borrowed
+        due date assigned
+        borrowing record saved
+    else if validation fail
+        display why validation failed
+        1. book does not exist
+        2. book is not available
+        3. user has exceeded borrowing limit
+
+returnBook
+    user enters book ID
+    system check if book is currently borrowed by the user
+    if validation true
+        if overdue
+            book status updated to available
+            return date recorded
+            fine calculation
+        else if not overdue
+            book status updated to available
+            return date recorded
+            no fine calculation
+    else if validation not true
+        display error message
+
+3. accessible by: librarian
+
+addBook
+    librarian enters book details
+    system checks input
+    book is added to database (.txt file)
+
+removeBook
+    librarian enters book ID
+    system check if book exists and available (not borrowed)
+    if book exist && available
+        book removed from database; remove from (.txt file) -> hakim
+    else book exist && !available
+        display error, book is being borrowed BY WHO, UNTIL WHEN
+    else
+        display error, book does not exist
+
+registerMember
+    librarian enters member details; name, email
+    system check if member already exists
+    if exist    
+        display error, user alrady exists
+    else
+        system generates member ID
+        store details in .txt file
+
+removeMember
+    librarian enters member ID
+    system check if member has outstand borrowed books or fine
+    if outstading borrowed books
+        display error, outstanding borrowed books
+    else if outstanding fine
+        display error, outstanding fine unsettled
+    else
+        remove member data from .txt file
+
+calculateFine
+    system check current date with due date
+    if overdue 
+        fine calculation, RM0.50 per display
+        fine is displayed and/or stored?
+    else
+        no fine calculation
