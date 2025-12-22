@@ -287,5 +287,5 @@ bool LibraryService::removeMember()
 double LibraryService::calculateFine()
 {
     std::cout << "to be done later, hakim + phi's part" << std::endl;
-    return false;
+    return 0.0;
 }
