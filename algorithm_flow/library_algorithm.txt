@@ -1,63 +1,187 @@
-enter main menu
-user logins
-main function redirects from main function to dedicated function based on user hierarchy
+LIBRARY MANAGEMENT SYSTEM – MAIN ALGORITHM (FILE-BASED VERSION)
 
-if not a current user
-	terminate program
+OVERVIEW
+This algorithm describes the overall control flow of the Library Management System using
+text files (.txt) as the persistent data source.
 
-if guest
-	enter guest menu (1.)
-else if member
-	enter member menu (2.)
-else if librarian
-	enter librarian menu (3.)
+User authentication, book records, and borrowing records are no longer temporary.
+Responsibilities are clearly separated between backend, File I/O module, and Linked List module.
 
-1. guest menu
-display options guest can do
-enter while loop for continuous function
-	user enters choice
-	if choice == 1
-		search book function
-	else if choice == 0
-		break from while loop
-return to main function
+--------------------------------------------------
+PROGRAM START
+--------------------------------------------------
 
-2. member menu
-display options member can do
-enter while loop for continuous function
-	user enters choice
-	if choice == 1
-		search book function
-	else if choice == 2
-		borrow book function
-	else if choice == 3
-		return book function
-	else if choice == 4
-		view borrowed book function
-	else if choice == 0
-		break from while loop
-return to main function
+start program
 
-3. librarian menu
-display options librarian can do
-enter while loop for continuous function
-	user enters choice
-	if choice == 1
-		add book function
-	else if choice == 2
-		remove book function
-	else if choice == 3
-		register member function
-	else if choice == 4
-		remove mmber function
-	else if choice == 5
-		borrow book function
-	else if choice == 6
-		return book function
-	else if choice == 7
-		fine calculation function
-	else if choice == 0
-		break from while loop
-return to main function	
+initialise File I/O module
+initialise PeopleDatabase
+initialise LibraryService
+initialise BorrowRecord linked list
 
-test update example
+--------------------------------------------------
+USER LOGIN FLOW (FILE-BASED)
+--------------------------------------------------
+
+prompt user to enter user ID
+
+File I/O module reads users.txt
+
+if user ID not found in users.txt
+    display message: "User not found. Continue as Guest"
+    set user role = Guest
+else
+    retrieve user name and role from users.txt
+
+--------------------------------------------------
+ROLE REDIRECTION
+--------------------------------------------------
+
+if user role == Guest
+    redirect to Guest Menu
+else if user role == Member
+    redirect to Member Menu
+else if user role == Librarian
+    redirect to Librarian Menu
+
+--------------------------------------------------
+1. GUEST MENU
+--------------------------------------------------
+
+enter guest menu
+loop until user exits
+    display guest options
+        1. search book by title
+        2. search book by author
+        3. search book by genre
+        4. display book catalogue
+        0. exit
+
+    user enters choice
+
+    if choice == 1
+        LibraryService::searchByTitle()
+    else if choice == 2
+        LibraryService::searchByAuthor()
+    else if choice == 3
+        LibraryService::searchByGenre()
+    else if choice == 4
+        LibraryService::displayCatalogue()
+    else if choice == 0
+        exit guest menu
+
+return to main flow
+
+--------------------------------------------------
+2. MEMBER MENU
+--------------------------------------------------
+
+enter member menu
+loop until user exits
+    display member options
+        1. search book by title
+        2. search book by author
+        3. search book by genre
+        4. borrow book
+        5. return book
+        6. view borrowed books
+        0. exit
+
+    user enters choice
+
+    if choice == 1
+        LibraryService::searchByTitle()
+    else if choice == 2
+        LibraryService::searchByAuthor()
+    else if choice == 3
+        LibraryService::searchByGenre()
+    else if choice == 4
+        LibraryService::borrowBook()
+    else if choice == 5
+        LibraryService::returnBook()
+    else if choice == 6
+        LibraryService::checkBorrowed()
+    else if choice == 0
+        exit member menu
+
+return to main flow
+
+--------------------------------------------------
+3. LIBRARIAN MENU
+--------------------------------------------------
+
+enter librarian menu
+loop until user exits
+    display librarian options
+        1. search book by title
+        2. search book by author
+        3. search book by genre
+        4. display catalogue
+        5. borrow book
+        6. return book
+        7. add book
+        8. remove book
+        9. register member
+        10. remove member
+        11. calculate fine
+        0. exit
+
+    user enters choice
+
+    if choice == 1
+        LibraryService::searchByTitle()
+    else if choice == 2
+        LibraryService::searchByAuthor()
+    else if choice == 3
+        LibraryService::searchByGenre()
+    else if choice == 4
+        LibraryService::displayCatalogue()
+    else if choice == 5
+        LibraryService::borrowBook()
+    else if choice == 6
+        LibraryService::returnBook()
+    else if choice == 7
+        LibraryService::addBook()
+    else if choice == 8
+        LibraryService::removeBook()
+    else if choice == 9
+        PeopleDatabase::registerMember()
+    else if choice == 10
+        PeopleDatabase::removeMember()
+    else if choice == 11
+        LibraryService::calculateFine()
+    else if choice == 0
+        exit librarian menu
+
+return to main flow
+
+--------------------------------------------------
+PROGRAM TERMINATION
+--------------------------------------------------
+
+save all updated data to .txt files
+exit program cleanly
+
+--------------------------------------------------
+MODULE RESPONSIBILITIES (IMPORTANT)
+--------------------------------------------------
+
+LibraryService (Phi):
+    - book searching logic
+    - borrow / return state transitions
+    - book availability validation
+    - calls linked list and file I/O when required
+
+File I/O Module (Hakim):
+    - users.txt (read user ID, role, name)
+    - books.txt (read/write book records)
+    - persist borrow status changes
+    - persist member records
+
+Linked List Module (Yixian):
+    - store borrow records (member ID, book ID)
+    - assign due dates
+    - track borrow limits
+    - detect overdue books
+    - support fine calculation
+
+END OF ALGORITHM
