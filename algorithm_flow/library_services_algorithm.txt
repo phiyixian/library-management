@@ -115,3 +115,6 @@ calculateFine
         fine is displayed and/or stored?
     else
         no fine calculation
+
+
+test version 1
