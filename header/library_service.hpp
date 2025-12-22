@@ -26,6 +26,7 @@ class LibraryService
     void searchByTitle();
     void searchByAuthor();
     void searchByGenre();
+    void displayCatalogue();
 
     //member + librarian
     bool borrowBook();

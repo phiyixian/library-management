@@ -20,9 +20,9 @@ struct TempUser
 
 std::vector<TempUser> temp_users = {
     {"G001", "Guest User", "Guest"},
-    {"M001", "Alice", "Member"},
-    {"M002", "Bob", "Member"},
-    {"L001", "Dr. Smith", "Librarian"}
+    {"M001", "Susan", "Member"},
+    {"M002", "James", "Member"},
+    {"L001", "Iliot", "Librarian"}
 };
 
 TempUser* findUserByID(std::vector<TempUser>& users, const std::string& id)
@@ -66,6 +66,7 @@ void guestMenu(const TempUser& user, LibraryService& library)
         std::cout << "1. search book by title" << std::endl;
         std::cout << "2. search book by author" << std::endl;
         std::cout << "3. search book by genre" << std::endl;
+        std::cout << "4. display catalogue" << std::endl;
         std::cin >> choice;
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
@@ -80,6 +81,10 @@ void guestMenu(const TempUser& user, LibraryService& library)
         else if (choice == 3)
         {
             library.searchByGenre();
+        }
+        else if (choice == 4)
+        {
+            library.displayCatalogue();
         }
         else if (choice == 0)
         {
@@ -101,6 +106,7 @@ void memberMenu(const TempUser& user, LibraryService& library)
         std::cout << "4. Borrow book" << std::endl;
         std::cout << "5. Return book" << std::endl;
         std::cout << "6. View borrowed books" << std::endl;
+        std::cout << "7. Display Catalogue" << std::endl;
         std::cin >> choice;
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
@@ -126,6 +132,11 @@ void memberMenu(const TempUser& user, LibraryService& library)
         }
         else if (choice == 6) //forgot lmao
         {
+            library.checkBorrowed();
+        }
+        else if (choice == 7)
+        {
+            library.displayCatalogue();
         }
         else if (choice == 0)
         {
@@ -148,11 +159,13 @@ void librarianMenu(const TempUser& user, LibraryService& library)
         std::cout << "3. search book by genre" << std::endl;
         std::cout << "4. Borrow book" << std::endl;
         std::cout << "5. Return book" << std::endl;
-        std::cout << "6. Add book" << std::endl;
-        std::cout << "7. Remove book" << std::endl;
-        std::cout << "8. Register member" << std::endl;
-        std::cout << "9. Remove member" << std::endl;
-        std::cout << "10. Fine calculation" << std::endl;
+        std::cout << "6. Check borrowed book" << std::endl;
+        std::cout << "7. Add book" << std::endl;
+        std::cout << "8. Remove book" << std::endl;
+        std::cout << "9. Register member" << std::endl;
+        std::cout << "10. Remove member" << std::endl;
+        std::cout << "11. Fine calculation" << std::endl;
+        std::cout << "12. display catalogue" << std::endl;
         std::cin >> choice;
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
@@ -176,27 +189,34 @@ void librarianMenu(const TempUser& user, LibraryService& library)
         {
             library.returnBook();
         }
-        /*
         else if (choice == 6) //forgot lmao
         {
+            library.checkBorrowed();
         }
         else if (choice == 7)
         {
-            library.removeBook();
+            library.addBook();
         }
         else if (choice == 8)
         {
-            library.registerMember();
+            library.removeBook();
         }
         else if (choice == 9)
         {
-            library.removeMember();
+            library.registerMember();
         }
         else if (choice == 10)
         {
+            library.removeMember();
+        }
+        else if (choice == 11)
+        {
             library.calculateFine();
         }
-        */
+        else if (choice == 12)
+        {
+            library.displayCatalogue();
+        }
         else if (choice == 0)
         {
             break;
