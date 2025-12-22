@@ -120,3 +120,254 @@ calculateFine
 test version 1
 
 test 2.1
+library services (UPDATED – TEAM VERSION)
+
+OVERVIEW
+Library services are handled by LibraryService.
+Current implementation uses a temporary vector<Book>.
+This will later be integrated with file I/O (.txt files) and a linked list for borrow records.
+
+--------------------------------------------------
+1. ACCESSIBLE BY: GUEST, MEMBER, LIBRARIAN
+--------------------------------------------------
+
+searchByTitle  (IMPLEMENTED – LibraryService)
+    user enters title keyword
+    system searches books vector
+    if title matches
+        display book ID, title, author, genre
+    else
+        display "No books found"
+
+Responsibility:
+    backend
+    hakim:
+    - later replace vector with books.txt
+    - make sure loop goes through the .txt file
+
+--------------------------------------------------
+
+searchByAuthor  (IMPLEMENTED – LibraryService)
+    user enters author keyword
+    system searches books vector
+    if author matches
+        display matching books
+    else
+        display "No books found"
+
+Responsibility:
+    backend
+    FHakim:
+    - read from books.txt
+    - update so for loops uses .txt file
+
+--------------------------------------------------
+
+searchByGenre  (IMPLEMENTED – LibraryService)
+    user enters genre keyword
+    system searches books vector
+    if genre matches
+        display matching books
+    else
+        display "No books found"
+
+Responsibility:
+    backend
+    hakim: 
+    - read from books.txt
+    - update so for loops and rest uses .txt file
+
+--------------------------------------------------
+
+displayCatalogue  (IMPLEMENTED – LibraryService)
+    system displays all books
+    show ID, title, author, genre
+
+Responsibility:
+    backend
+    hakim: load catalogue from books.txt
+
+--------------------------------------------------
+2. ACCESSIBLE BY: MEMBER, LIBRARIAN
+--------------------------------------------------
+
+borrowBook  (PARTIALLY IMPLEMENTED)
+    user enters book ID
+
+    if book does not exist
+        display error
+        return
+
+    if book is already borrowed
+        display error
+        return
+
+    if user borrowing limit exceeded
+        display error
+        return
+
+    mark book as borrowed
+    display success message
+
+Current Implementation:
+    backend:
+        - book existence check
+        - availability check
+        - update is_borrowed flag
+
+Remaining Work:
+    yixian:
+        - track borrow records (member ID, book ID)
+        - enforce borrow limit
+        - assign due date
+
+    hakim:
+        - update borrow status in books.txt
+
+--------------------------------------------------
+
+returnBook  (PARTIALLY IMPLEMENTED)
+    user enters book ID
+
+    if book does not exist
+        display error
+        return
+
+    if book is not borrowed
+        display error
+        return
+
+    mark book as available
+
+    if overdue
+        calculate fine
+
+    display success message
+
+Current Implementation:
+    aydan (backend):
+        - existence check
+        - borrowed status check
+        - update is_borrowed flag
+
+Remaining Work:
+    yixian:
+        - determine overdue status
+        - compute fine
+
+    hakim:
+        - update books.txt
+        - store fine if required
+
+--------------------------------------------------
+
+checkBorrowed  (TEMP IMPLEMENTED)
+    system displays all borrowed books
+
+Current Implementation:
+    backend:
+        - lists all books with is_borrowed == true
+
+Remaining Work:
+    yixian:
+        - display borrowed books per member
+        - include due dates
+
+--------------------------------------------------
+3. ACCESSIBLE BY: LIBRARIAN ONLY
+--------------------------------------------------
+
+addBook  (IMPLEMENTED – TEMP VECTOR)
+    librarian enters book ID, title, author, genre
+
+    if book ID already exists
+        display error
+    else
+        add book to database
+
+Responsibility:
+    backend
+    hakim: append to books.txt
+
+--------------------------------------------------
+
+removeBook  (IMPLEMENTED – TEMP VECTOR)
+    librarian enters book ID
+
+    if book does not exist
+        display error
+    else if book is borrowed
+        display error
+    else
+        remove book from database
+
+Responsibility:
+    backend
+    hakim: remove from books.txt
+    yixian: ensure no active borrow records
+
+--------------------------------------------------
+
+registerMember  (NOT IMPLEMENTED IN LibraryService)
+    librarian enters member details
+
+    if member already exists
+        display error
+    else
+        generate member ID
+        store member record
+
+Responsibility:
+    hakim (members.txt)
+
+--------------------------------------------------
+
+removeMember  (NOT IMPLEMENTED IN LibraryService)
+    librarian enters member ID
+
+    if member has borrowed books
+        display error
+    else if member has outstanding fine
+        display error
+    else
+        remove member record
+
+Responsibility:
+    yixian (borrow records)
+    hakim (members.txt)
+
+--------------------------------------------------
+
+calculateFine  (PLACEHOLDER)
+    system compares current date with due date
+
+    if overdue
+        fine = days overdue × RM0.50
+    else
+        fine = RM0.00
+
+Responsibility:
+    yixian (dates & records)
+    hakim (store fine if required)
+
+--------------------------------------------------
+
+RESPONSIBILITY SUMMARY
+
+LibraryService (aydan; me :>):
+    - search logic
+    - borrow / return state update
+    - book availability checks
+    - temporary vector storage
+
+Yixian:
+    - borrow history records
+    - member-book relationship
+    - due dates
+    - borrow limits
+    - fine calculation
+
+hakim:
+    - books.txt (read/write)
+    - members.txt (read/write)
+    - persist borrow status and fines
