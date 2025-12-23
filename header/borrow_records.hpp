@@ -1,0 +1,45 @@
+#ifndef BORROW_RECORDS_HPP
+#define BORROW_RECORDS_HPP
+
+#include <string>
+#include <vector>
+#include <ctime>
+
+using namespace std;
+
+struct record
+{
+    int book_ID;
+    time_t borrowDate;
+    time_t dueDate;
+    bool overdue;
+    record *next;
+    record *prev;
+};
+
+class linkedRecords
+{
+    private:
+        string member_ID;
+        double fines = 0;
+        record *borrowHead;
+    public:
+        linkedRecords(string member_ID, int book_ID);
+
+        void insert(int book_ID);
+        void remove(int book_ID);
+
+        void printRecords();
+        void printRecord(int book_ID);
+
+        void checkOverdues();
+        void checkOverdue(int book_ID);
+
+        void calculateFines();
+        double payFine(int fine);
+
+        int overdueDays(time_t dueDate);
+        double calculateFine(int overdueDays);
+};
+
+#endif
