@@ -1,11 +1,10 @@
-GUEST, G001, John, john@example.com
-GUEST, G002, Sam, sam@example.com
-GUEST, G003, Elle, elle@example.com
-
-MEMBER, M001, Susan, susan@example.com
-MEMBER, M002, James, james@example.com
-MEMBER, M003, Marcus, marcus@example.com
-
-LIBRARIAN, L001, Iliot, iliot@example.com
-LIBRARIAN, L002, Tom, tom@example.com
-LIBRARIAN, L003, Emma, emma@example.com
+Role|ID|Username|Email
+GUEST|G001|John|john@example.com
+GUEST|G002|Sam|sam@example.com
+GUEST|G003|Elle|elle@example.com
+MEMBER|M001|Susan|susan@example.com
+MEMBER|M002|James|james@example.com
+MEMBER|M003|Marcus|marcus@example.co
+LIBRARIAN|L001|Iliot|iliot@example.com
+LIBRARIAN|L002|Tom|tom@example.com
+LIBRARIAN|L003|Emma|emma@example.com

@@ -1,14 +1,12 @@
-// Book Title, Category, First Added, Last Updated, 
-// Borrowed Times, Current Status
 
-Book 1, A001, 2020-1-1, 2025-1-3, 4, Borrowed
-Book 2, A001, 2020-1-1, 2025-5-7, 1, Reserved
-Book 3, A001, 2020-1-1, 2024-12-25, 3, Available
 
-Book 1, B001, 2020-1-1, 2025-1-3, 4, Borrowed
-Book 2, B001, 2020-1-1, 2025-5-7, 1, Reserved
-Book 3, B001, 2020-1-1, 2024-12-25, 3, Available
-
-Book 1, C001, 2020-1-1, 2025-1-3, 4, Borrowed
-Book 2, C001, 2020-1-1, 2025-5-7, 1, Reserved
-Book 3, C001, 2020-1-1, 2024-12-25, 3, Available
+Title|ID|Category|Date Added|Last Updated|Borrow Count|Status
+Book 1|A001|2020-1-1|2025-1-3|4|Borrowed
+Book 2|A001|2020-1-1|2025-5-7|1|Reserved
+Book 3|A001|2020-1-1|2024-12-25|3|Available
+Book 1|B001|2020-1-1|2025-1-3|4|Borrowed
+Book 2|B001|2020-1-1|2025-5-7|1|Reserved
+Book 3|B001|2020-1-1|2024-12-25|3|Available
+Book 1|C001|2020-1-1|2025-1-3|4|Borrowed
+Book 2|C001|2020-1-1|2025-5-7|1|Reserved
+Book 3|C001|2020-1-1|2024-12-25|3|Available
