@@ -4,13 +4,13 @@
 #include <string>
 #include "person.hpp"
 
-class member: public person
+class Member: public Person
 {
     private:
     int borrow_count;
 
     public:
-    member(std::string, std::string, std::string);
+    Member(std::string, std::string, std::string);
 
     void borrowIncrement();
     void borrowDecrement();

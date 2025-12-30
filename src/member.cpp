@@ -2,15 +2,15 @@
 #include <string>
 #include <iostream>
 
-member::member(std::string ID_main, std::string name_main, std::string email_main)
-: person(ID_main, name_main, email_main), borrow_count(0) {}
+Member::Member(std::string ID_main, std::string name_main, std::string email_main)
+: Person(ID_main, name_main, email_main), borrow_count(0) {}
 
-void member::borrowIncrement()
+void Member::borrowIncrement()
 {
     borrow_count++;
 }
 
-void member::borrowDecrement()
+void Member::borrowDecrement()
 {
     if (borrow_count > 0)
     {
@@ -18,25 +18,25 @@ void member::borrowDecrement()
     }
 }
 
-void member::setBorrowCount(int borrow_count_main)
+void Member::setBorrowCount(int borrow_count_main)
 {
     borrow_count = borrow_count_main;
 }
 
-int member::getBorrowCount()
+int Member::getBorrowCount()
 {
     return borrow_count;
 }
 
-std::string member::getRole() const
+std::string Member::getRole() const
 {
     return "Member";
 }
 
-void member::displayInformation() const
+void Member::displayInformation() const
 {
     std::cout << "-MEMBER-" << std::endl;
-    person::displayInformation();
+    Person::displayInformation();
     std::cout << "Borrowed books: " << borrow_count << std::endl;
 }
 

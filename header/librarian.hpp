@@ -4,13 +4,13 @@
 #include "person.hpp"
 #include <string>
 
-class librarian: public person
+class Librarian: public Person
 {
     private:
     std::string position_title;
 
     public:
-    librarian(std::string, std::string, std::string, std::string);
+    Librarian(std::string, std::string, std::string, std::string);
 
     void setPositionTitle(std::string);
     std::string getPositionTitle() const;

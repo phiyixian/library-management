@@ -2,16 +2,16 @@
 #include <string>
 #include <iostream>
 
-guest::guest(std::string ID_main, std::string name_main, std::string email_main)
-: person(ID_main, name_main, email_main) {}
+Guest::Guest(std::string ID_main, std::string name_main, std::string email_main)
+: Person(ID_main, name_main, email_main) {}
 
-std::string guest::getRole() const
+std::string Guest::getRole() const
 {
     return "Guest";
 }
 
-void guest::displayInformation() const
+void Guest::displayInformation() const
 {
-    std::cout << "-GUEST-" << std::endl;
-    person::displayInformation();
+    std::cout << "-Guest-" << std::endl;
+    Person::displayInformation();
 }
