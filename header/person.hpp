@@ -3,15 +3,15 @@
 
 #include <string>
 
-class person
+class Person
 {
     protected:
     std::string ID, name, email;
 
     public:
     //constructor
-    person(std::string, std::string, std::string);
-    virtual ~person() = default; //polymorphism
+    Person(std::string, std::string, std::string);
+    virtual ~Person() = default; //polymorphism
 
     //actuators and accessors
     std::string getID() const;
@@ -24,6 +24,7 @@ class person
 
     // to be used in polymorphism
     virtual void displayInformation() const;
+    virtual void showMenu();
     virtual std::string getRole() const;
 };
 
