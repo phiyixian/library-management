@@ -10,7 +10,7 @@ class Guest: public Person
     Guest(std::string, std::string, std::string);
     std::string getRole() const override; //overriding virtual function derived in base class
     void displayInformation() const override;
-    void showMenu() override;
+    void showMenu(LibraryService &) override;
 };
 
 #endif

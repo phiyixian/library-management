@@ -1,6 +1,8 @@
 #ifndef PERSON_HPP
 #define PERSON_HPP
 
+#include "library_service.hpp"
+
 #include <string>
 
 class Person
@@ -24,8 +26,8 @@ class Person
 
     // to be used in polymorphism
     virtual void displayInformation() const;
-    virtual void showMenu();
-    virtual std::string getRole() const;
+    virtual void showMenu(LibraryService &) = 0;
+    virtual std::string getRole() const = 0;
 };
 
 #endif

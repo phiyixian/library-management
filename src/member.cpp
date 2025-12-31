@@ -40,5 +40,55 @@ void Member::displayInformation() const
     std::cout << "Borrowed books: " << borrow_count << std::endl;
 }
 
+void Member::showMenu(LibraryService &library)
+{
+    int choice;
+    do
+    {
+        std::cout << "\nWelcome, Member: " << this->name << std::endl;
+        std::cout << "User actions:" << std::endl;
+        std::cout << "1. Search book by title" << std::endl;
+        std::cout << "2. Search book by author" << std::endl;
+        std::cout << "3. Search book by genre" << std::endl;
+        std::cout << "4. Borrow book" << std::endl;
+        std::cout << "5. Return book" << std::endl;
+        std::cout << "6. View borrowed books" << std::endl;
+        std::cout << "7. Display Catalogue" << std::endl;
+        std::cout << "8. Quit" << std::endl;
+        std::cin >> choice;
+        
+        switch (choice)
+        {
+        case 1:
+            library.searchByTitle();
+            break;        
+        case 2:
+            library.searchByAuthor();
+            break;
+        case 3:
+            library.searchByGenre();
+            break;
+        case 4:
+            library.borrowBook();
+            break;
+        case 5:
+            library.returnBook();
+            break;
+        case 6:
+            library.checkBorrowed();
+            break;
+        case 7:
+            library.displayCatalogue();
+            break;
+        default:
+            std::cout << "Invalid action\n";
+            break;
+        }
+        
+    } while (choice != 8);
+    
+    std::cout << "Thank you for using" << std::endl;
+    return;
+}
 
 

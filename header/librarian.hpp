@@ -8,15 +8,17 @@ class Librarian: public Person
 {
     private:
     std::string position_title;
+    int borrow_count;
 
     public:
-    Librarian(std::string, std::string, std::string, std::string);
+    Librarian(std::string, std::string, std::string, std::string = "New Hire");
 
     void setPositionTitle(std::string);
     std::string getPositionTitle() const;
     
     std::string getRole() const override;
     void displayInformation() const override;
+    void showMenu(LibraryService &) override;
 };
 
 #endif

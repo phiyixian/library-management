@@ -46,12 +46,3 @@ void Person::displayInformation() const
     std::cout << "E-MAIL: " << email << std::endl;
 }
 
-std::string Person::getRole() const
-{
-    return "Person";
-}
-
-void Person::showMenu() 
-{
-    std::cout << "Welcome\n";
-}
