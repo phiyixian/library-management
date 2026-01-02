@@ -25,6 +25,8 @@ class linkedRecords
         record *borrowHead;
     public:
         linkedRecords(string member_ID, int book_ID);
+        
+        string getID();
 
         void insert(int book_ID);
         void remove(int book_ID);

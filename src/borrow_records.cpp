@@ -21,6 +21,12 @@ linkedRecords::linkedRecords(string member_ID, int book_ID){
     fines = 0;
 }
 
+// Returns the ID of the member / librarian whom the linked list of history belongs to
+string linkedRecords::getID()
+{
+    return member_ID;
+}
+
 void linkedRecords::insert(int book_ID){
     checkOverdues();
 
