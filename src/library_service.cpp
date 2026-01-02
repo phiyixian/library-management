@@ -129,7 +129,7 @@ bool LibraryService::borrowBook()
             //set book borrowing condtiion to true
             book.is_borrowed = true;
 
-            //save borrowing recored and assign due date later, hakim
+            //save borrowing recored and assign due date later
 
             std::cout << "Book borrowed successfully" << std::endl;
             return true;
