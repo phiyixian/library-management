@@ -1,0 +1,17 @@
+ID should be given automatically by system and is unique
+
+Email and username need to be unique
+
+Person should be an abstract class
+
+I think guest info should not be saved into the database
+
+Librarian is able to borrow so they should also have a borrow count
+
+So 'borrow count' field need to be added to people database
+
+When LibraryService is initialized, it should load the both the database into itself(idk a linked list or the vector ydan used)
+
+active_borrows shows users and the books they are currently borrowing
+
+borrow_history will show every single borrow and return events (havent implemented yet)
