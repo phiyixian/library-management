@@ -5,6 +5,7 @@
 
 Person *login()
 {
+    
     std::string userid, username;
     std::cout << "Enter User ID: ";
     std::cin >> userid;
@@ -45,11 +46,9 @@ Person *login()
             
             Person *p = nullptr;
             // (poly) Create derived object based on role
-            if (role == "GUEST")
-                p = new Guest(id, name, email);
-            else if (role == "LIBRARIAN")
+            if (role == "LIBRARIAN")
                 p = new Librarian(id, name, email);
-            else 
+            if (role == "MEMBER") 
                 p = new Member(id, name, email);
 
             p->setID(id);
@@ -62,6 +61,8 @@ Person *login()
     return nullptr;
 }
 
+// Registers a new user and returns the created object
+// Userrole should be either "LIBRARIAN" or "MEMBER"
 Person *registerUser(std::string &userrole)
 {
     std::fstream peopledata("../database/people_databse.txt", std::ios::in);
@@ -125,26 +126,28 @@ Person *registerUser(std::string &userrole)
     }
 
     // Incrementing the ID
-    const int IDNoIndex = 1; // the index in the id string where the numbers start 
-    id = userrole[0] + std::to_string(std::stoi(id.substr(IDNoIndex)));
+    int nextSuffix = std::stol(id) + 1;
+    const int ID_WIDTH = 3;              // -> produces L001, M007, etc.
+    std::ostringstream idoss;
+    idoss << userrole[0] << std::setw(ID_WIDTH) << std::setfill('0') << nextSuffix;
+    id = idoss.str();    // e.g. "M007"
 
     // Saving the user's info
     // Format: Role|ID|Username|Email|
-    // ID format: G1, L1, M1
+    // ID format: G001, L001, M001
     peopledata << userrole << '|' << id << '|' << username << '|' << useremail << "|\n";
 
     peopledata.close();
 
     Person *p = nullptr;
     // (poly) Create derived object based on role
-    if (userrole == "GUEST")
-        p = new Guest(id, username, useremail);
-    else if (userrole == "LIBRARIAN")
+    
+    if (userrole == "LIBRARIAN")
         p = new Librarian(id, username, useremail);
-    else 
+    if (userrole == "MEMBER") 
         p = new Member(id, username, useremail);
     
-        return p;
+    return p;
 }
 
 std::string borrowStatus(bool overdue){

@@ -18,6 +18,7 @@ int main()
     std::cout << "===== Library Management System =====" << std::endl;
     std::cout << "1. Register" << std::endl;
     std::cout << "2. Login" << std::endl;
+    std::cout << "3. Continue as Guest" << std::endl;
     std::cout << "> ";
     std::cin >> choice; // There should be an error check here for invalid choices
 
@@ -42,6 +43,18 @@ int main()
         
         std::cout << "Login successful!\n";
         break;
+    case 3: // Continue as Guest
+        {
+        std::string guestname, guestemail;
+        std::cout << "Enter User Name: ";
+        std::cin >> guestname;
+        std::cout << "Enter User Email: ";
+        std::cin >> guestemail;
+        
+        user = new Guest("GXXX", guestname, guestemail);
+        std::cout << "Continuing as Guest!\n";
+        break;
+        }
     default:
         // Error check maybe
         break;
@@ -53,19 +66,3 @@ int main()
 
     return 0;
 }
-
-//test output
-
-// //leads users to respective menu, from there they can do actions within the system
-    // if (currentUser->role == "Guest")
-    // {
-    //     guestMenu(*currentUser, library);
-    // }
-    // else if (currentUser->role == "Member")
-    // {
-    //     memberMenu(*currentUser, library);
-    // }
-    // else if (currentUser->role == "Librarian")
-    // {
-    //     librarianMenu(*currentUser, library);
-    // }
