@@ -4,18 +4,25 @@
 #include <string>
 #include "library_service.hpp"
 #include "person.hpp"
+#include "borrow_records.hpp"
 
 class Member: public Person
 {
     private:
     int borrow_count;
+    double fines = 0;
+    linkedRecords borrow_history; //initialize linked list for borrow records
 
     public:
     Member(std::string, std::string, std::string);
+    ~Member();
 
     void borrowIncrement();
     void borrowDecrement();
 
+    void setFine(double);
+    double getFine();
+    
     void setBorrowCount(int);
     int getBorrowCount();
 

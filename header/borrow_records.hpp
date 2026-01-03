@@ -9,7 +9,7 @@ using namespace std;
 
 struct record
 {
-    int book_ID;
+    string book_ID;
     time_t borrowDate;
     time_t dueDate;
     bool overdue;
@@ -21,23 +21,26 @@ class linkedRecords
 {
     private:
         string member_ID;
-        double fines = 0;
         record *borrowHead;
     public:
-        linkedRecords(string member_ID, int book_ID);
+        linkedRecords(string member_ID);
         
         string getID();
 
-        void insert(int book_ID);
-        void remove(int book_ID);
+        void load();
+        void save();
+        void updateStatus();
+
+        void insert(string book_ID, time_t borrowDate, time_t dueDate, bool overdue);
+        void remove(string book_ID);
 
         void printRecords();
-        void printRecord(int book_ID);
+        void printRecord(string book_ID);
 
         void checkOverdues();
-        void checkOverdue(int book_ID);
+        void checkOverdue(string book_ID);
 
-        void calculateFines();
+        double calculateTotalFines();
         double payFine(int fine);
 
         int overdueDays(time_t dueDate);

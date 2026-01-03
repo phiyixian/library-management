@@ -3,8 +3,15 @@
 #include <iostream>
 
 Member::Member(std::string ID_main, std::string name_main, std::string email_main)
-: Person(ID_main, name_main, email_main), borrow_count(0) {}
+: Person(ID_main, name_main, email_main), borrow_count(0), borrow_history(ID_main)
+{
+    setFine(this->borrow_history.calculateTotalFines());
+}
 
+Member::~Member()
+{
+    // Clean up the history linked lists
+}
 void Member::borrowIncrement()
 {
     borrow_count++;
@@ -18,6 +25,15 @@ void Member::borrowDecrement()
     }
 }
 
+void Member::setFine(double fine)
+{
+    this->fines = fine;
+}
+
+double Member::getFine()
+{
+    return this->fines;
+}
 void Member::setBorrowCount(int borrow_count_main)
 {
     borrow_count = borrow_count_main;

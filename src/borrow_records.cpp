@@ -2,23 +2,18 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "../header/utility.hpp"
 #include <ctime>
+#include <filesystem>
+#include <iomanip>
 
 using namespace std;
 
 // Initialize new linked list for each member
-linkedRecords::linkedRecords(string member_ID, int book_ID){
-    this->member_ID = member_ID;
-
-    borrowHead = new record;
-    borrowHead->book_ID = book_ID;
-    borrowHead->borrowDate = time(nullptr);
-    borrowHead->dueDate = borrowHead->borrowDate + 14 * 24 * 60 * 60;
-    borrowHead->overdue = false;
-    borrowHead->next = NULL;
-    borrowHead->prev = NULL;
-
-    fines = 0;
+linkedRecords::linkedRecords(string member_ID) : member_ID(member_ID) {
+    borrowHead = nullptr;
+    load();
+    updateStatus();
 }
 
 // Returns the ID of the member / librarian whom the linked list of history belongs to
@@ -27,41 +22,154 @@ string linkedRecords::getID()
     return member_ID;
 }
 
-void linkedRecords::insert(int book_ID){
-    checkOverdues();
+void linkedRecords::load(){
+    // Load active borrowing records from file
+    std::fstream borrowdata("../database/active_borrows.txt", std::ios::in);
+    if (!borrowdata)
+    {
+        std::cerr << "load(): Error loading active borrowing history\n";
+        std::exit(1);
+    }
 
-    if(fines > 5){
-        cout << "Your fine is more than RM5, you are not allowed to borrow anymore books." << endl;
-        cout << "Please pay the fines and return the books before you borrow new book." << endl;
-    } else {
-        // create new borrow record
-        record *newRecord = new record;
-        newRecord->book_ID = book_ID;
-        newRecord->borrowDate = time(nullptr); 
-        newRecord->dueDate = newRecord->borrowDate + 14 * 24 * 60 * 60;
-        newRecord->overdue = false;
-        newRecord->next = NULL;
+    std::string line;
+    std::getline(borrowdata, line);
 
-        // check if member has more than one borrow history
-        if(borrowHead->next == NULL){
-            borrowHead->next = newRecord;
-            newRecord->prev = borrowHead;
-        } else {
-            record *temp;
-            temp = borrowHead;
-            while(temp->next != NULL){
-                temp = temp->next;
-            }
-            temp->next = newRecord;
-            newRecord->prev = temp;
+    // Loading loop
+    while (std::getline(borrowdata, line))
+    {
+        std::istringstream ss(line);
+        std::string memberID;
+
+        std::getline(ss, memberID, '|');
+
+        if (memberID == this->member_ID)
+        {   
+            std::string book_ID, borrowDate, dueDate, status; 
+            std::getline(ss, book_ID, '|');
+            std::getline(ss, borrowDate, '|');
+            std::getline(ss, dueDate, '|');
+            std::getline(ss, status, '|');
+
+            insert(book_ID, parseTimeFromString(borrowDate), parseTimeFromString(dueDate), status == "OVERDUE");
         }
+    }   
+}
+
+void linkedRecords::save(){
+    // Save borrowing records to database
+    // 
+    // Save borrowDate and dueDate as so
+    // 
+    // convert time_t to string for saving
+    const std::string path = "../database/active_borrows.txt";
+    const std::string tempPath = path + ".tmp";
+
+    std::ifstream ifs(path);
+    std::ofstream ofs(tempPath);
+    if (!ofs) {
+        std::cerr << "save(): Error opening temporary file for writing\n";
+        std::exit(1);
+    }
+
+    // Copy all lines except those belonging to this member
+    std::string line;
+    const std::string prefix = this->member_ID + "|";
+
+    if (ifs) {
+        while (std::getline(ifs, line)) {
+            if (line.rfind(prefix, 0) == 0) {
+                // skip lines that start with "memberID|"
+                continue;
+            }
+            ofs << line << "\n";
+        }
+        ifs.close();
+    } else {
+        std::cerr << "save(): Error opening active borrow file for reading\n";
+        std::exit(1);
+    }
+
+    // Append this member's current active borrows
+    record *temp = borrowHead;
+    while (temp != nullptr) {
+        std::string status = borrowStatus(temp->overdue);
+        ofs << this->member_ID << "|" << temp->book_ID << "|"
+            << parseTimeIntoString(temp->borrowDate) << "|"
+            << parseTimeIntoString(temp->dueDate) << "|"
+            << status << "|\n";
+        temp = temp->next;
+    }
+
+    ofs.close();
+
+    std::error_code ec;
+
+    // 1. Remove the old file if it exists
+    std::filesystem::remove(path, ec); 
+
+    // 2. Rename the temp file to the original path
+    std::filesystem::rename(tempPath, path, ec);
+
+    if (ec) {
+        std::cerr << "save(): Critical error during file swap: " << ec.message() << "\n";
     }
 }
 
-void linkedRecords::remove(int book_ID){
+void linkedRecords::updateStatus(){
+    // Update overdue status for all borrow records
+    record *temp = borrowHead;
+    time_t now = time(nullptr);
+
+    while (temp != nullptr) {
+        if (now > temp->dueDate) {
+            temp->overdue = true;
+        } else {
+            temp->overdue = false;
+        }
+        temp = temp->next;
+    }
+}
+// 
+
+void linkedRecords::insert(string book_ID, time_t borrowDate, time_t dueDate, bool overdue){
+    // Insert new borrow record at the end of linked list
+
+    // checkOverdues();
+
+    // if(fines > 5){
+    //     cout << "Your fine is more than RM5, you are not allowed to borrow anymore books." << endl;
+    //     cout << "Please pay the fines and return the books before you borrow new book." << endl;
+    // } else {
+    // Checking for fines should be responsiblity of caller
+
+    // create new borrow record
+    record *newRecord = new record;
+    newRecord->book_ID = book_ID;
+    newRecord->borrowDate = borrowDate; 
+    newRecord->dueDate = dueDate;
+    newRecord->overdue = overdue; // replace with call to checkOverdue(), might have to modify it
+    newRecord->next = nullptr;
+
+    // check if member has more than one borrow history
+    if(borrowHead == nullptr){
+        borrowHead = newRecord;
+    } else {
+        // append to tail
+        record *temp;
+        temp = borrowHead;
+        while(temp->next != nullptr){
+            temp = temp->next;
+        }
+        temp->next = newRecord;
+    }
+}
+
+void linkedRecords::remove(string book_ID){
     record *temp;
     temp = borrowHead;
-    while(temp != NULL){
+    // Traverse linked list to find book ID
+    while(temp->next != nullptr){
+        // When the book is found
         if(temp->book_ID == book_ID){
             if(temp->overdue){
                 cout << "Your borrowed book is overdue." << endl;
@@ -80,55 +188,75 @@ void linkedRecords::remove(int book_ID){
                 cout << "Thanks for your payment!" << endl;
                 cout << "Change: RM" << fine << endl;
 
-                // Remove book from linked list
-                if(temp->prev)
-                    temp->prev->next = temp->next;
 
-                if(temp->next)
-                    temp->next->prev = temp->prev;
+            // Remove book from linked list
+            if(temp->prev)
+                temp->prev->next = temp->next;
 
-                delete temp;
+            if(temp->next)
+                temp->next->prev = temp->prev;
 
-                cout << "Your book has been returned." << endl;
-            }
+            delete temp;
+
+            std::cout << "Your book has been returned." << endl;
         }
         temp = temp->next;
     }
+}
 }
 
 
 void linkedRecords::printRecords(){
     // Display all borrow records for the member
-    cout << "All borrow records for " << member_ID << ": " << endl;
-    record *temp;
-    temp = borrowHead;
-    int count = 0;
-    while(temp != NULL){
-        cout << "Book " << count << ": " << temp->book_ID << endl;
-        cout << "Borrow Date: " << ctime(&temp->borrowDate) << endl;
-        cout << "Due Date: " << ctime(&temp->dueDate) << endl;
-        if(temp->overdue){
-            cout << "Book is overdue!" << endl;
-        }
-        cout << endl;
-        count++;
+    record *temp = borrowHead;
+
+    // 1. Print the Table Header
+    std::cout << std::left 
+              << std::setw(10) << "Book ID" 
+              << std::setw(25) << "Borrow Date" 
+              << std::setw(25) << "Due Date" << "\n";
+    std::cout << std::string(60, '-') << "\n"; // Decorative separator line
+
+    // 2. Iterate and Print Rows
+    while (temp != nullptr) {
+        std::cout << std::left 
+                    << std::setw(10) << temp->book_ID
+                    << std::setw(25) << parseTimeIntoString(temp->borrowDate)
+                    << std::setw(25) << parseTimeIntoString(temp->dueDate) 
+                    << "\n";
         temp = temp->next;
     }
 }
 
-void linkedRecords::printRecord(int book_ID){
-    // print single borrow record based on book ID
-    record *temp;
-    temp = borrowHead;
-    while(temp != NULL){
-        if(temp->book_ID == book_ID){
-            cout << "Book is found" << ": " << temp->book_ID << endl;
-            cout << "Borrow Date: " << ctime(&temp->borrowDate) << endl;
-            cout << "Due Date: " << ctime(&temp->dueDate) << endl;
-            cout << endl;
+void linkedRecords::printRecord(string book_ID){
+    // Display specific borrow record for the book
+    bool found = false;
+    record *temp = borrowHead;
+
+    // 1. Print the Table Header
+    std::cout << std::left 
+              << std::setw(10) << "Book ID" 
+              << std::setw(25) << "Borrow Date" 
+              << std::setw(25) << "Due Date" << "\n";
+    std::cout << std::string(60, '-') << "\n"; // Decorative separator line
+
+    // 2. Iterate and Print Rows
+    while (temp != nullptr) {
+        if (temp->book_ID == book_ID) {
+            found = true;
+            std::cout << std::left 
+                      << std::setw(10) << temp->book_ID
+                      << std::setw(25) << parseTimeIntoString(temp->borrowDate)
+                      << std::setw(25) << parseTimeIntoString(temp->dueDate) 
+                      << "\n";
         }
         temp = temp->next;
     }
+
+    if (!found) {
+        std::cout << "No records found for Book ID: " << book_ID << "\n";
+    }
+    std::cout << std::endl;
 }
 
 // check for all overdues
@@ -141,7 +269,7 @@ void linkedRecords::checkOverdues(){
     record *temp;
     temp = borrowHead;
 
-    while(temp != NULL){
+    while(temp != nullptr){
         // check if due date has passed
         if(now > temp->dueDate){
             temp->overdue = true;
@@ -179,6 +307,21 @@ int linkedRecords::overdueDays(time_t dueDate){
 
 double linkedRecords::calculateFine(int overdueDays){
     return overdueDays * 0.5;
+}
+
+double linkedRecords::calculateTotalFines(){
+    double totalFines = 0;
+    record *temp = borrowHead;
+
+    while(temp != nullptr){
+        if(temp->overdue){
+            int overdue_Days = overdueDays(temp->dueDate);
+            double fine = calculateFine(overdue_Days);
+            totalFines += fine;
+        }
+        temp = temp->next;
+    }
+    return totalFines;
 }
 
 double linkedRecords::payFine(int fine){

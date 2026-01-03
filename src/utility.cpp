@@ -1,14 +1,7 @@
-#include "../header/person.hpp"
-#include "../header/member.hpp"
-#include "../header/guest.hpp"
-#include "../header/librarian.hpp"
-#include "../header/library_service.hpp"
-#include "../header/utility.hpp"
 
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <string>
+#include "../header/utility.hpp"
+#include <ctime>
+#include <iomanip>
 
 Person *login()
 {
@@ -103,13 +96,13 @@ Person *registerUser(std::string &userrole)
         // Checks if username and email is unused
         if (name == username)
         {   
-            std::cout << "Username is taken\n";
+            std::cerr << "Username is taken\n";
             return nullptr;
         }    
 
         if (email == useremail)
         {
-            std::cout << "Email is already registered\n";
+            std::cerr << "Email is already registered\n";
             return nullptr;
         }
 
@@ -127,7 +120,7 @@ Person *registerUser(std::string &userrole)
 
     // Saving the user's info
     // Format: Role|ID|Username|Email|
-    // Role format: G001, L001, M001
+    // ID format: G001, L001, M001
     peopledata << userrole << '|' << id << '|' << username << '|' << useremail << "|\n";
 
     Person *p = nullptr;
@@ -140,4 +133,26 @@ Person *registerUser(std::string &userrole)
         p = new Member(id, name, email);
 
     return p;
+}
+
+std::string borrowStatus(bool overdue){
+    if(overdue){
+        return "OVERDUE";
+    } else {
+        return "ONTIME";
+    }
+}
+
+time_t parseTimeFromString(const std::string &dateTimeString) {
+    std::tm tm = {};
+    std::istringstream iss(dateTimeString);
+    iss >> std::get_time(&tm, "%Y-%m-%d %H:%M:%S");
+    return std::mktime(&tm); // local time
+}
+
+const std::string parseTimeIntoString(time_t t) {
+    std::tm *parseTimeptr = std::localtime(&t);
+    std::ostringstream oss;
+    oss << std::put_time(parseTimeptr, "%Y-%m-%dT%H:%M:%S");
+    return oss.str();
 }
