@@ -36,12 +36,12 @@ class linkedRecords
 
         void printRecords();
         void printRecord(string book_ID);
+        int getRecordCount();
 
         void checkOverdues();
         void checkOverdue(string book_ID);
 
         double calculateTotalFines();
-        double payFine(int fine);
 
         int overdueDays(time_t dueDate);
         double calculateFine(int overdueDays);

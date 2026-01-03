@@ -171,22 +171,24 @@ void linkedRecords::remove(string book_ID){
     while(temp->next != nullptr){
         // When the book is found
         if(temp->book_ID == book_ID){
-            if(temp->overdue){
-                cout << "Your borrowed book is overdue." << endl;
-                cout << "Please pay your fine before you return your book." << endl;
+            // if(temp->overdue){
+            //     cout << "Your borrowed book is overdue." << endl;
+            //     cout << "Please pay your fine before you return your book." << endl;
 
-                // Display overdue days and fine charged
-                int overdue_Days = overdueDays(temp->dueDate);
-                cout << "Overdue by " << overdue_Days << " days\n";
+            //     // Display overdue days and fine charged
+            //     int overdue_Days = overdueDays(temp->dueDate);
+            //     cout << "Overdue by " << overdue_Days << " days\n";
 
-                double fine = calculateFine(overdue_Days);
-                cout << "Fine charged: RM" << fine << endl;
+            //     double fine = calculateFine(overdue_Days);
+            //     cout << "Fine charged: RM" << fine << endl;
 
-                // Fine payment before returning book
-                double change = payFine(fine);
-                cout << endl;
-                cout << "Thanks for your payment!" << endl;
-                cout << "Change: RM" << fine << endl;
+            //     // Fine payment before returning book
+            //     double change = payFine(fine);
+            //     cout << endl;
+            //     cout << "Thanks for your payment!" << endl;
+            //     cout << "Change: RM" << fine << endl;
+
+            // Checking by caller (library service) should handle fine payment
 
 
             // Remove book from linked list
@@ -203,7 +205,7 @@ void linkedRecords::remove(string book_ID){
         temp = temp->next;
     }
 }
-}
+
 
 
 void linkedRecords::printRecords(){
@@ -259,9 +261,20 @@ void linkedRecords::printRecord(string book_ID){
     std::cout << std::endl;
 }
 
+int linkedRecords::getRecordCount() {
+    int count = 0;
+    record *temp = borrowHead;
+
+    while (temp != nullptr) {
+        count++;
+        temp = temp->next;
+    }
+    return count;
+}
+
 // check for all overdues
 void linkedRecords::checkOverdues(){
-    fines = 0;
+    double fines = 0;
     time_t now = time(nullptr);
     cout << "Checking if your borrow history is overdue..." << endl;
     cout << "Date today: " << ctime(&now) << endl;
@@ -322,23 +335,4 @@ double linkedRecords::calculateTotalFines(){
         temp = temp->next;
     }
     return totalFines;
-}
-
-double linkedRecords::payFine(int fine){
-    double payment;
-    while(true){
-        payment = 0;
-        cout << "Payment: RM";
-        cin >> payment;
-        if(payment < fine){
-            cout << "Insufficient funds!" << endl;
-        } else if(payment <= 0) {
-            cout << "Please enter valid amount." << endl;
-        } else {
-            payment -= fine;
-            fines -= fine;
-            break;
-        }
-    }
-    return payment;
 }
