@@ -15,3 +15,5 @@ When LibraryService is initialized, it should load the both the database into it
 active_borrows shows users and the books they are currently borrowing
 
 borrow_history will show every single borrow and return events (havent implemented yet)
+
+Unsure if we should move all fine calculations into LibraryService from linkedRecords

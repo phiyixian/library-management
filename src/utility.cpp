@@ -65,7 +65,7 @@ Person *login()
 // Userrole should be either "LIBRARIAN" or "MEMBER"
 Person *registerUser(std::string &userrole)
 {
-    std::fstream peopledata("../database/people_databse.txt", std::ios::in);
+    std::fstream peopledata("../database/people_database.txt", std::ios::in);
     if (!peopledata)
     {
         std::cerr << "registerUser(): Error opening people database for reading\n";

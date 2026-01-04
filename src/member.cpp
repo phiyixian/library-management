@@ -6,11 +6,15 @@ Member::Member(std::string ID_main, std::string name_main, std::string email_mai
 : Person(ID_main, name_main, email_main), borrow_count(0), borrow_history(ID_main)
 {
     setFine(this->borrow_history.calculateTotalFines());
+    setBorrowCount(this->borrow_history.getRecordCount());
 }
 
 Member::~Member()
-{
-    // Clean up the history linked lists
+{   
+    // 1. Save the borrow history to file
+    borrow_history.save();
+    // 2. Free up the history linked lists
+
 }
 void Member::borrowIncrement()
 {
@@ -34,6 +38,16 @@ double Member::getFine()
 {
     return this->fines;
 }
+
+void Member::decreaseFines(double amount)
+{
+    this->fines -= amount;
+    if (this->fines < 0)
+    {
+        this->fines = 0;
+    }
+}
+
 void Member::setBorrowCount(int borrow_count_main)
 {
     borrow_count = borrow_count_main;
@@ -47,6 +61,11 @@ int Member::getBorrowCount()
 std::string Member::getRole() const
 {
     return "Member";
+}
+
+linkedRecords& Member::getBorrowHistory()
+{
+    return this->borrow_history;
 }
 
 void Member::displayInformation() const

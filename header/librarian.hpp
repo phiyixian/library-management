@@ -16,6 +16,8 @@ class Librarian: public Person
     void setPositionTitle(std::string);
     std::string getPositionTitle() const;
     
+    void decreaseFines(double);
+
     std::string getRole() const override;
     void displayInformation() const override;
     void showMenu(LibraryService &) override;

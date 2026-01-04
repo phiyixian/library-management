@@ -22,9 +22,12 @@ class Member: public Person
 
     void setFine(double);
     double getFine();
+    void decreaseFines(double);
     
     void setBorrowCount(int);
     int getBorrowCount();
+
+    linkedRecords& getBorrowHistory();
 
     //overriding virtual functions derived in basd class
     std::string getRole() const override;

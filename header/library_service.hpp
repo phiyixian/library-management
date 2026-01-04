@@ -3,6 +3,8 @@
 
 #include <string>
 #include <vector>
+#include "member.hpp"
+#include "librarian.hpp"
 
 //temp book file 
 struct Book
@@ -29,8 +31,8 @@ class LibraryService
     void displayCatalogue();
 
     //member + librarian
-    bool borrowBook();
-    bool returnBook();
+    bool borrowBook(Member &);
+    bool returnBook(Member &);
     void checkBorrowed();
 
     //librarian only features;
@@ -40,6 +42,12 @@ class LibraryService
     bool removeMember();
 
     double calculateFine();
+    double payFine(double, Member &);
+    double payFine(double, Librarian &);
+
+    // Helper functions
+    void loadBooksFromFile();
+    void saveBooksToFile(); 
 };
 
 #endif

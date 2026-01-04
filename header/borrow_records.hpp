@@ -25,6 +25,7 @@ class linkedRecords
     public:
         linkedRecords(string member_ID);
         
+        record* getHead();
         string getID();
 
         void load();
@@ -37,6 +38,7 @@ class linkedRecords
         void printRecords();
         void printRecord(string book_ID);
         int getRecordCount();
+        record* getRecordByBookID(string book_ID);
 
         void checkOverdues();
         void checkOverdue(string book_ID);

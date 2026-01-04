@@ -63,6 +63,7 @@ int main()
 
     user->showMenu();
     
-
+    delete user; // Free allocated memory
+    
     return 0;
 }

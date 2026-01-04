@@ -171,26 +171,6 @@ void linkedRecords::remove(string book_ID){
     while(temp->next != nullptr){
         // When the book is found
         if(temp->book_ID == book_ID){
-            // if(temp->overdue){
-            //     cout << "Your borrowed book is overdue." << endl;
-            //     cout << "Please pay your fine before you return your book." << endl;
-
-            //     // Display overdue days and fine charged
-            //     int overdue_Days = overdueDays(temp->dueDate);
-            //     cout << "Overdue by " << overdue_Days << " days\n";
-
-            //     double fine = calculateFine(overdue_Days);
-            //     cout << "Fine charged: RM" << fine << endl;
-
-            //     // Fine payment before returning book
-            //     double change = payFine(fine);
-            //     cout << endl;
-            //     cout << "Thanks for your payment!" << endl;
-            //     cout << "Change: RM" << fine << endl;
-
-            // Checking by caller (library service) should handle fine payment
-
-
             // Remove book from linked list
             if(temp->prev)
                 temp->prev->next = temp->next;
@@ -206,8 +186,27 @@ void linkedRecords::remove(string book_ID){
     }
 }
 
+// Returns pointer to head of linked list
+record* linkedRecords::getHead(){
+    return borrowHead;
+}
 
+// Returns pointer to the record if found, else nullptr
+record* linkedRecords::getRecordByBookID(string book_ID){
+    record *temp = borrowHead;
 
+    while(temp != nullptr){
+        if(temp->book_ID == book_ID){
+            return temp;
+        }
+        temp = temp->next;
+    }
+
+    // Return an empty record if not found
+    return nullptr;
+}
+
+// Print all borrow records in a table format
 void linkedRecords::printRecords(){
     // Display all borrow records for the member
     record *temp = borrowHead;
@@ -230,6 +229,7 @@ void linkedRecords::printRecords(){
     }
 }
 
+// Print specific borrow record for a book ID
 void linkedRecords::printRecord(string book_ID){
     // Display specific borrow record for the book
     bool found = false;
@@ -261,6 +261,7 @@ void linkedRecords::printRecord(string book_ID){
     std::cout << std::endl;
 }
 
+// Returns the number of borrow records in the linked list
 int linkedRecords::getRecordCount() {
     int count = 0;
     record *temp = borrowHead;
@@ -313,15 +314,18 @@ void linkedRecords::checkOverdues(){
 
 }
 
+// Calculate number of overdue days
 int linkedRecords::overdueDays(time_t dueDate){
     time_t now = time(nullptr);
     return (now - dueDate) / (24 * 60 * 60);
 }
 
+// Calculate fine based on number of overdue days
 double linkedRecords::calculateFine(int overdueDays){
     return overdueDays * 0.5;
 }
 
+// Calculate total fines for all overdue books
 double linkedRecords::calculateTotalFines(){
     double totalFines = 0;
     record *temp = borrowHead;
