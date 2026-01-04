@@ -8,3 +8,5 @@ MEMBER|M3|Marcus|marcus@example.co|
 LIBRARIAN|L1|Iliot|iliot@example.com|
 LIBRARIAN|L2|Tom|tom@example.com|
 LIBRARIAN|L3|Emma|emma@example.com|
+MEMBER|M004|aydan|test@gmail.com
+MEMBER|M005|test|idk@123

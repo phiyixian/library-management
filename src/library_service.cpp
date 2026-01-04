@@ -17,7 +17,7 @@ void LibraryService::searchByTitle()
 {
     std::string keyword_title;
     std::cout << "Enter title of book: ";
-    std::getline(std::cin, keyword_title); //getline to include space
+    std::getline(std::cin >> std::ws, keyword_title); //getline to include space
 
     bool found = false;
 
@@ -44,7 +44,7 @@ void LibraryService::searchByAuthor()
 {
     std::string keyword_author;
     std::cout << "Enter author of book: ";
-    std::getline(std::cin, keyword_author);
+    std::getline(std::cin >> std::ws, keyword_author);
 
     bool found = false;
 
@@ -68,7 +68,7 @@ void LibraryService::searchByGenre()
 {
     std::string keyword_genre;
     std::cout << "Enter genre of book: ";
-    std::getline(std::cin, keyword_genre);
+    std::getline(std::cin >> std::ws, keyword_genre);
 
     bool found = false;
 
@@ -105,7 +105,7 @@ bool LibraryService::borrowBook()
 {
     std::string book_id_borrow;
     std::cout << "Enter book ID: ";
-    std::getline(std::cin, book_id_borrow);
+    std::getline(std::cin >> std::ws, book_id_borrow);
 
     //validate book by searching book's id
     //EDIT SO IT CHECK FROM .TXT FILE

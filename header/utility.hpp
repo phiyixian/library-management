@@ -13,9 +13,9 @@
 #include <iostream>
 #include <string>
 
-Person *registerUser();
+Person *registerUser(const std::string &userrole);
 
-Person *loginUser();
+Person *login();
 
 std::string borrowStatus(bool overdue);
 

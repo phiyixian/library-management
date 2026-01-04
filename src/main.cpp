@@ -22,27 +22,30 @@ int main()
     std::cout << "> ";
     std::cin >> choice; // There should be an error check here for invalid choices
 
-    Person *user;
+    Person *user = nullptr;
+    LibraryService library;
 
     switch (choice)
     {
     case 1: // Register
-        user = registerUser();
+        user = registerUser("MEMBER");
         std::cout << "Register successful!\n";
         break;
+
     case 2: // Login
         do 
         {
-        user = loginUser();
+        user = login();
 
         if (user == nullptr)
         {
-            std::cout << "ID not found or Username mismatch. Try again.";
+            std::cout << "ID not found or Username mismatch. Try again." << std::endl;
         }
         } while(user == nullptr);
         
         std::cout << "Login successful!\n";
         break;
+
     case 3: // Continue as Guest
         {
         std::string guestname, guestemail;
@@ -56,13 +59,14 @@ int main()
         break;
         }
     default:
-        // Error check maybe
+        std::cout << "Invalid option. temporary je" << std::endl;
         break;
     }
 
-
-    user->showMenu();
-    
+    if (user)
+        user->showMenu(library);
+    else
+        std::cout << "No user session started.\n";
 
     return 0;
 }
