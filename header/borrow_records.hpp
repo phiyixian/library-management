@@ -5,11 +5,10 @@
 #include <vector>
 #include <ctime>
 
-using namespace std;
 
 struct record
 {
-    string book_ID;
+    std::string book_ID;
     time_t borrowDate;
     time_t dueDate;
     bool overdue;
@@ -20,28 +19,27 @@ struct record
 class linkedRecords
 {
     private:
-        string member_ID;
+        std::string member_ID;
         record *borrowHead;
     public:
-        linkedRecords(string member_ID);
+        linkedRecords(std::string member_ID);
         
-        record* getHead();
-        string getID();
+        std::string getID();
 
         void load();
         void save();
         void updateStatus();
 
-        void insert(string book_ID, time_t borrowDate, time_t dueDate, bool overdue);
-        void remove(string book_ID);
+        void insert(std::string book_ID, time_t borrowDate, time_t dueDate, bool overdue);
+        void remove(std::string book_ID);
 
         void printRecords();
-        void printRecord(string book_ID);
+        void printRecord(std::string book_ID);
         int getRecordCount();
         record* getRecordByBookID(string book_ID);
 
         void checkOverdues();
-        void checkOverdue(string book_ID);
+        void checkOverdue(std::string book_ID);
 
         double calculateTotalFines();
 

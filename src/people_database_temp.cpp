@@ -3,7 +3,6 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-using namespace std;
 
 peopleDatabase::~peopleDatabase()
 {
@@ -13,12 +12,12 @@ peopleDatabase::~peopleDatabase()
     }
 }
 
-void peopleDatabase::addPerson(person *people_main)
+void peopleDatabase::addPerson(Person *people_main)
 {
     people.push_back(people_main);
 }
 
-person* peopleDatabase::findByID(const std::string &ID_main)
+Person* peopleDatabase::findByID(const std::string &ID_main)
 {
     for (auto people_main: people)
     {
@@ -40,17 +39,17 @@ void peopleDatabase::listAll() const
     //     std::cout << std::endl;
     // }
 
-    string line;
+    std::string line;
 
     //Open a file in read mode.
-    ifstream inFile("database/people_database.txt");
+    std::ifstream inFile("database/people_database.txt");
     if (!inFile) {
-        cerr << "Unable to open file people_database.txt";
+        std::cerr << "Unable to open file people_database.txt";
         exit(1); // terminate with error
     }
 
     while(getline(inFile, line)) {
-        cout << line << endl;
+        std::cout << line << std::endl;
     }
 }
 
@@ -59,7 +58,7 @@ size_t peopleDatabase::size() const
     return people.size();
 }
 
-person* peopleDatabase::get(size_t i) const
+Person* peopleDatabase::get(size_t i) const
 {
     return people[i];
 }

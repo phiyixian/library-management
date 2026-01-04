@@ -12,7 +12,7 @@ Person *login()
     std::cout << "Enter User Name: ";
     std::cin >> username;
 
-    std::fstream peopledata("../database/people_databse.txt", std::ios::in);
+    std::fstream peopledata("database/people_database.txt", std::ios::in);
     if (!peopledata)
     {
         std::cerr << "Error opening people database\n";
@@ -45,16 +45,20 @@ Person *login()
             }
             
             Person *p = nullptr;
-            // (poly) Create derived object based on role
+
             if (role == "LIBRARIAN")
                 p = new Librarian(id, name, email);
-            if (role == "MEMBER") 
+            else if (role == "MEMBER") 
                 p = new Member(id, name, email);
+            else if (role == "GUEST")
+                p = new Guest(id, name, email);
 
-            p->setID(id);
-            p->setEmail(email);
-            p->setName(name);
-            
+            //no need for setters
+            if (!p)
+            {
+                std::cerr << "login(): Unknown role in database: " << role << "\n";
+                return nullptr;
+            }
             return p;
         }
     }
@@ -63,9 +67,9 @@ Person *login()
 
 // Registers a new user and returns the created object
 // Userrole should be either "LIBRARIAN" or "MEMBER"
-Person *registerUser(std::string &userrole)
+Person *registerUser(const std::string &userrole)
 {
-    std::fstream peopledata("../database/people_database.txt", std::ios::in);
+    std::fstream peopledata("database/people_database.txt", std::ios::in);
     if (!peopledata)
     {
         std::cerr << "registerUser(): Error opening people database for reading\n";
@@ -79,7 +83,8 @@ Person *registerUser(std::string &userrole)
     std::cin >> username;
 
         
-    std::string name, email,id = userrole[0] + "0"; // Initial ID for comparison
+    std::string name, email;
+    int max_suffix = 0;
     std::string line;
     std::getline(peopledata, line); // Skip header in database
     while (std::getline(peopledata, line)) // Read loop
@@ -111,14 +116,16 @@ Person *registerUser(std::string &userrole)
         // Useful for incrementing the ID for new user later
         if (role == userrole)
         {
-            id = std::stoi(id.substr(1)) > std::stoi(tempid.substr(1)) ? id : tempid; // getting max ID
+            int suffix = std::stoi(tempid.substr(1));  // "007" -> 7
+            if (suffix > max_suffix)
+            max_suffix = suffix;
         }
     }
 
     peopledata.close();
 
     // Reopen file in append mode to add new user
-    peopledata.open("../database/people_databse.txt", std::ios::app);
+    peopledata.open("database/people_database.txt", std::ios::app);
     if (!peopledata)
     {
         std::cerr << "registerUser(): Error opening people database for appending\n";
@@ -126,16 +133,20 @@ Person *registerUser(std::string &userrole)
     }
 
     // Incrementing the ID
-    int nextSuffix = std::stol(id) + 1;
-    const int ID_WIDTH = 3;              // -> produces L001, M007, etc.
+    int nextSuffix = max_suffix + 1;
+
     std::ostringstream idoss;
-    idoss << userrole[0] << std::setw(ID_WIDTH) << std::setfill('0') << nextSuffix;
-    id = idoss.str();    // e.g. "M007"
+    idoss << userrole[0]
+        << std::setw(3)
+        << std::setfill('0')
+        << nextSuffix;
+
+    std::string id = idoss.str();
 
     // Saving the user's info
     // Format: Role|ID|Username|Email|
     // ID format: G001, L001, M001
-    peopledata << userrole << '|' << id << '|' << username << '|' << useremail << "|\n";
+    peopledata << '\n' << userrole << '|' << id << '|' << username << '|' << useremail;
 
     peopledata.close();
 
