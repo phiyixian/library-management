@@ -371,6 +371,7 @@ double LibraryService::calculateFine()
 //--------------------------------
 // HELPER FUNCTIONS FOR LOADING AND SAVING BOOKS & PEOPLE
 //--------------------------------
+// INCOMPLETE
 // Load books from file
 // Reminder: Modify this to use the linked list for Books instead of vector
 void LibraryService::loadBooksFromFile()
@@ -418,6 +419,7 @@ void LibraryService::loadBooksFromFile()
     bookdata.close();
 }
 
+// INCOMPLETE
 // Save books to file
 // Reminder: Modify this to use the linked list for Books instead of vector
 void LibraryService::saveBooksToFile()
@@ -467,4 +469,53 @@ void LibraryService::saveBooksToFile()
         std::cerr << "save(): Critical error during file swap: " << ec.message() << "\n";
         std::exit(1);
     }
+}
+
+// INCOMPLETE
+void LibraryService::loadPeopleFromFile()
+{
+    // Load people from file
+    std::fstream peopledata("../database/people_database.txt", std::ios::in);
+    if (!peopledata)
+    {
+        std::cerr << "loadPeopleFromFile(): Error loading active borrowing history\n";
+        std::exit(1);
+    }
+    // Role|ID|Username|Email|
+    std::string line;
+    std::getline(peopledata, line); // Skip header
+
+    // Loading loop
+    while (std::getline(peopledata, line))
+    {
+        std::istringstream ss(line);
+        std::string role, id, username, email;
+
+        std::getline(ss, role, '|');
+        std::getline(ss, id, '|');
+        std::getline(ss, username, '|');
+        std::getline(ss, email, '|');
+        
+        
+    }
+    peopledata.close();
+}
+
+// INCOMPLETE
+void LibraryService::savePeopleToFile()
+{
+    // Save people to file
+    std::ofstream ofs("../database/people_database.txt");
+    if (!ofs) {
+        std::cerr << "savePeopleToFile(): Error opening file for writing\n";
+        std::exit(1);
+    }
+    
+    // Write header
+    ofs << "Role|ID|Username|Email|\n";
+
+    // Writing loop
+    // To be implemented
+
+    ofs.close();
 }
