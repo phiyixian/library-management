@@ -6,13 +6,18 @@
 #include "member.hpp"
 #include "librarian.hpp"
 
-//temp book file 
+    //    std::string title, bookID, category, dateAdded, lastUpdated, borrowCount, status;
+
+//temp book file (or should we use a class)
 struct Book
 {
-    std::string id;
+    std::string ISBN;
     std::string title;
     std::string author;
-    std::string genre;
+    std::string genre; // or category
+    std::string dateAdded;
+    std::string lastUpdated;
+    int borrowCount;
     bool is_borrowed;
 };
 
@@ -20,6 +25,7 @@ class LibraryService
 {
     private:
     std::vector<Book> books; //temp
+    // the list that stores all members and librarians should also be added here
     
     public:
     LibraryService(); //temp
@@ -48,6 +54,8 @@ class LibraryService
     // Helper functions
     void loadBooksFromFile();
     void saveBooksToFile(); 
+    void loadPeopleFromFile();
+    void savePeopleToFile();
 };
 
 #endif

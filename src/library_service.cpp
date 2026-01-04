@@ -5,6 +5,7 @@
 #include "../header/person.hpp"
 #include "../header/utility.hpp"
 #include <fstream>
+#include <filesystem>
 #include <iostream>
 #include <string>
 #include <vector> //temporary header for books
@@ -367,6 +368,11 @@ double LibraryService::calculateFine()
     return 0.0;
 }
 
+//--------------------------------
+// HELPER FUNCTIONS FOR LOADING AND SAVING BOOKS & PEOPLE
+//--------------------------------
+// Load books from file
+// Reminder: Modify this to use the linked list for Books instead of vector
 void LibraryService::loadBooksFromFile()
 {
     // Load books from file
@@ -384,10 +390,11 @@ void LibraryService::loadBooksFromFile()
     while (std::getline(bookdata, line))
     {
         std::istringstream ss(line);
-        std::string title, bookID, category, dateAdded, lastUpdated, borrowCount, status;
+        std::string title, author,  ISBN, category, dateAdded, lastUpdated, borrowCount, status;
 
         std::getline(ss, title, '|');
-        std::getline(ss, bookID, '|');
+        std::getline(ss, author, '|');
+        std::getline(ss, ISBN, '|');
         std::getline(ss, category, '|');
         std::getline(ss, dateAdded, '|');
         std::getline(ss, lastUpdated, '|');
@@ -396,14 +403,68 @@ void LibraryService::loadBooksFromFile()
 
         // Create a new Book object and add it to the books vector
         Book newBook;
-        newBook.id = bookID;
+        newBook.ISBN = ISBN;
         newBook.title = title;
-        newBook.author = "Unknown"; // Placeholder for author
+        newBook.author = author; // Are we adding author field to the db? // Nvm im adding it anyway
         newBook.genre = category;
+        newBook.dateAdded = dateAdded;
+        newBook.lastUpdated = lastUpdated;
+        newBook.borrowCount = std::stoi(borrowCount);
         newBook.is_borrowed = (status == "BORROWED");
 
         books.push_back(newBook);
     }
 
     bookdata.close();
+}
+
+// Save books to file
+// Reminder: Modify this to use the linked list for Books instead of vector
+void LibraryService::saveBooksToFile()
+{
+    // Save books to file
+    const std::string path = "database/books_database.txt";
+    const std::string tempPath = path + ".tmp";
+
+    std::ofstream ofs(tempPath);
+    if (!ofs) {
+        std::cerr << "saveBooksToFile(): Error opening temporary file for writing\n";
+        std::exit(1);
+    }
+    
+    // Write header
+    ofs << "Title|Author|ISBN|Category|DateAdded|LastUpdated|BorrowCount|Status\n";
+
+    // Writing loop
+    for (const Book& book : books)
+    {
+        std::string line = 
+            book.title + "|" +
+            book.author + "|" +
+            book.ISBN + "|" +
+            book.genre + "|" +
+            book.dateAdded + "|" +
+            book.lastUpdated + "|" +
+            std::to_string(book.borrowCount) + "|" +
+            (book.is_borrowed ? "BORROWED" : "AVAILABLE");
+        
+        ofs << line << "\n";
+    }
+
+    ofs.close();
+
+
+    // Replace original file with temporary file //
+    std::error_code ec;
+
+    // 1. Remove the old file if it exists
+    std::filesystem::remove(path, ec); 
+
+    // 2. Rename the temp file to the original path
+    std::filesystem::rename(tempPath, path, ec);
+
+    if (ec) {
+        std::cerr << "save(): Critical error during file swap: " << ec.message() << "\n";
+        std::exit(1);
+    }
 }
