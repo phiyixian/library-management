@@ -4,7 +4,14 @@
 #include <string>
 #include "person.hpp"
 
+<<<<<<< Updated upstream
 class member: public person
+=======
+// Forward declaration
+class LibraryService;
+
+class Member: public Person
+>>>>>>> Stashed changes
 {
     private:
     int borrow_count;

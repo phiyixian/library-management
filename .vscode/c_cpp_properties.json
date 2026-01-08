@@ -3,7 +3,13 @@
         {
             "name": "Win32",
             "includePath": [
+<<<<<<< Updated upstream
                 "${workspaceFolder}/**"
+=======
+                "${workspaceFolder}/**",
+                "/usr/include/**",
+                "${workspaceFolder}/header"
+>>>>>>> Stashed changes
             ],
             "defines": [
                 "_DEBUG",

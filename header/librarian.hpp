@@ -4,7 +4,14 @@
 #include "person.hpp"
 #include <string>
 
+<<<<<<< Updated upstream
 class librarian: public person
+=======
+// Forward declaration
+class LibraryService;
+
+class Librarian: public Person
+>>>>>>> Stashed changes
 {
     private:
     std::string position_title;

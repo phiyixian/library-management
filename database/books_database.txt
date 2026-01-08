@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 // Book Title, Category, First Added, Last Updated, 
 // Borrowed Times, Current Status
 
@@ -12,3 +13,17 @@ Book 3, B001, 2020-1-1, 2024-12-25, 3, Available
 Book 1, C001, 2020-1-1, 2025-1-3, 4, Borrowed
 Book 2, C001, 2020-1-1, 2025-5-7, 1, Reserved
 Book 3, C001, 2020-1-1, 2024-12-25, 3, Available
+=======
+Title|Author|Genre|ID|Date Added|Last Updated|Borrow Count|Status
+1984|George Orwell|Dystopian|A001|2020-1-1|2025-1-3|4|Available
+To Kill a Mockingbird|Harper Lee|Fiction|A002|2020-1-1|2025-5-7|1|Available
+The Great Gatsby|F. Scott Fitzgerald|Classic|A003|2020-1-1|2024-12-25|3|Available
+The Hobbit|J.R.R. Tolkien|Fantasy|B001|2020-1-1|2025-1-3|4|Available
+Harry Potter and the Philosopher's Stone|J.K. Rowling|Fantasy|B002|2020-1-1|2025-5-7|1|Available
+The Catcher in the Rye|J.D. Salinger|Classic|B003|2020-1-1|2024-12-25|3|Available
+Pride and Prejudice|Jane Austen|Romance|C001|2020-1-1|2025-1-3|4|Available
+The Alchemist|Paulo Coelho|Adventure|C002|2020-1-1|2025-5-7|1|Available
+The Da Vinci Code|Dan Brown|Thriller|C003|2020-1-1|2026-01-08|5|Available
+Phi TEST Book|PHI|Horror|C004|2026-01-08|2026-01-08|0|Available
+Testing Book Added 2|Phi Xian|Romance|C005|2026-01-08|2026-01-08|0|Available
+>>>>>>> Stashed changes

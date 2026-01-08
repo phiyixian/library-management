@@ -3,8 +3,16 @@
 #include <string>
 #include <vector>
 #include <ctime>
+<<<<<<< Updated upstream
 
 using namespace std;
+=======
+#include <filesystem>
+#include <iomanip>
+#include <sstream>
+#include <cstdlib>
+#include "borrow_records.hpp"
+>>>>>>> Stashed changes
 
 // Initialize new linked list for each member
 linkedRecords::linkedRecords(string member_ID, int book_ID){
@@ -36,10 +44,75 @@ void linkedRecords::insert(int book_ID){
         newRecord->overdue = false;
         newRecord->next = NULL;
 
+<<<<<<< Updated upstream
         // check if member has more than one borrow history
         if(borrowHead->next == NULL){
             borrowHead->next = newRecord;
             newRecord->prev = borrowHead;
+=======
+    // Append this member's current active borrows
+    record *temp = borrowHead;
+    while (temp != nullptr) {
+        std::string status = borrowStatus(temp->overdue);
+        ofs << this->member_ID << "|" << temp->book_ID << "|"
+            << parseTimeIntoString(temp->borrowDate) << "|"
+            << parseTimeIntoString(temp->dueDate) << "|"
+            << status << "|\n";
+        temp = temp->next;
+    }
+
+    ofs.close();
+
+    std::error_code ec;
+
+    // 1. Remove the old file if it exists
+    std::filesystem::remove(path, ec); 
+
+    // 2. Rename the temp file to the original path
+    std::filesystem::rename(tempPath, path, ec);
+
+    if (ec) {
+        std::cerr << "save(): Critical error during file swap: " << ec.message() << "\n";
+    }
+}
+
+// Save returned book to borrow history file
+void linkedRecords::saveToHistory(const std::string &book_ID, time_t returnDate)
+{
+    // Find the record before removing it
+    record *returnedRecord = getRecordByBookID(book_ID);
+    if (returnedRecord == nullptr)
+    {
+        return; // Record not found
+    }
+    
+    // Append to borrow history file
+    std::ofstream historyFile("database/borrow_history.txt", std::ios::app);
+    if (!historyFile)
+    {
+        std::cerr << "Error: Cannot open borrow_history.txt for writing\n";
+        return;
+    }
+    
+    // Format: memberID|Event|bookID|borrowTime|dueTime|
+    // Event can be: BORROWED, RETURNED
+    historyFile << this->member_ID << "|RETURNED|" << book_ID << "|"
+                << parseTimeIntoString(returnedRecord->borrowDate) << "|"
+                << parseTimeIntoString(returnedRecord->dueDate) << "|"
+                << parseTimeIntoString(returnDate) << "|\n";
+    
+    historyFile.close();
+}
+
+void linkedRecords::updateStatus(){
+    // Update overdue status for all borrow records
+    record *temp = borrowHead;
+    time_t now = time(nullptr);
+
+    while (temp != nullptr) {
+        if (now > temp->dueDate) {
+            temp->overdue = true;
+>>>>>>> Stashed changes
         } else {
             record *temp;
             temp = borrowHead;
@@ -52,10 +125,18 @@ void linkedRecords::insert(int book_ID){
     }
 }
 
+<<<<<<< Updated upstream
 void linkedRecords::remove(int book_ID){
     record *temp;
     temp = borrowHead;
     while(temp != NULL){
+=======
+void linkedRecords::remove(std::string book_ID){
+    record *temp = borrowHead;
+    // Traverse linked list to find book ID
+    while(temp != nullptr){
+        // When the book is found
+>>>>>>> Stashed changes
         if(temp->book_ID == book_ID){
             if(temp->overdue){
                 cout << "Your borrowed book is overdue." << endl;
@@ -65,6 +146,7 @@ void linkedRecords::remove(int book_ID){
                 int overdue_Days = overdueDays(temp->dueDate);
                 cout << "Overdue by " << overdue_Days << " days\n";
 
+<<<<<<< Updated upstream
                 double fine = calculateFine(overdue_Days);
                 cout << "Fine charged: RM" << fine << endl;
 
@@ -85,6 +167,12 @@ void linkedRecords::remove(int book_ID){
 
                 cout << "Your book has been returned." << endl;
             }
+=======
+            record *toDelete = temp;
+            temp = temp->next; // Move to next before deleting
+            delete toDelete;
+            return; // Book found and removed
+>>>>>>> Stashed changes
         }
         temp = temp->next;
     }
@@ -192,4 +280,28 @@ double linkedRecords::payFine(int fine){
         }
     }
     return payment;
+}
+
+// Check if a specific book is overdue
+void linkedRecords::checkOverdue(std::string book_ID){
+    record *temp = borrowHead;
+    time_t now = time(nullptr);
+
+    while(temp != nullptr){
+        if(temp->book_ID == book_ID){
+            if(now > temp->dueDate){
+                temp->overdue = true;
+                int overdue_Days = overdueDays(temp->dueDate);
+                double fine = calculateFine(overdue_Days);
+                std::cout << "Book " << book_ID << " is overdue by " << overdue_Days << " days." << std::endl;
+                std::cout << "Fine charged: RM" << fine << std::endl;
+            } else {
+                temp->overdue = false;
+                std::cout << "Book " << book_ID << " is not overdue." << std::endl;
+            }
+            return;
+        }
+        temp = temp->next;
+    }
+    std::cout << "Book " << book_ID << " not found in borrow records." << std::endl;
 }

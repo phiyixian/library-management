@@ -3,7 +3,14 @@
 
 #include <string>
 
+<<<<<<< Updated upstream
 class person
+=======
+// Forward declaration to avoid circular dependency
+class LibraryService;
+
+class Person
+>>>>>>> Stashed changes
 {
     protected:
     std::string ID, name, email;
