@@ -23,6 +23,10 @@ MEMBER|M005|test|idk@123
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+MEMBER|M006|Phi|phi@yahoo.com
+>>>>>>> Stashed changes
+=======
 MEMBER|M006|Phi|phi@yahoo.com
 >>>>>>> Stashed changes
 =======
