@@ -36,7 +36,7 @@ class linkedRecords
         void printRecords();
         void printRecord(std::string book_ID);
         int getRecordCount();
-        record* getRecordByBookID(string book_ID);
+        record* getRecordByBookID(std::string book_ID);
 
         void checkOverdues();
         void checkOverdue(std::string book_ID);
