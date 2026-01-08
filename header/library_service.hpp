@@ -2,22 +2,20 @@
 #define LIBRARY_SERVICE_HPP
 
 #include <string>
-#include <vector>
-#include "borrow_records.hpp"
 #include "books.hpp"
+#include "borrow_records.hpp"
 
-// Forward declarations to avoid circular dependency
+// Forward declarations
 class Member;
 class Librarian;
 
 class LibraryService
 {
     private:
-    BookList books; // Linked list of books loaded from database
-    // the list that stores all members and librarians should also be added here
+    BookList books;
     
     public:
-    LibraryService(); //temp
+    LibraryService();
 
     // guest + member + librarian
     void searchByTitle();
@@ -43,7 +41,7 @@ class LibraryService
 
     // Helper functions
     void loadBooksFromFile();
-    void saveBooksToFile();
+    void saveBooksToFile(); 
     void loadPeopleFromFile();
     void savePeopleToFile();
 };

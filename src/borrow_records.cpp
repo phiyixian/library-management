@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <sstream>
 #include <cstdlib>
+#include <fstream>
 
 // Initialize new linked list for each member
 linkedRecords::linkedRecords(std::string member_ID) : member_ID(member_ID) {
