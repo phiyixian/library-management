@@ -4,8 +4,11 @@
 #include <string>
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 class person
 =======
+=======
+>>>>>>> Stashed changes
 // Forward declaration to avoid circular dependency
 class LibraryService;
 

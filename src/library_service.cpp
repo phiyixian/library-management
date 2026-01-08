@@ -19,6 +19,9 @@
 #include <cstdlib>
 #include <ctime>
 #include <iomanip>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 // Constructor - load books from database file
@@ -44,9 +47,12 @@ void LibraryService::searchByAuthor()
 {
     std::string keyword_author;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     std::cout << "Enter author of book: ";
     std::getline(std::cin, keyword_author);
 =======
+=======
+>>>>>>> Stashed changes
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
     std::cout << "  Search by Author" << std::endl;
@@ -63,9 +69,12 @@ void LibraryService::searchByGenre()
 {
     std::string keyword_genre;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     std::cout << "Enter genre of book: ";
     std::getline(std::cin, keyword_genre);
 =======
+=======
+>>>>>>> Stashed changes
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
     std::cout << "  Search by Genre" << std::endl;
@@ -83,7 +92,10 @@ void LibraryService::searchByGenre()
 bool LibraryService::borrowBook()
 {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
     std::cout << "  Library Catalogue" << std::endl;
@@ -125,6 +137,9 @@ bool LibraryService::borrowBook(Member &user)
     std::cout << std::string(50, '=') << std::endl;
     std::cout << "  Borrow Book" << std::endl;
     std::cout << std::string(50, '=') << std::endl;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     std::string book_id_borrow;
     std::cout << "Enter book ID: ";
@@ -135,6 +150,7 @@ bool LibraryService::borrowBook(Member &user)
     
     if (book == nullptr)
     {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         if (book.id == book_id_borrow)
         {
@@ -159,6 +175,10 @@ bool LibraryService::borrowBook(Member &user)
             std::cout << "Book borrowed successfully" << std::endl;
             return true;
         }
+=======
+        std::cout << "Error, book does not exist" << std::endl;
+        return false;
+>>>>>>> Stashed changes
 =======
         std::cout << "Error, book does not exist" << std::endl;
         return false;
@@ -203,7 +223,10 @@ bool LibraryService::borrowBook(Member &user)
 bool LibraryService::returnBook()
 {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
     std::cout << "  Return Book" << std::endl;
@@ -223,6 +246,7 @@ bool LibraryService::returnBook()
 
     for (Book& book : books)
     {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         if (book.id == return_book_id)
         {
@@ -255,6 +279,8 @@ bool LibraryService::returnBook()
 
     std::cout << "Error, book does not exits" << std::endl;
 =======
+=======
+>>>>>>> Stashed changes
         std::cout << "\nEnter Book ID to return (or 'Q' to cancel): ";
         std::cin >> return_book_id;
         std::cin.ignore(); // Clear the newline character from the buffer
@@ -480,6 +506,7 @@ bool LibraryService::removeBook()
         return true;
     }
     
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
     return false;
 }
@@ -507,6 +534,12 @@ double LibraryService::calculateFine()
 {}
 */
 =======
+=======
+    return false;
+}
+
+bool LibraryService::registerMember()
+>>>>>>> Stashed changes
 {
     std::string username, email;
     

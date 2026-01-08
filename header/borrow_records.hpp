@@ -41,6 +41,8 @@ class linkedRecords
 
         record *getHead();
 
+        record *getHead();
+
         void printRecords();
         void printRecord(int book_ID);
 

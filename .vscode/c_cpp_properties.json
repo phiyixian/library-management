@@ -9,6 +9,9 @@
                 "${workspaceFolder}/**",
                 "/usr/include/**",
                 "${workspaceFolder}/header"
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             ],
             "defines": [

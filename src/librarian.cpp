@@ -25,8 +25,11 @@ std::string librarian::getRole() const
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 void librarian::displayInformation() const
 =======
+=======
+>>>>>>> Stashed changes
 void Librarian::decreaseFines(double amount)
 {
     // Librarians don't have fines, but this function is needed for polymorphism

@@ -5,8 +5,11 @@
 #include <string>
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 class librarian: public person
 =======
+=======
+>>>>>>> Stashed changes
 // Forward declaration
 class LibraryService;
 

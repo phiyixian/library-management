@@ -12,6 +12,9 @@ using namespace std;
 #include <sstream>
 #include <cstdlib>
 #include "borrow_records.hpp"
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 // Initialize new linked list for each member
@@ -126,11 +129,14 @@ void linkedRecords::updateStatus(){
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 void linkedRecords::remove(int book_ID){
     record *temp;
     temp = borrowHead;
     while(temp != NULL){
 =======
+=======
+>>>>>>> Stashed changes
 void linkedRecords::remove(std::string book_ID){
     record *temp = borrowHead;
     // Traverse linked list to find book ID
@@ -146,6 +152,7 @@ void linkedRecords::remove(std::string book_ID){
                 int overdue_Days = overdueDays(temp->dueDate);
                 cout << "Overdue by " << overdue_Days << " days\n";
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
                 double fine = calculateFine(overdue_Days);
                 cout << "Fine charged: RM" << fine << endl;
@@ -168,10 +175,15 @@ void linkedRecords::remove(std::string book_ID){
                 cout << "Your book has been returned." << endl;
             }
 =======
+=======
+>>>>>>> Stashed changes
             record *toDelete = temp;
             temp = temp->next; // Move to next before deleting
             delete toDelete;
             return; // Book found and removed
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         }
         temp = temp->next;
@@ -280,6 +292,30 @@ double linkedRecords::payFine(int fine){
         }
     }
     return payment;
+}
+
+// Check if a specific book is overdue
+void linkedRecords::checkOverdue(std::string book_ID){
+    record *temp = borrowHead;
+    time_t now = time(nullptr);
+
+    while(temp != nullptr){
+        if(temp->book_ID == book_ID){
+            if(now > temp->dueDate){
+                temp->overdue = true;
+                int overdue_Days = overdueDays(temp->dueDate);
+                double fine = calculateFine(overdue_Days);
+                std::cout << "Book " << book_ID << " is overdue by " << overdue_Days << " days." << std::endl;
+                std::cout << "Fine charged: RM" << fine << std::endl;
+            } else {
+                temp->overdue = false;
+                std::cout << "Book " << book_ID << " is not overdue." << std::endl;
+            }
+            return;
+        }
+        temp = temp->next;
+    }
+    std::cout << "Book " << book_ID << " not found in borrow records." << std::endl;
 }
 
 // Check if a specific book is overdue
