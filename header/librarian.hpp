@@ -4,35 +4,26 @@
 #include "person.hpp"
 #include <string>
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-class librarian: public person
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 // Forward declaration
 class LibraryService;
 
 class Librarian: public Person
->>>>>>> Stashed changes
 {
     private:
     std::string position_title;
+    int borrow_count;
 
     public:
-    librarian(std::string, std::string, std::string, std::string);
+    Librarian(std::string, std::string, std::string, std::string = "New Hire");
 
     void setPositionTitle(std::string);
     std::string getPositionTitle() const;
-    
+
+    void decreaseFines(double);
+
     std::string getRole() const override;
     void displayInformation() const override;
+    void showMenu(LibraryService &) override;
 };
 
 #endif

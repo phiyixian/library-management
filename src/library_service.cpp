@@ -1,9 +1,4 @@
 #include "../header/library_service.hpp"
-<<<<<<< Updated upstream
-#include <iostream>
-#include <string>
-#include <vector> //temporary header for books
-=======
 #include "../header/borrow_records.hpp"
 #include "../header/books.hpp"
 #include "../header/librarian.hpp"
@@ -19,16 +14,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <iomanip>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+#include <cctype>
+#include <limits>
 
 // Constructor - load books from database file
 LibraryService::LibraryService()
@@ -43,7 +30,7 @@ void LibraryService::searchByTitle()
 {
     std::string keyword_title;
     std::cout << "Enter title of book: ";
-    std::getline(std::cin, keyword_title); //getline to include space
+    std::getline(std::cin >> std::ws, keyword_title); //getline to include space
 
     // Use linked list to search
     books.displayByTitle(keyword_title);
@@ -52,26 +39,12 @@ void LibraryService::searchByTitle()
 void LibraryService::searchByAuthor()
 {
     std::string keyword_author;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    std::cout << "Enter author of book: ";
-    std::getline(std::cin, keyword_author);
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
     std::cout << "  Search by Author" << std::endl;
     std::cout << std::string(50, '=') << std::endl;
     std::cout << "Enter author name: ";
     std::getline(std::cin >> std::ws, keyword_author);
->>>>>>> Stashed changes
 
     // Use linked list to search
     books.displayByAuthor(keyword_author);
@@ -80,46 +53,19 @@ void LibraryService::searchByAuthor()
 void LibraryService::searchByGenre()
 {
     std::string keyword_genre;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    std::cout << "Enter genre of book: ";
-    std::getline(std::cin, keyword_genre);
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
     std::cout << "  Search by Genre" << std::endl;
     std::cout << std::string(50, '=') << std::endl;
     std::cout << "Enter genre: ";
     std::getline(std::cin >> std::ws, keyword_genre);
->>>>>>> Stashed changes
 
     // Use linked list to search
     books.displayByGenre(keyword_genre);
 }
 
-//member + librarian
-
-bool LibraryService::borrowBook()
+void LibraryService::displayCatalogue()
 {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
     std::cout << "  Library Catalogue" << std::endl;
@@ -161,68 +107,17 @@ bool LibraryService::borrowBook(Member &user)
     std::cout << std::string(50, '=') << std::endl;
     std::cout << "  Borrow Book" << std::endl;
     std::cout << std::string(50, '=') << std::endl;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     std::string book_id_borrow;
     std::cout << "Enter book ID: ";
-    std::getline(std::cin, book_id_borrow);
+    std::getline(std::cin >> std::ws, book_id_borrow);
 
     // Validate book by searching book's id using linked list
     BookNode *book = books.searchByID(book_id_borrow);
     
     if (book == nullptr)
     {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        if (book.id == book_id_borrow)
-        {
-            if (book.is_borrowed == true)
-            {
-                std::cout << "Error, Book is already borrowed" << std::endl;
-                return false;
-            }
-            
-            bool borrowing_limit_exceeded = false;
-            if (borrowing_limit_exceeded == true)
-            {
-                std::cout << "Error, borrowing limit exceeded" << std::endl;
-                return false;
-            }
-
-            //set book borrowing condtiion to true
-            book.is_borrowed = true;
-
-            //save borrowing recored and assign due date later
-
-            std::cout << "Book borrowed successfully" << std::endl;
-            return true;
-        }
-=======
         std::cout << "Error, book does not exist" << std::endl;
         return false;
->>>>>>> Stashed changes
-=======
-        std::cout << "Error, book does not exist" << std::endl;
-        return false;
->>>>>>> Stashed changes
-=======
-        std::cout << "Error, book does not exist" << std::endl;
-        return false;
->>>>>>> Stashed changes
-=======
-        std::cout << "Error, book does not exist" << std::endl;
-        return false;
->>>>>>> Stashed changes
     }
     
     if (book->is_borrowed == true)
@@ -260,19 +155,8 @@ bool LibraryService::borrowBook(Member &user)
     return true;
 }
 
-bool LibraryService::returnBook()
+bool LibraryService::returnBook(linkedRecords &borrowlist, Member &user)
 {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
     std::cout << "  Return Book" << std::endl;
@@ -285,54 +169,9 @@ bool LibraryService::returnBook()
     std::cout << "\nYour Current Borrowed Books:\n";
     borrowlist.printRecords();
 
->>>>>>> Stashed changes
     std::string return_book_id;
-    std::cout << "enter book id: ";
-    std::cin >> return_book_id;
-
-    for (Book& book : books)
+    do
     {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        if (book.id == return_book_id)
-        {
-            if (book.is_borrowed == false)
-            {
-                std::cout << "Error, book is not borrowed" << std::endl;
-                return false;
-            }
-
-            //temp bool for overdue, hakim's part
-            bool overdue_return = false;
-            if (overdue_return == true)
-            {
-                book.is_borrowed = false;
-                std::cout << "Book returned successfully" << std::endl;
-                //record return date and fine calculation
-
-                return true;
-            }
-            else
-            {
-                book.is_borrowed = false;
-                std::cout << "Book returned successfully" << std::endl;
-                //record return date
-
-                return true;
-            }
-        }
-    }
-
-    std::cout << "Error, book does not exits" << std::endl;
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         std::cout << "\nEnter Book ID to return (or 'Q' to cancel): ";
         std::cin >> return_book_id;
         std::cin.ignore(); // Clear the newline character from the buffer
@@ -409,10 +248,11 @@ double LibraryService::payFine(double fine, Member &user)
         payment = 0;
         std::cout << "Payment: RM";
         std::cin >> payment;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear buffer
         if(payment < fine){
-            std::cout << "Insufficient funds!" << std::endl;
+            std::cout << "Insufficient funds! Please pay the full amount." << std::endl;
         } else if(payment <= 0) {
-            std::cout << "Please enter valid amount." << std::endl;
+            std::cout << "Please enter a valid amount." << std::endl;
         } else {
             payment -= fine;
             user.decreaseFines(fine);
@@ -429,13 +269,14 @@ double LibraryService::payFine(double fine, Librarian &user)
         payment = 0;
         std::cout << "Payment: RM";
         std::cin >> payment;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear buffer
         if(payment < fine){
-            std::cout << "Insufficient funds!" << std::endl;
+            std::cout << "Insufficient funds! Please pay the full amount." << std::endl;
         } else if(payment <= 0) {
-            std::cout << "Please enter valid amount." << std::endl;
+            std::cout << "Please enter a valid amount." << std::endl;
         } else {
             payment -= fine;
-            user.decreaseFines(fine);
+            user.decreaseFines(fine); // This will just print a message for librarians
             break;
         }
     }
@@ -446,7 +287,9 @@ void LibraryService::checkBorrowed()
 {
     bool found = false;
 
-    std::cout << "Borrowed books:" << std::endl;
+    std::cout << "\n=====================================" << std::endl;
+    std::cout << "        Currently Borrowed Books" << std::endl;
+    std::cout << "=====================================" << std::endl;
 
     BookNode *current = books.getHead();
     while (current != nullptr)
@@ -458,13 +301,18 @@ void LibraryService::checkBorrowed()
             std::cout << "Title: " << current->title << std::endl;
             std::cout << "Author: " << current->author << std::endl;
             std::cout << "Genre: " << current->genre << std::endl;
+            std::cout << "-------------------------------------" << std::endl;
         }
         current = current->next;
     }
 
     if (found == false)
     {
-        std::cout << "no books currently borrowed" << std::endl;
+        std::cout << "No books currently borrowed." << std::endl;
+        std::cout << "-------------------------------------\n" << std::endl;
+    }
+    else {
+        std::cout << "=====================================\n" << std::endl;
     }
 }
 
@@ -558,46 +406,10 @@ bool LibraryService::removeBook()
         return true;
     }
     
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-    return false;
-}
-
-//later
-/*
-void LibraryService::checkBorrowed()
-{}
-
-//librarian only features;
-bool LibraryService::addBook()
-{}
-
-bool LibraryService::removeBook()
-{}
-
-bool LibraryService::registerMember()
-<<<<<<< Updated upstream
-{}
-
-bool LibraryService::removeMember()
-{}
-
-double LibraryService::calculateFine()
-{}
-*/
-=======
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     return false;
 }
 
 bool LibraryService::registerMember()
->>>>>>> Stashed changes
 {
     std::string username, email;
     
@@ -873,4 +685,3 @@ void LibraryService::savePeopleToFile()
 
     ofs.close();
 }
->>>>>>> Stashed changes

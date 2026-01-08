@@ -3,16 +3,28 @@
 #include <string>
 #include <iostream>
 #include <iomanip>
+#include <limits>
 
-member::member(std::string ID_main, std::string name_main, std::string email_main)
-: person(ID_main, name_main, email_main), borrow_count(0) {}
+Member::Member(std::string ID_main, std::string name_main, std::string email_main)
+: Person(ID_main, name_main, email_main), borrow_count(0), borrow_history(ID_main)
+{
+    setFine(this->borrow_history.calculateTotalFines());
+    setBorrowCount(this->borrow_history.getRecordCount());
+}
 
-void member::borrowIncrement()
+Member::~Member()
+{
+    // 1. Save the borrow history to file
+    borrow_history.save();
+    // 2. Free up the history linked lists (handled by destructor of linkedRecords)
+}
+
+void Member::borrowIncrement()
 {
     borrow_count++;
 }
 
-void member::borrowDecrement()
+void Member::borrowDecrement()
 {
     if (borrow_count > 0)
     {
@@ -20,30 +32,52 @@ void member::borrowDecrement()
     }
 }
 
-void member::setBorrowCount(int borrow_count_main)
+void Member::setFine(double fine)
+{
+    this->fines = fine;
+}
+
+double Member::getFine()
+{
+    return this->fines;
+}
+
+void Member::decreaseFines(double amount)
+{
+    this->fines -= amount;
+    if (this->fines < 0)
+    {
+        this->fines = 0;
+    }
+}
+
+void Member::setBorrowCount(int borrow_count_main)
 {
     borrow_count = borrow_count_main;
 }
 
-int member::getBorrowCount()
+int Member::getBorrowCount()
 {
     return borrow_count;
 }
 
-std::string member::getRole() const
+std::string Member::getRole() const
 {
     return "Member";
 }
 
-void member::displayInformation() const
+linkedRecords& Member::getBorrowHistory()
+{
+    return this->borrow_history;
+}
+
+void Member::displayInformation() const
 {
     std::cout << "-MEMBER-" << std::endl;
-    person::displayInformation();
+    Person::displayInformation();
     std::cout << "Borrowed books: " << borrow_count << std::endl;
 }
 
-<<<<<<< Updated upstream
-=======
 void Member::showMenu(LibraryService &library)
 {
     int choice;
@@ -82,6 +116,7 @@ void Member::showMenu(LibraryService &library)
         std::cout << std::string(50, '-') << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> choice;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear buffer
         
         switch (choice)
         {
@@ -126,6 +161,3 @@ void Member::showMenu(LibraryService &library)
     
     return;
 }
->>>>>>> Stashed changes
-
-

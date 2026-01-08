@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <ctime>
 #include <filesystem>
+#include <cctype>
 
 BookList::BookList() : head(nullptr), count(0) {}
 

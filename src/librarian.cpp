@@ -2,55 +2,37 @@
 #include "../header/library_service.hpp"
 #include <string>
 #include <iostream>
+#include <limits>
 
-librarian::librarian(std::string ID_main, std::string name_main, std::string email_main, std::string position_title_main)
-: person(ID_main, name_main, email_main), position_title(position_title_main)
-{
-    setPositionTitle(position_title_main);
-}
+Librarian::Librarian(std::string ID_main, std::string name_main, std::string email_main, std::string position_title_main)
+: Person(ID_main, name_main, email_main), position_title(position_title_main), borrow_count(0) {}
 
-void librarian::setPositionTitle(std::string position_title_main)
+void Librarian::setPositionTitle(std::string position_title_main)
 {
     position_title = position_title_main;
 }
 
-std::string librarian::getPositionTitle() const
+std::string Librarian::getPositionTitle() const
 {
     return position_title;
 }
 
-std::string librarian::getRole() const
+void Librarian::decreaseFines(double amount)
+{
+    // Librarians don't have fines in this system, but the method is required by polymorphism
+    std::cout << "Librarians do not incur fines." << std::endl;
+}
+
+std::string Librarian::getRole() const
 {
     return "Librarian";
 }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-void librarian::displayInformation() const
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-void Librarian::decreaseFines(double amount)
-{
-    // Librarians don't have fines, but this function is needed for polymorphism
-    // This is a no-op for librarians
-    (void)amount; // Suppress unused parameter warning
-}
-
 void Librarian::displayInformation() const
->>>>>>> Stashed changes
 {
     std::cout << "--LIBRARIAN--" << std::endl;
-    person::displayInformation();
+    Person::displayInformation();
     std::cout << "Position: " << position_title << std::endl;
-<<<<<<< Updated upstream
-=======
 }
 
 void Librarian::showMenu(LibraryService &library)
@@ -83,10 +65,10 @@ void Librarian::showMenu(LibraryService &library)
         std::cout << std::string(50, '-') << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> choice;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear buffer
         
         switch (choice)
         {
-        // User actions
         case 1:
             library.searchByTitle();
             break;        
@@ -108,7 +90,6 @@ void Librarian::showMenu(LibraryService &library)
         case 7:
             library.displayCatalogue();
             break;
-        // Administrative actions
         case 8:
             library.addBook();
             break;
@@ -132,5 +113,4 @@ void Librarian::showMenu(LibraryService &library)
     } while (choice != 0);
     
     return;
->>>>>>> Stashed changes
 }

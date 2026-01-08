@@ -2,21 +2,18 @@
 #include "../header/library_service.hpp"
 #include <string>
 #include <iostream>
+#include <limits>
 
-guest::guest(std::string ID_main, std::string name_main, std::string email_main)
-: person(ID_main, name_main, email_main) {}
+Guest::Guest(std::string ID_main, std::string name_main, std::string email_main)
+: Person(ID_main, name_main, email_main) {}
 
-std::string guest::getRole() const
+std::string Guest::getRole() const
 {
     return "Guest";
 }
 
-void guest::displayInformation() const
+void Guest::displayInformation() const
 {
-<<<<<<< Updated upstream
-    std::cout << "-GUEST-" << std::endl;
-    person::displayInformation();
-=======
     std::cout << "-Guest-" << std::endl;
     Person::displayInformation();
 }
@@ -39,6 +36,7 @@ void Guest::showMenu(LibraryService &library)
         std::cout << std::string(50, '-') << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> choice;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear buffer
         
         switch (choice)
         {
@@ -65,5 +63,4 @@ void Guest::showMenu(LibraryService &library)
     } while (choice != 0);
     
     return;
->>>>>>> Stashed changes
 }

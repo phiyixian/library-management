@@ -3,40 +3,38 @@
 
 #include <string>
 #include "person.hpp"
-
-<<<<<<< Updated upstream
-class member: public person
-=======
-// Forward declaration
-class LibraryService;
-
-// Forward declaration
-class LibraryService;
-
-// Forward declaration
-class LibraryService;
+#include "borrow_records.hpp"
 
 // Forward declaration
 class LibraryService;
 
 class Member: public Person
->>>>>>> Stashed changes
 {
     private:
     int borrow_count;
+    double fines = 0;
+    linkedRecords borrow_history; //initialize linked list for borrow records
 
     public:
-    member(std::string, std::string, std::string);
+    Member(std::string, std::string, std::string);
+    ~Member();
 
     void borrowIncrement();
     void borrowDecrement();
 
+    void setFine(double);
+    double getFine();
+    void decreaseFines(double);
+
     void setBorrowCount(int);
     int getBorrowCount();
+
+    linkedRecords& getBorrowHistory();
 
     //overriding virtual functions derived in basd class
     std::string getRole() const override;
     void displayInformation() const override;
+    void showMenu(LibraryService &) override;
 };
 
 #endif
