@@ -195,7 +195,7 @@ record* linkedRecords::getHead(){
 }
 
 // Returns pointer to the record if found, else nullptr
-record* linkedRecords::getRecordByBookID(string book_ID){
+record* linkedRecords::getRecordByBookID(std::string book_ID){
     record *temp = borrowHead;
 
     while(temp != nullptr){

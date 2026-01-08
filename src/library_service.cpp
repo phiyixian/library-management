@@ -7,8 +7,8 @@
 #include <fstream>
 #include <filesystem>
 #include <iostream>
-#include <string>   
-#include <vector> //temporary header for books
+#include <string>
+#include <vector>
 
 //temp vector to store books
 LibraryService::LibraryService()
@@ -223,12 +223,12 @@ double LibraryService::payFine(double fine, Member &user)
     double payment;
     while(true){
         payment = 0;
-        cout << "Payment: RM";
-        cin >> payment;
+        std::cout << "Payment: RM";
+        std::cin >> payment;
         if(payment < fine){
-            cout << "Insufficient funds!" << endl;
+            std::cout << "Insufficient funds!" << std::endl;
         } else if(payment <= 0) {
-            cout << "Please enter valid amount." << endl;
+            std::cout << "Please enter valid amount." << std::endl;
         } else {
             payment -= fine;
             user.decreaseFines(fine);
@@ -243,12 +243,12 @@ double LibraryService::payFine(double fine, Librarian &user)
     double payment;
     while(true){
         payment = 0;
-        cout << "Payment: RM";
-        cin >> payment;
+        std::cout << "Payment: RM";
+        std::cin >> payment;
         if(payment < fine){
-            cout << "Insufficient funds!" << endl;
+            std::cout << "Insufficient funds!" << std::endl;
         } else if(payment <= 0) {
-            cout << "Please enter valid amount." << endl;
+            std::cout << "Please enter valid amount." << std::endl;
         } else {
             payment -= fine;
             user.decreaseFines(fine);
