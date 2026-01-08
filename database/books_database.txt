@@ -1,5 +1,6 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 // Book Title, Category, First Added, Last Updated, 
 // Borrowed Times, Current Status
 
@@ -17,6 +18,8 @@ Book 3, C001, 2020-1-1, 2024-12-25, 3, Available
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 Title|Author|Genre|ID|Date Added|Last Updated|Borrow Count|Status
 1984|George Orwell|Dystopian|A001|2020-1-1|2025-1-3|4|Available
 To Kill a Mockingbird|Harper Lee|Fiction|A002|2020-1-1|2025-5-7|1|Available
@@ -30,6 +33,9 @@ The Da Vinci Code|Dan Brown|Thriller|C003|2020-1-1|2026-01-08|5|Available
 Phi TEST Book|PHI|Horror|C004|2026-01-08|2026-01-08|0|Available
 Testing Book Added 2|Phi Xian|Romance|C005|2026-01-08|2026-01-08|0|Available
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes

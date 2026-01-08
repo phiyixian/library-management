@@ -5,6 +5,7 @@
 #include <vector>
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 //temp book file 
 struct Book
@@ -31,15 +32,26 @@ class Librarian;
 class Member;
 class Librarian;
 >>>>>>> Stashed changes
+=======
+#include "borrow_records.hpp"
+#include "books.hpp"
+
+// Forward declarations to avoid circular dependency
+class Member;
+class Librarian;
+>>>>>>> Stashed changes
 
 class LibraryService
 {
     private:
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     std::vector<Book> books; //temp
 
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     BookList books; // Linked list of books loaded from database

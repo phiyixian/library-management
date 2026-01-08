@@ -13,6 +13,9 @@ class LibraryService;
 // Forward declaration
 class LibraryService;
 
+// Forward declaration
+class LibraryService;
+
 class Member: public Person
 >>>>>>> Stashed changes
 {

@@ -1,10 +1,16 @@
 #include <iostream>
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 #include <fstream>
 #include <string>
 #include <limits>
 #include <vector> //temporary for storing user files
+=======
+#include <string>
+#include <limits>
+#include <iomanip>
+>>>>>>> Stashed changes
 =======
 #include <string>
 #include <limits>
@@ -242,8 +248,22 @@ void printSeparator()
     std::cout << std::string(50, '-') << std::endl;
 }
 
+void printHeader(const std::string &title)
+{
+    std::cout << "\n";
+    std::cout << std::string(50, '=') << std::endl;
+    std::cout << std::setw(35) << title << std::endl;
+    std::cout << std::string(50, '=') << std::endl;
+}
+
+void printSeparator()
+{
+    std::cout << std::string(50, '-') << std::endl;
+}
+
 int main()
 {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
     //just temporary to check polymorphism works. yes it works
@@ -273,6 +293,8 @@ int main()
     {
         librarianMenu(*currentUser, library);
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     int choice;
@@ -348,6 +370,9 @@ int main()
     {
         std::cout << "\n[ERROR] No user session started.\n";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
