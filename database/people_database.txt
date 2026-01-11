@@ -8,3 +8,4 @@ LIBRARIAN|L003|Emma|emma@example.com|
 MEMBER|M004|aydan|test@gmail.com
 MEMBER|M005|test|idk@123
 MEMBER|M006|Phi|phi@yahoo.com
+MEMBER|M007|akkzacam|akkzacam@yahoo.com

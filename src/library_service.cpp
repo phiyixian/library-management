@@ -526,8 +526,8 @@ bool LibraryService::removeMember()
     std::string memberID;
     
     std::cout << "\n========== Remove Member ==========" << std::endl;
-    std::cout << "Enter Member ID to remove: ";
     std::cin.ignore();
+    std::cout << "Enter Monember ID to remove: ";
     std::getline(std::cin, memberID);
     
     // Check if member has active borrows
