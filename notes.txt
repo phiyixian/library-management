@@ -19,3 +19,5 @@ borrow_history will show every single borrow and return events (havent implement
 Unsure if we should move all fine calculations into LibraryService from linkedRecords
 
 cd "C:\Users\Phi Yi Xian\Documents\GitHub\library-management"; g++ -std=c++17 -Iheader src/books.cpp src/borrow_records.cpp src/guest.cpp src/librarian.cpp src/library_service.cpp src/main.cpp src/member.cpp src/people_database_temp.cpp src/person.cpp src/utility.cpp -o main.exe 2>&1
+
+trst
