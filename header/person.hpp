@@ -3,15 +3,18 @@
 
 #include <string>
 
-class person
+// Forward declaration to avoid circular dependency
+class LibraryService;
+
+class Person
 {
     protected:
     std::string ID, name, email;
 
     public:
     //constructor
-    person(std::string, std::string, std::string);
-    virtual ~person() = default; //polymorphism
+    Person(std::string, std::string, std::string);
+    virtual ~Person() = default; //polymorphism
 
     //actuators and accessors
     std::string getID() const;
@@ -24,7 +27,8 @@ class person
 
     // to be used in polymorphism
     virtual void displayInformation() const;
-    virtual std::string getRole() const;
+    virtual void showMenu(LibraryService &) = 0;
+    virtual std::string getRole() const = 0;
 };
 
 #endif

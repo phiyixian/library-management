@@ -1,9 +1,7 @@
-//temp file for people database
 #include "../header/people_database_temp.hpp"
 #include <string>
 #include <iostream>
 #include <fstream>
-using namespace std;
 
 peopleDatabase::~peopleDatabase()
 {
@@ -13,12 +11,12 @@ peopleDatabase::~peopleDatabase()
     }
 }
 
-void peopleDatabase::addPerson(person *people_main)
+void peopleDatabase::addPerson(Person *people_main)
 {
     people.push_back(people_main);
 }
 
-person* peopleDatabase::findByID(const std::string &ID_main)
+Person* peopleDatabase::findByID(const std::string &ID_main)
 {
     for (auto people_main: people)
     {
@@ -32,26 +30,18 @@ person* peopleDatabase::findByID(const std::string &ID_main)
 
 void peopleDatabase::listAll() const
 {
-    // int i = 0;
-    // for (auto people_main: people)
-    // {
-    //     std::cout << "Person " << i + 1 << std::endl;
-    //     people[i]->displayInformation();
-    //     std::cout << std::endl;
-    // }
+    std::string line;
 
-    string line;
-
-    //Open a file in read mode.
-    ifstream inFile("database/people_database.txt");
+    std::ifstream inFile("database/people_database.txt");
     if (!inFile) {
-        cerr << "Unable to open file people_database.txt";
-        exit(1); // terminate with error
+        std::cerr << "Unable to open file people_database.txt";
+        return;
     }
 
-    while(getline(inFile, line)) {
-        cout << line << endl;
+    while(std::getline(inFile, line)) {
+        std::cout << line << std::endl;
     }
+    inFile.close();
 }
 
 size_t peopleDatabase::size() const
@@ -59,7 +49,7 @@ size_t peopleDatabase::size() const
     return people.size();
 }
 
-person* peopleDatabase::get(size_t i) const
+Person* peopleDatabase::get(size_t i) const
 {
     return people[i];
 }

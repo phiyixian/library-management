@@ -1,8 +1,7 @@
 #include <iostream>
-#include <fstream>
 #include <string>
 #include <limits>
-#include <vector> //temporary for storing user files
+#include <iomanip>
 #include "../header/people_database_temp.hpp"
 #include "../header/person.hpp"
 #include "../header/member.hpp"
@@ -20,9 +19,9 @@ struct TempUser
 
 std::vector<TempUser> temp_users = {
     {"G001", "Guest User", "Guest"},
-    {"M001", "Susan", "Member"},
-    {"M002", "James", "Member"},
-    {"L001", "Iliot", "Librarian"}
+    {"M001", "Alice", "Member"},
+    {"M002", "Bob", "Member"},
+    {"L001", "Dr. Smith", "Librarian"}
 };
 
 TempUser* findUserByID(std::vector<TempUser>& users, const std::string& id)
@@ -66,25 +65,21 @@ void guestMenu(const TempUser& user, LibraryService& library)
         std::cout << "1. search book by title" << std::endl;
         std::cout << "2. search book by author" << std::endl;
         std::cout << "3. search book by genre" << std::endl;
-        std::cout << "4. display catalogue" << std::endl;
         std::cin >> choice;
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-        if (choice == 1)
+    switch (choice)
+    {
+    case 1: // Register
+        printHeader("Member Registration");
+        user = registerUser("MEMBER");
+        if (user)
         {
-            library.searchByTitle();
-        }
-        else if (choice == 2)
-        {
-            library.searchByAuthor();
+            std::cout << "\n[SUCCESS] Registration successful!\n";
         }
         else if (choice == 3)
         {
             library.searchByGenre();
-        }
-        else if (choice == 4)
-        {
-            library.displayCatalogue();
         }
         else if (choice == 0)
         {
@@ -106,7 +101,6 @@ void memberMenu(const TempUser& user, LibraryService& library)
         std::cout << "4. Borrow book" << std::endl;
         std::cout << "5. Return book" << std::endl;
         std::cout << "6. View borrowed books" << std::endl;
-        std::cout << "7. Display Catalogue" << std::endl;
         std::cin >> choice;
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
@@ -132,11 +126,6 @@ void memberMenu(const TempUser& user, LibraryService& library)
         }
         else if (choice == 6) //forgot lmao
         {
-            library.checkBorrowed();
-        }
-        else if (choice == 7)
-        {
-            library.displayCatalogue();
         }
         else if (choice == 0)
         {
@@ -159,13 +148,11 @@ void librarianMenu(const TempUser& user, LibraryService& library)
         std::cout << "3. search book by genre" << std::endl;
         std::cout << "4. Borrow book" << std::endl;
         std::cout << "5. Return book" << std::endl;
-        std::cout << "6. Check borrowed book" << std::endl;
-        std::cout << "7. Add book" << std::endl;
-        std::cout << "8. Remove book" << std::endl;
-        std::cout << "9. Register member" << std::endl;
-        std::cout << "10. Remove member" << std::endl;
-        std::cout << "11. Fine calculation" << std::endl;
-        std::cout << "12. display catalogue" << std::endl;
+        std::cout << "6. Add book" << std::endl;
+        std::cout << "7. Remove book" << std::endl;
+        std::cout << "8. Register member" << std::endl;
+        std::cout << "9. Remove member" << std::endl;
+        std::cout << "10. Fine calculation" << std::endl;
         std::cin >> choice;
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
@@ -189,72 +176,48 @@ void librarianMenu(const TempUser& user, LibraryService& library)
         {
             library.returnBook();
         }
+        /*
         else if (choice == 6) //forgot lmao
         {
-            library.checkBorrowed();
         }
         else if (choice == 7)
         {
-            library.addBook();
+            library.removeBook();
         }
         else if (choice == 8)
         {
-            library.removeBook();
+            library.registerMember();
         }
         else if (choice == 9)
         {
-            library.registerMember();
+            library.removeMember();
         }
         else if (choice == 10)
         {
-            library.removeMember();
-        }
-        else if (choice == 11)
-        {
             library.calculateFine();
         }
-        else if (choice == 12)
-        {
-            library.displayCatalogue();
-        }
+        */
         else if (choice == 0)
         {
             break;
         }
-    } while (choice != 0);
-}
-
-int main()
-{
-    //just temporary to check polymorphism works. yes it works
-    peopleDatabase pdb;
-    std::cout << "\n=== TEST: LISTING ALL PEOPLE ===" << std::endl;
-    pdb.listAll();
-
-    //create a temp user and login menu
-    TempUser* currentUser = login(temp_users);
-    if (currentUser == nullptr)
-    {
+    case 0:
+        std::cout << "\nThank you for using Library Management System. Goodbye!\n";
+        return 0;
+    default:
+        std::cout << "\n[ERROR] Invalid option. Please try again." << std::endl;
         return 0;
     }
 
-    LibraryService library;
-
-    //leads users to respective menu, from there they can do actions within the system
-    if (currentUser->role == "Guest")
+    if (user)
     {
-        guestMenu(*currentUser, library);
+        user->showMenu(library);
+        delete user; // Clean up
     }
-    else if (currentUser->role == "Member")
+    else
     {
-        memberMenu(*currentUser, library);
-    }
-    else if (currentUser->role == "Librarian")
-    {
-        librarianMenu(*currentUser, library);
+        std::cout << "\n[ERROR] No user session started.\n";
     }
 
     return 0;
 }
-
-//test output

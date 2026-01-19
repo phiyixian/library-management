@@ -2,25 +2,20 @@
 #define LIBRARY_SERVICE_HPP
 
 #include <string>
-#include <vector>
+#include "books.hpp"
+#include "borrow_records.hpp"
 
-//temp book file 
-struct Book
-{
-    std::string id;
-    std::string title;
-    std::string author;
-    std::string genre;
-    bool is_borrowed;
-};
+// Forward declarations
+class Member;
+class Librarian;
 
 class LibraryService
 {
     private:
-    std::vector<Book> books; //temp
-
+    BookList books;
+    
     public:
-    LibraryService(); //temp
+    LibraryService();
 
     // guest + member + librarian
     void searchByTitle();
@@ -29,8 +24,9 @@ class LibraryService
     void displayCatalogue();
 
     //member + librarian
-    bool borrowBook();
-    bool returnBook();
+    bool borrowBook(Member &);
+    bool returnBook(linkedRecords &borrowlist, Member &user);
+    bool returnBook(Member &);
     void checkBorrowed();
 
     //librarian only features;
@@ -40,6 +36,14 @@ class LibraryService
     bool removeMember();
 
     double calculateFine();
+    double payFine(double, Member &);
+    double payFine(double, Librarian &);
+
+    // Helper functions
+    void loadBooksFromFile();
+    void saveBooksToFile(); 
+    void loadPeopleFromFile();
+    void savePeopleToFile();
 };
 
 #endif

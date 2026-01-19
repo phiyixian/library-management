@@ -4,12 +4,16 @@
 #include "person.hpp"
 #include <string>
 
-class guest: public person
+// Forward declaration
+class LibraryService;
+
+class Guest: public Person
 {
     public:
-    guest(std::string, std::string, std::string);
-    std::string getRole() const override; //overriding virtual function derived in base class
+    Guest(std::string, std::string, std::string);
+    std::string getRole() const override;
     void displayInformation() const override;
+    void showMenu(LibraryService &) override;
 };
 
 #endif
