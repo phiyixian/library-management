@@ -317,7 +317,6 @@ void LibraryService::checkBorrowed()
 }
 
 
-
 //librarian only features;
 bool LibraryService::addBook()
 {
