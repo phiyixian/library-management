@@ -231,8 +231,8 @@ void linkedRecords::printRecords(){
         std::cout << std::left
                     << std::setw(10) << temp->book_ID
                     << std::setw(25) << formatDateForDisplay(temp->borrowDate)
-                    << std::setw(25) << formatDateForDisplay(temp->dueDate)
-                    //<< std::setw(25) << parseTimeIntoString(temp->borrowDate)
+                    << std::setw(25) << formatDateForDisplay(temp->dueDate) // user friendly display
+                    //<< std::setw(25) << parseTimeIntoString(temp->borrowDate) 
                     //<< std::setw(25) << parseTimeIntoString(temp->dueDate)
                     << std::setw(10) << borrowStatus(temp->overdue)
                     << "\n";

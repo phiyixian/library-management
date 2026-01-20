@@ -10,6 +10,15 @@
 #include "../header/library_service.hpp"
 #include "../header/utility.hpp"
 
+void clearScreen() {
+    // Cross-platform screen clearing
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
 void printHeader(const std::string &title)
 {
     std::cout << "\n";
@@ -31,13 +40,49 @@ int main()
     Person *user = nullptr;
     LibraryService library;
 
-    printHeader("Library Management System");
+    clearScreen();
+
+    /*printHeader("Library Management System");
     std::cout << "\n1. Register (New Member)" << std::endl;
     std::cout << "2. Login" << std::endl;
     std::cout << "3. Continue as Guest" << std::endl;
     std::cout << "0. Exit" << std::endl;
-    printSeparator();
-    std::cout << "Enter your choice: ";
+    printSeparator();*/
+
+    std::cout << R"(
+
+    _____
+   /    /|_ ___________________________________
+  /    // /|       ~~*~~                      /|
+ (====|/ //  Welcome to the...   ______      / |
+  (=====|/    SMART LIBRARY     /  /  / |   / .|
+ (====|/    MANAGEMENT SYSTEM  /__/__/ (_) / /||
+/_________________________________________/ / ||
+|  _____________________________________  ||  ||
+| ||                                    | ||
+| ||                                    | ||
+| ||                                    | || 
+)" << std::endl;
+
+std::cout << "\nPress Enter to log in..." << std::endl;
+std::cin.get();
+clearScreen();
+
+std::cout << R"(
+      _.--._  _.--._             -----~~~~====*====~~~~-----
+,-=.-":;:;:;\':;:;:;"-._              ˗ˏˋ ꒰ SLMP  ꒱ˎˊ˗
+\\\:;:;:;:;:;\:;:;:;:;:;\         
+ \\\:;:;:;:;:;\:;:;:;:;:;\        1. Register as New Member
+  \\\:;:;:;:;:;\:;:;:;:;:;\       2. Login
+   \\\:;:;:;:;:;\:;::;:;:;:\      3. Continue as Guest
+    \\\;:;::;:;:;\:;:;:;::;:\     0. Exit
+     \\\;;:;:_:--:\:_:--:_;:;\   -----~~~~====*====~~~~----- 
+      \\\_.-"      :      "-._\
+       \`_..--""--.;.--""--.._=>    
+
+)" << std::endl;
+
+    std::cout << "\nEnter your choice: ";
     std::cin >> choice;
 
     switch (choice)
