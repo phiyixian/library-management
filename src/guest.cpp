@@ -55,10 +55,10 @@ void Guest::showMenu(LibraryService &library)
             library.displayCatalogue();
             break;
         case 0:
-            std::cout << "\n[SUCCESS] Thank you for visiting! Goodbye!\n";
+            std::cout << "\n[SUCCESS] Thank you for visiting Library Management System! Goodbye!\n";
             break;
         default:
-            std::cout << "\n[ERROR] Invalid choice. Please try again.\n";
+            std::cout << "\n[ERROR] Invalid choice. Please choose from (1-4), or 0 to exit.\n";
             break;
         }
         
