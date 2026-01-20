@@ -422,6 +422,8 @@ void BookList::displayByTitle(const std::string &title)
 {
     bool found = false;
     BookNode *current = head;
+
+    std::cout << "\nBooks found in our library:\n\n";
     
     while (current != nullptr)
     {
