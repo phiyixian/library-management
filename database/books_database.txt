@@ -9,3 +9,4 @@ The Alchemist|Paulo Coelho|Adventure|C002|2020-1-1|2025-5-7|1|Available
 The Da Vinci Code|Dan Brown|Thriller|C003|2020-1-1|2026-01-08|5|Available
 Wuthering Heights|Emily Bronte|Romance|C004|2026-01-21|2026-01-21|0|Available
 Wuthering Heights|Emily Bronte|Romance|C005|2026-01-21|2026-01-21|0|Available
+Know My Name |Chanel Miller|Non-fiction|C006|2026-01-21|2026-01-21|0|Available
