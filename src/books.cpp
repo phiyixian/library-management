@@ -433,6 +433,8 @@ void BookList::displayByTitle(const std::string &title)
             std::cout << "Author: " << current->author << std::endl;
             std::cout << "Genre: " << current->genre << std::endl;
             std::cout << "Status: " << current->status << std::endl;
+            std::cout << "Borrow Count: " << current->borrowCount << std::endl << std::endl;
+
         }
         current = current->next;
     }
@@ -461,7 +463,7 @@ void BookList::displayByAuthor(const std::string &author)
             std::cout << "Author: " << current->author << std::endl;
             std::cout << "Genre: " << current->genre << std::endl;
             std::cout << "Status: " << current->status << std::endl;
-            std::cout << "Borrow Count: " << current->borrowCount << std::endl;
+            std::cout << "Borrow Count: " << current->borrowCount << std::endl << std::endl;
         }
         current = current->next;
     }
@@ -509,7 +511,7 @@ void BookList::displayByGenre(const std::string &genre)
             std::cout << "Author: " << current->author << std::endl;
             std::cout << "Genre: " << current->genre << std::endl;
             std::cout << "Status: " << current->status << std::endl;
-            std::cout << "Borrow Count: " << current->borrowCount << std::endl;
+            std::cout << "Borrow Count: " << current->borrowCount << std::endl << std::endl;
         }
         current = current->next;
     }
