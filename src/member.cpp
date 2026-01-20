@@ -151,7 +151,7 @@ void Member::showMenu(LibraryService &library)
             //library.displayCatalogue();
             break;
         case 0:
-            std::cout << "\n[SUCCESS] Logging out. Thank you for using Library Management System!\n";
+            std::cout << "\n[SUCCESS] Logging out. Thank you for using Smart Library Management System!\n";
             break;
         default:
             std::cout << "\n[ERROR] Invalid choice. Please choose from (1-7), or 0 to log out.\n";
