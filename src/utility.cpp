@@ -14,7 +14,7 @@ Person *login()
     std::string userid, username;
     std::cout << "Enter User ID: ";
     std::cin >> userid;
-    std::cout << "Enter User Name: ";
+    std::cout << "Enter Username: ";
     std::cin >> username;
 
     std::fstream peopledata("database/people_database.txt", std::ios::in);
@@ -84,7 +84,7 @@ Person *registerUser(const std::string &userrole)
     std::string useremail, username;
     std::cout << "Enter Email: "; // maybe use regex to validate emails
     std::cin >> useremail;
-    std::cout << "Enter User Name: ";
+    std::cout << "Enter Username: ";
     std::cin >> username;
 
         

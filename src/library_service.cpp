@@ -93,7 +93,8 @@ bool LibraryService::borrowBook(Member &user)
 
     if (user.getFine() > FINE_LIMIT)
     {
-        std::cout << "Error, your fine exceeds the limit of RM5. Please pay your fines before borrowing new books." << std::endl;
+        std::cout << "[ERROR] Your fine exceeds the limit of RM5." << std::endl;
+        std::cout << "Please pay your fines before borrowing new books." << std::endl;
         return false;
     }
 
@@ -108,7 +109,7 @@ bool LibraryService::borrowBook(Member &user)
     std::cout << "  Borrow Book" << std::endl;
     std::cout << std::string(50, '=') << std::endl;
     std::string book_id_borrow;
-    std::cout << "Enter book ID: ";
+    std::cout << "Enter Book ID: ";
     std::getline(std::cin >> std::ws, book_id_borrow);
 
     // Validate book by searching book's id using linked list
@@ -116,13 +117,15 @@ bool LibraryService::borrowBook(Member &user)
     
     if (book == nullptr)
     {
-        std::cout << "Error, book does not exist" << std::endl;
+        std::cout << "[ERROR] This book does not exist in our library. Try again." << std::endl;
+        std::cout << "Hint: Check for any typos." << std::endl;
         return false;
     }
     
     if (book->is_borrowed == true)
     {
-        std::cout << "Error, Book is already borrowed" << std::endl;
+        std::cout << "[ERROR] This book is already being borrowed. :(" << std::endl;
+        std::cout <<"Take a look at our full catalogue for more choices!" << std::endl;
         return false;
     }
     
@@ -151,7 +154,7 @@ bool LibraryService::borrowBook(Member &user)
     books.saveToFile("database/books_database.txt");
     user.borrowIncrement(); // Increment borrow count
 
-    std::cout << "Book borrowed successfully" << std::endl;
+    std::cout << "You have successfully borrowed this book!" << std::endl;
     return true;
 }
 
@@ -330,7 +333,7 @@ bool LibraryService::addBook()
     
     // Ask if user wants to auto-generate ID or enter manually
     char choice;
-    std::cout << "Auto-generate book ID? (Y/n): ";
+    std::cout << "Auto-generate Book ID? (Y/n): ";
     std::cin >> choice;
     std::cin.ignore();
     
@@ -343,7 +346,7 @@ bool LibraryService::addBook()
     else
     {
         // Manual entry
-        std::cout << "Enter book ID (format: A001, B002, etc.): ";
+        std::cout << "Enter Book ID (format: A001, B002, etc.): ";
         std::getline(std::cin, id);
         
         // Validate format
@@ -385,7 +388,7 @@ bool LibraryService::removeBook()
     
     std::string book_id;
     std::cin.ignore();
-    std::cout << "Enter book ID to remove: ";
+    std::cout << "Enter Book ID to remove: ";
     std::getline(std::cin, book_id);
     
     // Validate ID format

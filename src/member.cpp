@@ -131,25 +131,12 @@ void Member::showMenu(LibraryService &library)
             break;
         case 4:
             library.displayCatalogue();
-            //library.borrowBook(*this);
             break;
         case 5:
             library.borrowBook(*this);
-            //library.returnBook(*this);
             break;
         case 6:
             library.returnBook(*this);
-            /*
-            {
-            std::cout << "\n";
-            std::cout << std::string(50, '=') << std::endl;
-            std::cout << "  My Borrowed Books" << std::endl;
-            std::cout << std::string(50, '=') << std::endl;
-            linkedRecords& borrowlist = this->getBorrowHistory();
-            borrowlist.updateStatus();
-            borrowlist.printRecords();
-            break;
-            }*/
         case 7:
             {
             std::cout << "\n";
