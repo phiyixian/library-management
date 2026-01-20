@@ -74,8 +74,8 @@ int main()
         std::cin.ignore();
         std::cout << "Enter Your Name: ";
         std::getline(std::cin, guestname);
-        std::cout << "Enter Your Email: ";
-        std::getline(std::cin, guestemail);
+        //std::cout << "Enter Your Email: ";
+        //std::getline(std::cin, guestemail);
         
         user = new Guest("GXXX", guestname, guestemail);
         std::cout << "\n[SUCCESS] Continuing as Guest!\n";
