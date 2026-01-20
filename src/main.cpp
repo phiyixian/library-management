@@ -14,7 +14,9 @@ void printHeader(const std::string &title)
 {
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
-    std::cout << std::setw(35) << title << std::endl;
+    int padding = (50 + title.length()) / 2;  // length() is a built-in C++ function for std::string
+    std::cout << std::setw(padding) << title << std::endl;
+    //std::cout << std::setw(35) << title << std::endl;
     std::cout << std::string(50, '=') << std::endl;
 }
 
