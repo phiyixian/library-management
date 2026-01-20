@@ -449,6 +449,32 @@ void BookList::displayByAuthor(const std::string &author)
     bool found = false;
     BookNode *current = head;
     
+    std::cout << "\nBooks found in our library:\n\n";
+    
+    while (current != nullptr)
+    {
+        if (current->author == author)
+        {
+            found = true;
+            std::cout << "ID: " << current->id << std::endl;
+            std::cout << "Title: " << current->title << std::endl;
+            std::cout << "Author: " << current->author << std::endl;
+            std::cout << "Genre: " << current->genre << std::endl;
+            std::cout << "Status: " << current->status << std::endl;
+            std::cout << "Borrow Count: " << current->borrowCount << std::endl;
+        }
+        current = current->next;
+    }
+        if (!found)
+    {
+        std::cout << "No books found! Try again.\nHint: Check for any typos." << std::endl;
+    }
+}
+
+/*{
+    bool found = false;
+    BookNode *current = head;
+    
     while (current != nullptr)
     {
         if (current->author == author)
@@ -463,11 +489,37 @@ void BookList::displayByAuthor(const std::string &author)
     {
         std::cout << "No books found" << std::endl;
     }
-}
+}*/
 
 //display books by genre
 void BookList::displayByGenre(const std::string &genre)
 {
+    bool found = false;
+    BookNode *current = head;
+    
+    std::cout << "\nBooks found in our library:\n\n";
+    
+    while (current != nullptr)
+    {
+        if (current->genre == genre)
+        {
+            found = true;
+            std::cout << "ID: " << current->id << std::endl;
+            std::cout << "Title: " << current->title << std::endl;
+            std::cout << "Author: " << current->author << std::endl;
+            std::cout << "Genre: " << current->genre << std::endl;
+            std::cout << "Status: " << current->status << std::endl;
+            std::cout << "Borrow Count: " << current->borrowCount << std::endl;
+        }
+        current = current->next;
+    }
+    
+    if (!found)
+    {
+        std::cout << "No books found! Try again.\nHint: Check for any typos." << std::endl;
+    }    
+}
+/*{
     bool found = false;
     BookNode *current = head;
     
@@ -485,7 +537,7 @@ void BookList::displayByGenre(const std::string &genre)
     {
         std::cout << "No books found" << std::endl;
     }
-}
+}*/
 
 //get head of the list
 BookNode* BookList::getHead() const
