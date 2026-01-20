@@ -33,6 +33,7 @@ void Guest::showMenu(LibraryService &library)
         std::cout << "  3. Search by Genre" << std::endl;
         std::cout << "  4. Display Full Catalogue" << std::endl;
         std::cout << "\n  0. Exit" << std::endl;
+        std::cout << "\nIf you would like to borrow a book, please exit and sign in as a member! :)" << std::endl;
         std::cout << std::string(50, '-') << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> choice;
