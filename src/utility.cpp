@@ -202,3 +202,11 @@ const std::string parseTimeIntoString(time_t t) {
     oss << std::put_time(parseTimeptr, "%Y-%m-%dT%H:%M:%S");
     return oss.str();
 }
+
+// for friendly user interface (borrow date and due date)
+const std::string formatDateForDisplay(time_t t) {
+    std::tm *parseTimeptr = std::localtime(&t);
+    std::ostringstream oss;
+    oss << std::put_time(parseTimeptr, "%d %b %Y");  // example: 08 Jan 2026
+    return oss.str();
+}
