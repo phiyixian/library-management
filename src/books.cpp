@@ -443,7 +443,7 @@ void BookList::displayByTitle(const std::string &title)
     
     if (!found)
     {
-        std::cout << "No books found" << std::endl;
+        std::cout << "No books found! Try again.\nHint: Check for any typos." << std::endl;
     }
 }
 

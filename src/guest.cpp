@@ -27,7 +27,7 @@ void Guest::showMenu(LibraryService &library)
         std::cout << std::string(50, '=') << std::endl;
         std::cout << "  Welcome, " << this->name << " (Guest)" << std::endl;
         std::cout << std::string(50, '=') << std::endl;
-        std::cout << "\nBOOK SEARCH & BROWSING" << std::endl;
+        std::cout << "\nBOOK SEARCH & BROWSING ✮⋆˙" << std::endl;
         std::cout << "  1. Search by Title" << std::endl;
         std::cout << "  2. Search by Author" << std::endl;
         std::cout << "  3. Search by Genre" << std::endl;
