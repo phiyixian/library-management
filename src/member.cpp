@@ -101,13 +101,13 @@ void Member::showMenu(LibraryService &library)
         }
         std::cout << std::string(50, '-') << std::endl;
         
-        std::cout << "\nBOOK SEARCH" << std::endl;
+        std::cout << "\nBOOK SEARCH & BROWSING ✮⋆˙" << std::endl;
         std::cout << "  1. Search by Title" << std::endl;
         std::cout << "  2. Search by Author" << std::endl;
         std::cout << "  3. Search by Genre" << std::endl;
         std::cout << "  4. Display Full Catalogue" << std::endl;
         
-        std::cout << "\nBORROWING" << std::endl;
+        std::cout << "\nBORROWING ✶⋆˚" << std::endl;
         std::cout << "  5. Borrow Book" << std::endl;
         std::cout << "  6. Return Book" << std::endl;
         std::cout << "  7. View My Borrowed Books" << std::endl;
@@ -141,7 +141,7 @@ void Member::showMenu(LibraryService &library)
             {
             std::cout << "\n";
             std::cout << std::string(50, '=') << std::endl;
-            std::cout << "  My Borrowed Books" << std::endl;
+            std::cout << std::setw(33) << "My Borrowed Books" << std::endl;
             std::cout << std::string(50, '=') << std::endl;
             linkedRecords& borrowlist = this->getBorrowHistory();
             borrowlist.updateStatus();
