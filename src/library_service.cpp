@@ -290,9 +290,10 @@ void LibraryService::checkBorrowed()
 {
     bool found = false;
 
+    /*
     std::cout << "\n=====================================" << std::endl;
     std::cout << "        Currently Borrowed Books" << std::endl;
-    std::cout << "=====================================" << std::endl;
+    std::cout << "=====================================" << std::endl;*/
 
     BookNode *current = books.getHead();
     while (current != nullptr)
@@ -328,12 +329,12 @@ bool LibraryService::addBook()
 
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
-    std::cout << "  Add New Book" << std::endl;
+    std::cout << "  Add a New Book" << std::endl;
     std::cout << std::string(50, '=') << std::endl;
     
     // Ask if user wants to auto-generate ID or enter manually
     char choice;
-    std::cout << "Auto-generate Book ID? (Y/n): ";
+    std::cout << "Auto-generate Book ID? (Y/N): ";
     std::cin >> choice;
     std::cin.ignore();
     
@@ -353,7 +354,8 @@ bool LibraryService::addBook()
         if (id.length() != 4 || !std::isalpha(id[0]) || !std::isdigit(id[1]) || 
             !std::isdigit(id[2]) || !std::isdigit(id[3]))
         {
-            std::cout << "[ERROR] Invalid ID format. Must be Letter + 3 digits (e.g., A001)" << std::endl;
+            std::cout << "[ERROR] Invalid Book ID format." << std::endl;
+            std::cout << "It must be a letter, followed by 3 digits (e.g., A001)" << std::endl;
             return false;
         }
     }
@@ -371,8 +373,8 @@ bool LibraryService::addBook()
         // Save to file
         books.saveToFile("database/books_database.txt");
         std::cout << "\n[SUCCESS] Book added successfully!" << std::endl;
-        std::cout << "Book ID: " << id << std::endl;
-        std::cout << "Title: " << title << std::endl;
+        /*std::cout << "Book ID: " << id << std::endl;
+        std::cout << "Title: " << title << std::endl;*/
         return true;
     }
     
@@ -383,7 +385,7 @@ bool LibraryService::removeBook()
 {
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
-    std::cout << "  Remove Book" << std::endl;
+    std::cout << "  Remove a Book" << std::endl;
     std::cout << std::string(50, '=') << std::endl;
     
     std::string book_id;
@@ -395,7 +397,8 @@ bool LibraryService::removeBook()
     if (book_id.length() != 4 || !std::isalpha(book_id[0]) || !std::isdigit(book_id[1]) || 
         !std::isdigit(book_id[2]) || !std::isdigit(book_id[3]))
     {
-        std::cout << "[ERROR] Invalid ID format. Must be Letter + 3 digits (e.g., A001)" << std::endl;
+        std::cout << "[ERROR] Invalid Book ID format." << std::endl;
+        std::cout << "It must be a letter, followed by 3 digits (e.g., A001)" << std::endl;
         return false;
     }
 
@@ -529,7 +532,7 @@ bool LibraryService::removeMember()
     
     std::cout << "\n========== Remove Member ==========" << std::endl;
     std::cin.ignore();
-    std::cout << "Enter Monember ID to remove: ";
+    std::cout << "Enter Member ID to remove: ";
     std::getline(std::cin, memberID);
     
     // Check if member has active borrows

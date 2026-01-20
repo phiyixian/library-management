@@ -333,7 +333,8 @@ bool BookList::removeBook(const std::string &id)
     
     if (current == nullptr)
     {
-        std::cout << "[ERROR] Book does not exist" << std::endl;
+        std::cout << "[ERROR] This book does not exist in our library. Try again." << std::endl;
+        std::cout << "Hint: Check for any typos." << std::endl;
         return false;
     }
     
