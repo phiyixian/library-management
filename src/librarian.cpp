@@ -2,6 +2,7 @@
 #include "../header/library_service.hpp"
 #include <string>
 #include <iostream>
+#include <iomanip>
 #include <limits>
 
 Librarian::Librarian(std::string ID_main, std::string name_main, std::string email_main, std::string position_title_main)
@@ -46,20 +47,20 @@ void Librarian::showMenu(LibraryService &library)
         std::cout << "  Position: " << this->position_title << std::endl;
         std::cout << std::string(50, '=') << std::endl;
         
-        std::cout << "\nBOOK SEARCH & BROWSING" << std::endl;
+        std::cout << "\nBOOK SEARCH & BROWSING ✮⋆˙" << std::endl;
         std::cout << "  1. Search by Title" << std::endl;
         std::cout << "  2. Search by Author" << std::endl;
         std::cout << "  3. Search by Genre" << std::endl;
-        std::cout << "  7. Display Full Catalogue" << std::endl;
-        std::cout << "  6. View All Borrowed Books" << std::endl;
+        std::cout << "  4. Display Full Catalogue" << std::endl;
+        std::cout << "  5. View All Borrowed Books" << std::endl;
         
-        std::cout << "\nBOOK MANAGEMENT" << std::endl;
-        std::cout << "  8. Add New Book" << std::endl;
-        std::cout << "  9. Remove Book" << std::endl;
+        std::cout << "\nBOOK MANAGEMENT ⋆ೃ࿔*" << std::endl;
+        std::cout << "  6. Add New Book" << std::endl;
+        std::cout << "  7. Remove Book" << std::endl;
         
-        std::cout << "\nMEMBER MANAGEMENT" << std::endl;
-        std::cout << "  10. Register New Member" << std::endl;
-        std::cout << "  11. Remove Member" << std::endl;
+        std::cout << "\nMEMBER MANAGEMENT 𐦂𖨆𐀪𖠋" << std::endl;
+        std::cout << "  8. Register New Member" << std::endl;
+        std::cout << "  9. Remove Member" << std::endl;
         
         std::cout << "\n  0. Logout" << std::endl;
         std::cout << std::string(50, '-') << std::endl;
@@ -78,35 +79,37 @@ void Librarian::showMenu(LibraryService &library)
         case 3:
             library.searchByGenre();
             break;
-        case 6:
+        case 4:
+            library.displayCatalogue();
+            break;
+        case 5:
             {
             std::cout << "\n";
             std::cout << std::string(50, '=') << std::endl;
-            std::cout << "  All Borrowed Books" << std::endl;
+            //std::cout << "  All Borrowed Books" << std::endl;
+            int padding = (50 + std::string("All Borrowed Books").length()) / 2; // centered spacing
+            std::cout << std::setw(padding) << "All Borrowed Books" << std::endl;
             std::cout << std::string(50, '=') << std::endl;
             library.checkBorrowed();
             break;
             }
-        case 7:
-            library.displayCatalogue();
-            break;
-        case 8:
+        case 6:
             library.addBook();
             break;
-        case 9:
+        case 7:
             library.removeBook();
             break;
-        case 10:
+        case 8:
             library.registerMember();
             break;
-        case 11:
+        case 9:
             library.removeMember();
             break;
         case 0:
-            std::cout << "\n[SUCCESS] Logging out. Thank you for using the Library Management System!\n";
+            std::cout << "\n[SUCCESS] Logging out. Thank you for using the Smart Library Management System!\n";
             break;
         default:
-            std::cout << "\n[ERROR] Invalid choice. Please try again.\n";
+            std::cout << "\n[ERROR] Invalid choice. Please enter from (1-9), or 0 to log out.\n";
             break;
         }
         
