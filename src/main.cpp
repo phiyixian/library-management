@@ -60,7 +60,7 @@ int main()
             user = login();
             if (user == nullptr)
             {
-                std::cout << "\n[ERROR] ID not found or Username mismatch. Try again." << std::endl;
+                std::cout << "\n[ERROR] User ID not found or Username mismatch. Try again." << std::endl;
             }
         } while(user == nullptr);
         
@@ -85,7 +85,7 @@ int main()
         std::cout << "\nThank you for using Library Management System. Goodbye!\n";
         return 0;
     default:
-        std::cout << "\n[ERROR] Invalid option. Please try again." << std::endl;
+        std::cout << "\n[ERROR] Invalid option. Please choose from (1-3), or 0 to exit." << std::endl;
         return 0;
     }
 
