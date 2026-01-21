@@ -13,3 +13,4 @@ Know My Name |Chanel Miller|Non-fiction|C006|2026-01-21|2026-01-21|0|Available
 0|-|-|C007|2026-01-21|2026-01-21|0|Available
 Demian|Herman Hesse|Classic|C008|2026-01-21|2026-01-21|0|Available
 |||C009|2026-01-21|2026-01-21|0|Available
+Portrait of Markov|Yuri |Horror|A011|2026-01-21|2026-01-21|0|Available

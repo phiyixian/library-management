@@ -348,7 +348,7 @@ void LibraryService::checkBorrowed()
         std::cout << "=====================================\n" << std::endl;
     }*/
 
-    /*BookNode *current = books.getHead();
+    /*BookNode *current = books.getHead(); --> modified to retrieve dates & member info from books_database.txt
     while (current != nullptr)
     {
         if (current->is_borrowed == true)
@@ -388,17 +388,22 @@ bool LibraryService::addBook()
     
     // Ask if user wants to auto-generate ID or enter manually
     char choice;
+    bool validChoice = false;
+
+    while (!validChoice)
+    {
     std::cout << "Auto-generate Book ID? (Y/N): ";
     std::cin >> choice;
     std::cin.ignore();
     
-    if (choice == 'Y' || choice == 'y' || choice == '\n')
+    if (choice == 'Y' || choice == 'y')  //|| choice == '\n')
     {
         // Auto-generate ID
         id = books.generateNextID();
         std::cout << "Generated Book ID: " << id << std::endl;
+        validChoice = true;
     }
-    else
+    else if (choice == 'N' || choice == 'n')
     {
         // Manual entry
         std::cout << "Enter Book ID (format: A001, B002, etc.): ";
@@ -412,7 +417,14 @@ bool LibraryService::addBook()
             std::cout << "It must be a letter, followed by 3 digits (e.g., A001)" << std::endl;
             return false;
         }
+        validChoice = true;
     }
+    else
+    {
+        std::cout << "[ERROR] Invalid input. Please enter Y or N." << std::endl;
+
+    }
+    } // end of while(!validChoice)
 
     std::cout << "Enter title: ";
     std::getline(std::cin, title);
