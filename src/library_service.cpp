@@ -290,9 +290,9 @@ void LibraryService::checkBorrowed()
 {
     bool found = false;
 
-    std::cout << "\n=====================================" << std::endl;
+    /*std::cout << "\n=====================================" << std::endl;
     std::cout << "     Currently Borrowed Books" << std::endl;
-    std::cout << "=====================================" << std::endl;
+    std::cout << "=====================================" << std::endl;*/
 
     // Read active borrows file to get borrow details
     std::ifstream borrowFile("database/active_borrows.txt");
@@ -383,6 +383,8 @@ bool LibraryService::addBook()
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
     std::cout << "  Add a New Book" << std::endl;
+    int padding = (50 + std::string("Add a New Book").length()) / 2; // centered spacing
+    std::cout << std::setw(padding) << "Add a New Book" << std::endl;
     std::cout << std::string(50, '=') << std::endl;
     
     // Ask if user wants to auto-generate ID or enter manually
@@ -439,6 +441,8 @@ bool LibraryService::removeBook()
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
     std::cout << "  Remove a Book" << std::endl;
+    int padding = (50 + std::string("Remove a Book").length()) / 2; // centered spacing
+    std::cout << std::setw(padding) << "Remove a Book" << std::endl;
     std::cout << std::string(50, '=') << std::endl;
     
     std::string book_id;
@@ -471,7 +475,12 @@ bool LibraryService::registerMember()
 {
     std::string username, email;
     
-    std::cout << "\n========== Register New Member ==========" << std::endl;
+    //std::cout << "\n========== Register New Member ==========" << std::endl;
+    std::cout << "\n";
+    std::cout << std::string(50, '=') << std::endl;
+    int padding = (50 + std::string("Register New Member").length()) / 2; // centered spacing
+    std::cout << std::setw(padding) << "Register New Member" << std::endl;
+    std::cout << std::string(50, '=') << std::endl;
     std::cout << "Enter Username: ";
     std::cin.ignore();
     std::getline(std::cin, username);
