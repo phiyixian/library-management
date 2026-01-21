@@ -39,7 +39,7 @@ void Librarian::displayInformation() const
 void Librarian::showMenu(LibraryService &library)
 {
     int choice;
-    do
+    while (true)
     {
         std::cout << "\n";
         std::cout << std::string(50, '=') << std::endl;
@@ -66,7 +66,14 @@ void Librarian::showMenu(LibraryService &library)
         std::cout << std::string(50, '-') << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> choice;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear buffer
+
+        if (std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "\nInvalid choice. Please enter from (1-9), or 0 to log out.\n";
+            continue;
+        }
         
         switch (choice)
         {
@@ -107,13 +114,10 @@ void Librarian::showMenu(LibraryService &library)
             break;
         case 0:
             std::cout << "\n[SUCCESS] Logging out. Thank you for using the Smart Library Management System!\n";
-            break;
+            return;
         default:
-            std::cout << "\n[ERROR] Invalid choice. Please enter from (1-9), or 0 to log out.\n";
-            break;
+            std::cout << "\n[ERROR]" << std::endl;
         }
         
-    } while (choice != 0);
-    
-    return;
+    }
 }

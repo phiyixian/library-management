@@ -165,5 +165,4 @@ void Member::showMenu(LibraryService &library)
                 std::cout << "[ERROR]" << std::endl;
         }
     }
-    return;
 }
