@@ -343,10 +343,10 @@ void LibraryService::checkBorrowed()
         std::cout << "\nNo books currently borrowed." << std::endl;
         std::cout << "-------------------------------------\n" << std::endl;
     }
-    else
+    /*else --> removed this because it looks unflattering
     {
         std::cout << "=====================================\n" << std::endl;
-    }
+    }*/
 
     /*BookNode *current = books.getHead();
     while (current != nullptr)
@@ -382,7 +382,6 @@ bool LibraryService::addBook()
 
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
-    std::cout << "  Add a New Book" << std::endl;
     int padding = (50 + std::string("Add a New Book").length()) / 2; // centered spacing
     std::cout << std::setw(padding) << "Add a New Book" << std::endl;
     std::cout << std::string(50, '=') << std::endl;
