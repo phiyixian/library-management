@@ -93,7 +93,6 @@ void Librarian::showMenu(LibraryService &library)
             {
             std::cout << "\n";
             std::cout << std::string(50, '=') << std::endl;
-            //std::cout << "  All Borrowed Books" << std::endl;
             int padding = (50 + std::string("All Borrowed Books Currently").length()) / 2; // centered spacing
             std::cout << std::setw(padding) << "All Borrowed Books Currently" << std::endl;
             std::cout << std::string(50, '=') << std::endl;

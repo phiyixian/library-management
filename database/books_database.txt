@@ -10,8 +10,7 @@ The Da Vinci Code|Dan Brown|Thriller|C003|2020-1-1|2026-01-08|5|Available
 Wuthering Heights|Emily Bronte|Romance|C004|2026-01-21|2026-01-21|0|Available
 Wuthering Heights|Emily Bronte|Romance|C005|2026-01-21|2026-01-21|0|Available
 Know My Name |Chanel Miller|Non-fiction|C006|2026-01-21|2026-01-21|0|Available
-0|-|-|C007|2026-01-21|2026-01-21|0|Available
 Demian|Herman Hesse|Classic|C008|2026-01-21|2026-01-21|0|Available
-|||C009|2026-01-21|2026-01-21|0|Available
 Portrait of Markov|Yuri |Horror|A011|2026-01-21|2026-01-21|0|Available
 Sense and Sensibility|Jane Austen|Romance|C010|2026-01-21|2026-01-21|1|Borrowed
+How To Make Dr. Hari Mad|Aydan Khairin|Non-Fiction|C012|2026-01-21|2026-01-21|0|Available
