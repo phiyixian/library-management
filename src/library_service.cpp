@@ -451,7 +451,6 @@ bool LibraryService::removeBook()
 {
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
-    std::cout << "  Remove a Book" << std::endl;
     int padding = (50 + std::string("Remove a Book").length()) / 2; // centered spacing
     std::cout << std::setw(padding) << "Remove a Book" << std::endl;
     std::cout << std::string(50, '=') << std::endl;
