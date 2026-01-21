@@ -290,18 +290,71 @@ void LibraryService::checkBorrowed()
 {
     bool found = false;
 
-    /*
     std::cout << "\n=====================================" << std::endl;
-    std::cout << "        Currently Borrowed Books" << std::endl;
-    std::cout << "=====================================" << std::endl;*/
+    std::cout << "     Currently Borrowed Books" << std::endl;
+    std::cout << "=====================================" << std::endl;
 
-    BookNode *current = books.getHead();
+    // Read active borrows file to get borrow details
+    std::ifstream borrowFile("database/active_borrows.txt");
+    if (!borrowFile)
+    {
+        std::cerr << "Error: Cannot open active_borrows.txt\n";
+        return;
+    }
+
+    std::string line;
+    std::getline(borrowFile, line); // Skip header
+
+    while (std::getline(borrowFile, line)) // reads and parses the active_borrows.txt file line by line to extract borrowing information.
+    {
+        if (line.empty()) continue;
+
+        std::istringstream ss(line);
+        std::string memberID, bookID, borrowDate, dueDate, status;
+
+        std::getline(ss, memberID, '|');
+        std::getline(ss, bookID, '|');
+        std::getline(ss, borrowDate, '|');
+        std::getline(ss, dueDate, '|');
+        std::getline(ss, status, '|');
+
+        // Find the book in the book list
+        BookNode *book = books.searchByID(bookID);
+        if (book != nullptr && book->is_borrowed)
+        {
+            found = true;
+            std::cout << "\nBook ID: " << book->id << std::endl;
+            std::cout << "Title: " << book->title << std::endl;
+            std::cout << "Author: " << book->author << std::endl;
+            std::cout << "Genre: " << book->genre << std::endl;
+            std::cout << "Borrow Count: " << book->borrowCount << std::endl;
+            std::cout << "Date Borrowed: " << formatDateForDisplay(parseTimeFromString(borrowDate)) << std::endl;
+            std::cout << "Due Date: " << formatDateForDisplay(parseTimeFromString(dueDate)) << std::endl;
+            std::cout << "-------------------------------------" << std::endl;
+            std::cout << "Borrowed by Member ID: " << memberID << std::endl;
+            std::cout << std::endl;
+        }
+    }
+
+    borrowFile.close();
+
+    if (!found)
+    {
+        std::cout << "\nNo books currently borrowed." << std::endl;
+        std::cout << "-------------------------------------\n" << std::endl;
+    }
+    else
+    {
+        std::cout << "=====================================\n" << std::endl;
+    }
+
+    /*BookNode *current = books.getHead();
     while (current != nullptr)
     {
         if (current->is_borrowed == true)
         {
             found = true;
-            std::cout << "ID: " << current->id << std::endl;
+            std::cout << "n\Book ID: " << current->id << std::endl;
             std::cout << "Title: " << current->title << std::endl;
             std::cout << "Author: " << current->author << std::endl;
             std::cout << "Genre: " << current->genre << std::endl;
@@ -317,7 +370,7 @@ void LibraryService::checkBorrowed()
     }
     else {
         std::cout << "=====================================\n" << std::endl;
-    }
+    }*/
 }
 
 
