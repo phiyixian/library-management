@@ -81,9 +81,9 @@ void Member::displayInformation() const
 void Member::showMenu(LibraryService &library)
 {
     int choice;
-    do
+    while (true)
     {
-        std::cout << "\n";
+        std::cout << std::endl;
         std::cout << std::string(50, '=') << std::endl;
         std::cout << "  Welcome, " << this->name << " (Member)" << std::endl;
         std::cout << std::string(50, '=') << std::endl;
@@ -116,49 +116,54 @@ void Member::showMenu(LibraryService &library)
         std::cout << std::string(50, '-') << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> choice;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear buffer
+
+        if (std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "\nInvalid option. Please choose from (1-7), or 0 to exit." << std::endl;
+            continue;
+        }
         
         switch (choice)
         {
-        case 1:
-            library.searchByTitle();
-            break;        
-        case 2:
-            library.searchByAuthor();
-            break;
-        case 3:
-            library.searchByGenre();
-            break;
-        case 4:
-            library.displayCatalogue();
-            break;
-        case 5:
-            library.borrowBook(*this);
-            break;
-        case 6:
-            library.returnBook(*this);
-        case 7:
-            {
-            std::cout << "\n";
-            std::cout << std::string(50, '=') << std::endl;
-            std::cout << std::setw(33) << "My Borrowed Books" << std::endl;
-            std::cout << std::string(50, '=') << std::endl;
-            linkedRecords& borrowlist = this->getBorrowHistory();
-            borrowlist.updateStatus();
-            borrowlist.printRecords();
-            break;
-            }
-            //library.displayCatalogue();
-            break;
-        case 0:
-            std::cout << "\n[SUCCESS] Logging out. Thank you for using the Smart Library Management System!\n";
-            break;
-        default:
-            std::cout << "\n[ERROR] Invalid choice. Please enter from (1-7), or 0 to log out.\n";
-            break;
+            case 1:
+                library.searchByTitle();
+                break;        
+            case 2:
+                library.searchByAuthor();
+                break;
+            case 3:
+                library.searchByGenre();
+                break;
+            case 4:
+                library.displayCatalogue();
+                break;
+            case 5:
+                library.borrowBook(*this);
+                break;
+            case 6:
+                library.returnBook(*this);
+                break;
+            case 7:
+                {
+                std::cout << "\n";
+                std::cout << std::string(50, '=') << std::endl;
+                std::cout << std::setw(33) << "My Borrowed Books" << std::endl;
+                std::cout << std::string(50, '=') << std::endl;
+                linkedRecords& borrowlist = this->getBorrowHistory();
+                borrowlist.updateStatus();
+                borrowlist.printRecords();
+                break;
+                }
+                //library.displayCatalogue();
+                break;
+            case 0:
+                std::cout << "\n[SUCCESS] Logging out. Thank you for using the Smart Library Management System!\n";
+                return;
+            default:
+                std::cout << "[ERROR]" << std::endl;
         }
-        
-    } while (choice != 0);
-    
+    }
     return;
 }
