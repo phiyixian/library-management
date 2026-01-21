@@ -71,7 +71,7 @@ void Librarian::showMenu(LibraryService &library)
         {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "\nInvalid choice. Please enter from (1-9), or 0 to log out.\n";
+            std::cout << "\n[ERROR] Invalid choice. Please enter from (1-9), or 0 to log out.\n";
             continue;
         }
         

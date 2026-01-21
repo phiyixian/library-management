@@ -21,7 +21,7 @@ void Guest::displayInformation() const
 void Guest::showMenu(LibraryService &library)
 {
     int choice;
-    do
+    while(true)
     {
         std::cout << "\n";
         std::cout << std::string(50, '=') << std::endl;
@@ -38,7 +38,14 @@ void Guest::showMenu(LibraryService &library)
         std::cout << std::string(50, '-') << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> choice;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear buffer
+
+        if (std::cin.fail())
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "\n[ERROR] Invalid choice. Please enter from (1-4), or 0 to exit.\n";
+            continue;
+        }
         
         switch (choice)
         {
@@ -56,13 +63,11 @@ void Guest::showMenu(LibraryService &library)
             break;
         case 0:
             std::cout << "\n[SUCCESS] Thank you for visiting the Smart Library Management System! Goodbye!\n";
-            break;
+            return;
         default:
-            std::cout << "\n[ERROR] Invalid choice. Please enter from (1-4), or 0 to exit.\n";
-            break;
+            std::cout << "\n[ERROR]" << std::endl;
         }
         
-    } while (choice != 0);
+    }
     
-    return;
 }

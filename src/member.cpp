@@ -121,7 +121,7 @@ void Member::showMenu(LibraryService &library)
         {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "\nInvalid option. Please choose from (1-7), or 0 to exit." << std::endl;
+            std::cout << "\n[ERROR] Invalid option. Please choose from (1-7), or 0 to exit." << std::endl;
             continue;
         }
         
@@ -162,7 +162,7 @@ void Member::showMenu(LibraryService &library)
                 std::cout << "\n[SUCCESS] Logging out. Thank you for using the Smart Library Management System!\n";
                 return;
             default:
-                std::cout << "[ERROR]" << std::endl;
+                std::cout << "[ERROR]" << std::endl; //incase
         }
     }
 }
