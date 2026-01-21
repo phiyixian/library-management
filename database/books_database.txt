@@ -1,5 +1,5 @@
 Title|Author|Genre|ID|Date Added|Last Updated|Borrow Count|Status
-1984|George Orwell|Dystopian|A001|2020-1-1|2026-01-11|5|Borrowed
+1984|George Orwell|Dystopian|A001|2020-1-1|2026-01-21|5|Available
 To Kill a Mockingbird|Harper Lee|Fiction|A002|2020-1-1|2025-5-7|1|Available
 The Great Gatsby|F. Scott Fitzgerald|Classic|A003|2020-1-1|2024-12-25|3|Available
 The Hobbit|J.R.R. Tolkien|Fantasy|B001|2020-1-1|2026-01-08|5|Borrowed
@@ -14,3 +14,4 @@ Know My Name |Chanel Miller|Non-fiction|C006|2026-01-21|2026-01-21|0|Available
 Demian|Herman Hesse|Classic|C008|2026-01-21|2026-01-21|0|Available
 |||C009|2026-01-21|2026-01-21|0|Available
 Portrait of Markov|Yuri |Horror|A011|2026-01-21|2026-01-21|0|Available
+Sense and Sensibility|Jane Austen|Romance|C010|2026-01-21|2026-01-21|1|Borrowed
