@@ -29,6 +29,10 @@ LibraryService::LibraryService()
 void LibraryService::searchByTitle()
 {
     std::string keyword_title;
+    std::cout << "\n";
+    std::cout << std::string(50, '=') << std::endl;
+    std::cout << "  Search by Title" << std::endl;
+    std::cout << std::string(50, '=') << std::endl;
     std::cout << "Enter title of book: ";
     std::getline(std::cin >> std::ws, keyword_title); //getline to include space
 
