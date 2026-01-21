@@ -10,11 +10,22 @@
 #include "../header/library_service.hpp"
 #include "../header/utility.hpp"
 
+void clearScreen() {
+    // Cross-platform screen clearing
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
+
 void printHeader(const std::string &title)
 {
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
-    std::cout << std::setw(35) << title << std::endl;
+    int padding = (50 + title.length()) / 2;  // length() is a built-in C++ function for std::string
+    std::cout << std::setw(padding) << title << std::endl;
+    //std::cout << std::setw(35) << title << std::endl;
     std::cout << std::string(50, '=') << std::endl;
 }
 
@@ -29,13 +40,49 @@ int main()
     Person *user = nullptr;
     LibraryService library;
 
-    printHeader("Library Management System");
+    clearScreen();
+
+    /*printHeader("Library Management System");
     std::cout << "\n1. Register (New Member)" << std::endl;
     std::cout << "2. Login" << std::endl;
     std::cout << "3. Continue as Guest" << std::endl;
     std::cout << "0. Exit" << std::endl;
-    printSeparator();
-    std::cout << "Enter your choice: ";
+    printSeparator();*/
+
+    std::cout << R"(
+
+    _____
+   /    /|_ ___________________________________
+  /    // /|       ~~*~~                      /|
+ (====|/ //  Welcome to the...   ______      / |
+  (=====|/    SMART LIBRARY     /  /  / |   / .|
+ (====|/    MANAGEMENT SYSTEM  /__/__/ (_) / /||
+/_________________________________________/ / ||
+|  _____________________________________  ||  ||
+| ||                                    | ||
+| ||                                    | ||
+| ||                                    | || 
+)" << std::endl;
+
+std::cout << "\nPress Enter to log in..." << std::endl;
+std::cin.get();
+clearScreen();
+
+std::cout << R"(
+      _.--._  _.--._             -----~~~~====*====~~~~-----
+,-=.-":;:;:;\':;:;:;"-._              ˗ˏˋ ꒰ SLMP  ꒱ˎˊ˗
+\\\:;:;:;:;:;\:;:;:;:;:;\         
+ \\\:;:;:;:;:;\:;:;:;:;:;\        1. Register as New Member
+  \\\:;:;:;:;:;\:;:;:;:;:;\       2. Login
+   \\\:;:;:;:;:;\:;::;:;:;:\      3. Continue as Guest
+    \\\;:;::;:;:;\:;:;:;::;:\     0. Exit
+     \\\;;:;:_:--:\:_:--:_;:;\   -----~~~~====*====~~~~----- 
+      \\\_.-"      :      "-._\
+       \`_..--""--.;.--""--.._=>    
+
+)" << std::endl;
+
+    std::cout << "\nEnter your choice: ";
     std::cin >> choice;
 
     switch (choice)
@@ -60,7 +107,7 @@ int main()
             user = login();
             if (user == nullptr)
             {
-                std::cout << "\n[ERROR] ID not found or Username mismatch. Try again." << std::endl;
+                std::cout << "\n[ERROR] User ID not found or Username mismatch. Try again." << std::endl;
             }
         } while(user == nullptr);
         
@@ -74,8 +121,8 @@ int main()
         std::cin.ignore();
         std::cout << "Enter Your Name: ";
         std::getline(std::cin, guestname);
-        std::cout << "Enter Your Email: ";
-        std::getline(std::cin, guestemail);
+        //std::cout << "Enter Your Email: ";
+        //std::getline(std::cin, guestemail);
         
         user = new Guest("GXXX", guestname, guestemail);
         std::cout << "\n[SUCCESS] Continuing as Guest!\n";
@@ -85,7 +132,7 @@ int main()
         std::cout << "\nThank you for using Library Management System. Goodbye!\n";
         return 0;
     default:
-        std::cout << "\n[ERROR] Invalid option. Please try again." << std::endl;
+        std::cout << "\n[ERROR] Invalid option. Please choose from (1-3), or 0 to exit." << std::endl;
         return 0;
     }
 

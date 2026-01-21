@@ -93,7 +93,8 @@ bool LibraryService::borrowBook(Member &user)
 
     if (user.getFine() > FINE_LIMIT)
     {
-        std::cout << "Error, your fine exceeds the limit of RM5. Please pay your fines before borrowing new books." << std::endl;
+        std::cout << "[ERROR] Your fine exceeds the limit of RM5." << std::endl;
+        std::cout << "Please pay your fines before borrowing new books." << std::endl;
         return false;
     }
 
@@ -108,7 +109,7 @@ bool LibraryService::borrowBook(Member &user)
     std::cout << "  Borrow Book" << std::endl;
     std::cout << std::string(50, '=') << std::endl;
     std::string book_id_borrow;
-    std::cout << "Enter book ID: ";
+    std::cout << "Enter Book ID: ";
     std::getline(std::cin >> std::ws, book_id_borrow);
 
     // Validate book by searching book's id using linked list
@@ -116,13 +117,15 @@ bool LibraryService::borrowBook(Member &user)
     
     if (book == nullptr)
     {
-        std::cout << "Error, book does not exist" << std::endl;
+        std::cout << "[ERROR] This book does not exist in our library. Try again." << std::endl;
+        std::cout << "Hint: Check for any typos." << std::endl;
         return false;
     }
     
     if (book->is_borrowed == true)
     {
-        std::cout << "Error, Book is already borrowed" << std::endl;
+        std::cout << "[ERROR] This book is already being borrowed. :(" << std::endl;
+        std::cout <<"Take a look at our full catalogue for more choices!" << std::endl;
         return false;
     }
     
@@ -151,7 +154,7 @@ bool LibraryService::borrowBook(Member &user)
     books.saveToFile("database/books_database.txt");
     user.borrowIncrement(); // Increment borrow count
 
-    std::cout << "Book borrowed successfully" << std::endl;
+    std::cout << "You have successfully borrowed this book!" << std::endl;
     return true;
 }
 
@@ -287,17 +290,71 @@ void LibraryService::checkBorrowed()
 {
     bool found = false;
 
-    std::cout << "\n=====================================" << std::endl;
-    std::cout << "        Currently Borrowed Books" << std::endl;
-    std::cout << "=====================================" << std::endl;
+    /*std::cout << "\n=====================================" << std::endl;
+    std::cout << "     Currently Borrowed Books" << std::endl;
+    std::cout << "=====================================" << std::endl;*/
 
-    BookNode *current = books.getHead();
+    // Read active borrows file to get borrow details
+    std::ifstream borrowFile("database/active_borrows.txt");
+    if (!borrowFile)
+    {
+        std::cerr << "Error: Cannot open active_borrows.txt\n";
+        return;
+    }
+
+    std::string line;
+    std::getline(borrowFile, line); // Skip header
+
+    while (std::getline(borrowFile, line)) // reads and parses the active_borrows.txt file line by line to extract borrowing information.
+    {
+        if (line.empty()) continue;
+
+        std::istringstream ss(line);
+        std::string memberID, bookID, borrowDate, dueDate, status;
+
+        std::getline(ss, memberID, '|');
+        std::getline(ss, bookID, '|');
+        std::getline(ss, borrowDate, '|');
+        std::getline(ss, dueDate, '|');
+        std::getline(ss, status, '|');
+
+        // Find the book in the book list
+        BookNode *book = books.searchByID(bookID);
+        if (book != nullptr && book->is_borrowed)
+        {
+            found = true;
+            std::cout << "\nBook ID: " << book->id << std::endl;
+            std::cout << "Title: " << book->title << std::endl;
+            std::cout << "Author: " << book->author << std::endl;
+            std::cout << "Genre: " << book->genre << std::endl;
+            std::cout << "Borrow Count: " << book->borrowCount << std::endl;
+            std::cout << "Date Borrowed: " << formatDateForDisplay(parseTimeFromString(borrowDate)) << std::endl;
+            std::cout << "Due Date: " << formatDateForDisplay(parseTimeFromString(dueDate)) << std::endl;
+            std::cout << "-------------------------------------" << std::endl;
+            std::cout << "Borrowed by Member ID: " << memberID << std::endl;
+            std::cout << std::endl;
+        }
+    }
+
+    borrowFile.close();
+
+    if (!found)
+    {
+        std::cout << "\nNo books currently borrowed." << std::endl;
+        std::cout << "-------------------------------------\n" << std::endl;
+    }
+    /*else --> removed this because it looks unflattering
+    {
+        std::cout << "=====================================\n" << std::endl;
+    }*/
+
+    /*BookNode *current = books.getHead(); --> modified to retrieve dates & member info from books_database.txt
     while (current != nullptr)
     {
         if (current->is_borrowed == true)
         {
             found = true;
-            std::cout << "ID: " << current->id << std::endl;
+            std::cout << "n\Book ID: " << current->id << std::endl;
             std::cout << "Title: " << current->title << std::endl;
             std::cout << "Author: " << current->author << std::endl;
             std::cout << "Genre: " << current->genre << std::endl;
@@ -313,7 +370,7 @@ void LibraryService::checkBorrowed()
     }
     else {
         std::cout << "=====================================\n" << std::endl;
-    }
+    }*/
 }
 
 
@@ -325,35 +382,49 @@ bool LibraryService::addBook()
 
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
-    std::cout << "  Add New Book" << std::endl;
+    int padding = (50 + std::string("Add a New Book").length()) / 2; // centered spacing
+    std::cout << std::setw(padding) << "Add a New Book" << std::endl;
     std::cout << std::string(50, '=') << std::endl;
     
     // Ask if user wants to auto-generate ID or enter manually
     char choice;
-    std::cout << "Auto-generate book ID? (Y/n): ";
+    bool validChoice = false;
+
+    while (!validChoice)
+    {
+    std::cout << "Auto-generate Book ID? (Y/N): ";
     std::cin >> choice;
     std::cin.ignore();
     
-    if (choice == 'Y' || choice == 'y' || choice == '\n')
+    if (choice == 'Y' || choice == 'y')  //|| choice == '\n')
     {
         // Auto-generate ID
         id = books.generateNextID();
         std::cout << "Generated Book ID: " << id << std::endl;
+        validChoice = true;
     }
-    else
+    else if (choice == 'N' || choice == 'n')
     {
         // Manual entry
-        std::cout << "Enter book ID (format: A001, B002, etc.): ";
+        std::cout << "Enter Book ID (format: A001, B002, etc.): ";
         std::getline(std::cin, id);
         
         // Validate format
         if (id.length() != 4 || !std::isalpha(id[0]) || !std::isdigit(id[1]) || 
             !std::isdigit(id[2]) || !std::isdigit(id[3]))
         {
-            std::cout << "[ERROR] Invalid ID format. Must be Letter + 3 digits (e.g., A001)" << std::endl;
+            std::cout << "[ERROR] Invalid Book ID format." << std::endl;
+            std::cout << "It must be a letter, followed by 3 digits (e.g., A001)" << std::endl;
             return false;
         }
+        validChoice = true;
     }
+    else
+    {
+        std::cout << "[ERROR] Invalid input. Please enter Y or N." << std::endl;
+
+    }
+    } // end of while(!validChoice)
 
     std::cout << "Enter title: ";
     std::getline(std::cin, title);
@@ -368,8 +439,8 @@ bool LibraryService::addBook()
         // Save to file
         books.saveToFile("database/books_database.txt");
         std::cout << "\n[SUCCESS] Book added successfully!" << std::endl;
-        std::cout << "Book ID: " << id << std::endl;
-        std::cout << "Title: " << title << std::endl;
+        /*std::cout << "Book ID: " << id << std::endl;
+        std::cout << "Title: " << title << std::endl;*/
         return true;
     }
     
@@ -380,19 +451,22 @@ bool LibraryService::removeBook()
 {
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
-    std::cout << "  Remove Book" << std::endl;
+    std::cout << "  Remove a Book" << std::endl;
+    int padding = (50 + std::string("Remove a Book").length()) / 2; // centered spacing
+    std::cout << std::setw(padding) << "Remove a Book" << std::endl;
     std::cout << std::string(50, '=') << std::endl;
     
     std::string book_id;
     std::cin.ignore();
-    std::cout << "Enter book ID to remove: ";
+    std::cout << "Enter Book ID to remove: ";
     std::getline(std::cin, book_id);
     
     // Validate ID format
     if (book_id.length() != 4 || !std::isalpha(book_id[0]) || !std::isdigit(book_id[1]) || 
         !std::isdigit(book_id[2]) || !std::isdigit(book_id[3]))
     {
-        std::cout << "[ERROR] Invalid ID format. Must be Letter + 3 digits (e.g., A001)" << std::endl;
+        std::cout << "[ERROR] Invalid Book ID format." << std::endl;
+        std::cout << "It must be a letter, followed by 3 digits (e.g., A001)" << std::endl;
         return false;
     }
 
@@ -412,7 +486,12 @@ bool LibraryService::registerMember()
 {
     std::string username, email;
     
-    std::cout << "\n========== Register New Member ==========" << std::endl;
+    //std::cout << "\n========== Register New Member ==========" << std::endl;
+    std::cout << "\n";
+    std::cout << std::string(50, '=') << std::endl;
+    int padding = (50 + std::string("Register New Member").length()) / 2; // centered spacing
+    std::cout << std::setw(padding) << "Register New Member" << std::endl;
+    std::cout << std::string(50, '=') << std::endl;
     std::cout << "Enter Username: ";
     std::cin.ignore();
     std::getline(std::cin, username);
@@ -526,7 +605,7 @@ bool LibraryService::removeMember()
     
     std::cout << "\n========== Remove Member ==========" << std::endl;
     std::cin.ignore();
-    std::cout << "Enter Monember ID to remove: ";
+    std::cout << "Enter Member ID to remove: ";
     std::getline(std::cin, memberID);
     
     // Check if member has active borrows

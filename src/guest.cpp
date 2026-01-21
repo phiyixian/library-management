@@ -27,12 +27,14 @@ void Guest::showMenu(LibraryService &library)
         std::cout << std::string(50, '=') << std::endl;
         std::cout << "  Welcome, " << this->name << " (Guest)" << std::endl;
         std::cout << std::string(50, '=') << std::endl;
-        std::cout << "\nBOOK SEARCH & BROWSING" << std::endl;
+        std::cout << "\nBOOK SEARCH & BROWSING ✮⋆˙" << std::endl;
         std::cout << "  1. Search by Title" << std::endl;
         std::cout << "  2. Search by Author" << std::endl;
         std::cout << "  3. Search by Genre" << std::endl;
         std::cout << "  4. Display Full Catalogue" << std::endl;
         std::cout << "\n  0. Exit" << std::endl;
+        std::cout << "\nIf you would like to borrow a book, please exit" << std::endl; 
+        std::cout << "and sign in as a member! :)" << std::endl;
         std::cout << std::string(50, '-') << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> choice;
@@ -53,10 +55,10 @@ void Guest::showMenu(LibraryService &library)
             library.displayCatalogue();
             break;
         case 0:
-            std::cout << "\n[SUCCESS] Thank you for visiting! Goodbye!\n";
+            std::cout << "\n[SUCCESS] Thank you for visiting the Smart Library Management System! Goodbye!\n";
             break;
         default:
-            std::cout << "\n[ERROR] Invalid choice. Please try again.\n";
+            std::cout << "\n[ERROR] Invalid choice. Please enter from (1-4), or 0 to exit.\n";
             break;
         }
         

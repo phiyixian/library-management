@@ -101,16 +101,16 @@ void Member::showMenu(LibraryService &library)
         }
         std::cout << std::string(50, '-') << std::endl;
         
-        std::cout << "\nBOOK SEARCH" << std::endl;
+        std::cout << "\nBOOK SEARCH & BROWSING ✮⋆˙" << std::endl;
         std::cout << "  1. Search by Title" << std::endl;
         std::cout << "  2. Search by Author" << std::endl;
         std::cout << "  3. Search by Genre" << std::endl;
-        std::cout << "  7. Display Full Catalogue" << std::endl;
+        std::cout << "  4. Display Full Catalogue" << std::endl;
         
-        std::cout << "\nBORROWING" << std::endl;
-        std::cout << "  4. Borrow Book" << std::endl;
-        std::cout << "  5. Return Book" << std::endl;
-        std::cout << "  6. View My Borrowed Books" << std::endl;
+        std::cout << "\nBORROWING ✶⋆˚" << std::endl;
+        std::cout << "  5. Borrow Book" << std::endl;
+        std::cout << "  6. Return Book" << std::endl;
+        std::cout << "  7. View My Borrowed Books" << std::endl;
         
         std::cout << "\n  0. Logout" << std::endl;
         std::cout << std::string(50, '-') << std::endl;
@@ -130,30 +130,31 @@ void Member::showMenu(LibraryService &library)
             library.searchByGenre();
             break;
         case 4:
-            library.borrowBook(*this);
+            library.displayCatalogue();
             break;
         case 5:
-            library.returnBook(*this);
+            library.borrowBook(*this);
             break;
         case 6:
+            library.returnBook(*this);
+        case 7:
             {
             std::cout << "\n";
             std::cout << std::string(50, '=') << std::endl;
-            std::cout << "  My Borrowed Books" << std::endl;
+            std::cout << std::setw(33) << "My Borrowed Books" << std::endl;
             std::cout << std::string(50, '=') << std::endl;
             linkedRecords& borrowlist = this->getBorrowHistory();
             borrowlist.updateStatus();
             borrowlist.printRecords();
             break;
             }
-        case 7:
-            library.displayCatalogue();
+            //library.displayCatalogue();
             break;
         case 0:
-            std::cout << "\n[SUCCESS] Logging out. Thank you for using the Library Management System!\n";
+            std::cout << "\n[SUCCESS] Logging out. Thank you for using the Smart Library Management System!\n";
             break;
         default:
-            std::cout << "\n[ERROR] Invalid choice. Please try again.\n";
+            std::cout << "\n[ERROR] Invalid choice. Please enter from (1-7), or 0 to log out.\n";
             break;
         }
         

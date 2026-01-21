@@ -14,7 +14,7 @@ Person *login()
     std::string userid, username;
     std::cout << "Enter User ID: ";
     std::cin >> userid;
-    std::cout << "Enter User Name: ";
+    std::cout << "Enter Username: ";
     std::cin >> username;
 
     std::fstream peopledata("database/people_database.txt", std::ios::in);
@@ -84,7 +84,7 @@ Person *registerUser(const std::string &userrole)
     std::string useremail, username;
     std::cout << "Enter Email: "; // maybe use regex to validate emails
     std::cin >> useremail;
-    std::cout << "Enter User Name: ";
+    std::cout << "Enter Username: ";
     std::cin >> username;
 
         
@@ -200,5 +200,13 @@ const std::string parseTimeIntoString(time_t t) {
     std::tm *parseTimeptr = std::localtime(&t);
     std::ostringstream oss;
     oss << std::put_time(parseTimeptr, "%Y-%m-%dT%H:%M:%S");
+    return oss.str();
+}
+
+// for friendly user interface (borrow date and due date)
+const std::string formatDateForDisplay(time_t t) {
+    std::tm *parseTimeptr = std::localtime(&t);
+    std::ostringstream oss;
+    oss << std::put_time(parseTimeptr, "%d %b %Y %H:%M"); // example: 08 Jan 2026
     return oss.str();
 }
