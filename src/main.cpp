@@ -46,7 +46,7 @@ int main()
 
         std::cout << R"(
 
-            _____
+        _____
         /    /|_ ___________________________________
         /    // /|       ~~*~~                      /|
         (====|/ //  Welcome to the...   ______      / |
@@ -80,7 +80,7 @@ int main()
         std::cout << "\nEnter your choice: ";
         std::cin >> choice;
 
-        if (std::cin.fail())
+        if (std::cin.fail() || choice < 0 || choice > 3)
         {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -124,8 +124,6 @@ int main()
             std::cin.ignore();
             std::cout << "Enter Your Name: ";
             std::getline(std::cin, guestname);
-            //std::cout << "Enter Your Email: ";
-            //std::getline(std::cin, guestemail);
             
             user = new Guest("GXXX", guestname, guestemail);
             std::cout << "\n[SUCCESS] Continuing as Guest!\n";

@@ -117,7 +117,7 @@ void Member::showMenu(LibraryService &library)
         std::cout << "Enter your choice: ";
         std::cin >> choice;
 
-        if (std::cin.fail())
+        if (std::cin.fail() || choice < 0 || choice > 7)
         {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
