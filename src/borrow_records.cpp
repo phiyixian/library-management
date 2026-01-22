@@ -16,8 +16,9 @@ constexpr int FINE_INTERVAL_SECONDS = 60;
 
 //actual
 /*
-constexpr int LOAN_DURATION_SECONDS = 60;
-constexpr int LOAN_INTERVAL_SECONDS = 60;
+int days = (now - dueDate) / (24 * 60 * 60);
+constexpr int LOAN_DURATION_SECONDS = (24 * 60 * 60);
+constexpr int LOAN_INTERVAL_SECONDS = (24 * 60 * 60);
 */
 
 // Initialize new linked list for each member
