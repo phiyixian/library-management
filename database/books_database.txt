@@ -11,5 +11,5 @@ Wuthering Heights|Emily Bronte|Romance|C004|2026-01-21|2026-01-21|0|Available
 Wuthering Heights|Emily Bronte|Romance|C005|2026-01-21|2026-01-21|0|Available
 Know My Name |Chanel Miller|Non-fiction|C006|2026-01-21|2026-01-21|0|Available
 Demian|Herman Hesse|Classic|C008|2026-01-21|2026-01-22|2|Borrowed
-Portrait of Markov|Yuri |Horror|A011|2026-01-21|2026-01-21|0|Available
+Portrait of Markov|Yuri |Horror|A011|2026-01-21|2026-01-22|2|Available
 Sense and Sensibility|Jane Austen|Romance|C010|2026-01-21|2026-01-21|1|Borrowed

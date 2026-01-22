@@ -10,6 +10,16 @@
 #include <cstdlib>
 #include <fstream>
 
+// test
+constexpr int LOAN_DURATION_SECONDS = 60;
+constexpr int FINE_INTERVAL_SECONDS = 60;
+
+//actual
+/*
+constexpr int LOAN_DURATION_SECONDS = 60;
+constexpr int LOAN_INTERVAL_SECONDS = 60;
+*/
+
 // Initialize new linked list for each member
 linkedRecords::linkedRecords(std::string member_ID) : member_ID(member_ID) {
     borrowHead = nullptr;
@@ -353,9 +363,16 @@ void linkedRecords::checkOverdue(std::string book_ID){
 }
 
 // Calculate number of overdue days
-int linkedRecords::overdueDays(time_t dueDate){
+int linkedRecords::overdueDays(time_t dueDate)
+{
     time_t now = time(nullptr);
-    return (now - dueDate) / (24 * 60 * 60);
+    if (now <= dueDate)
+    {
+        return 0;
+    }
+    int days =  (now - dueDate) / FINE_INTERVAL_SECONDS;
+
+    return std::max(days, 0);
 }
 
 // Calculate fine based on number of overdue days

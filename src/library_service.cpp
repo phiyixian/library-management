@@ -17,6 +17,16 @@
 #include <cctype>
 #include <limits>
 
+// test
+constexpr int LOAN_DURATION_SECONDS = 60;
+constexpr int FINE_INTERVAL_SECONDS = 60;
+
+//actual
+/*
+constexpr int LOAN_DURATION_SECONDS = 60;
+constexpr int LOAN_INTERVAL_SECONDS = 60;
+*/
+
 // Constructor - load books from database file
 LibraryService::LibraryService()
 {
@@ -135,7 +145,7 @@ bool LibraryService::borrowBook(Member &user)
     
     // Actually borrowing the book
     time_t borrowTime = time(nullptr);
-    time_t dueTime = borrowTime + 14 * 24 * 60 * 60; // 2 weeks due date
+    time_t dueTime = borrowTime + LOAN_DURATION_SECONDS;
     borrowlist.insert(book->id, borrowTime, dueTime, false);
     
     // Save borrow record to active_borrows.txt
@@ -204,16 +214,18 @@ bool LibraryService::returnBook(linkedRecords &borrowlist, Member &user)
             
             // Save to borrow history before removing
             borrowlist.saveToHistory(return_book_id, returnTime);
+            int overdue_units = borrowlist.overdueDays(current->dueDate);
             
             // See if overdue and pay fine if necessary
-            if (current->overdue)
+            if (overdue_units > 0)
             {
                 std::cout << "\nThis book is overdue!" << std::endl;
-                int overdueDays = borrowlist.overdueDays(current->dueDate);
-                double fine = borrowlist.calculateFine(overdueDays);
-                std::cout << "Overdue by: " << overdueDays << " days" << std::endl;
+                double fine = borrowlist.calculateFine(overdue_units);
+
+                std::cout << "Overdue by: " << overdue_units << " days" << std::endl;
                 std::cout << "Fine amount: RM" << std::fixed << std::setprecision(2) << fine << std::endl;
                 std::cout << "Please proceed to pay the fine." << std::endl;
+
                 double change = payFine(fine, user);
                 std::cout << "Thank you for your payment! Your change is RM" << std::fixed << std::setprecision(2) << change << std::endl;
             }
