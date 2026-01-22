@@ -489,7 +489,6 @@ bool LibraryService::registerMember()
 {
     std::string username, email;
     
-    //std::cout << "\n========== Register New Member ==========" << std::endl;
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
     int padding = (50 + std::string("Register New Member").length()) / 2; // centered spacing
@@ -594,8 +593,8 @@ bool LibraryService::registerMember()
     outFile << "\nMEMBER|" << newID << "|" << username << "|" << email;
     outFile.close();
     
-    std::cout << "\nMember registered successfully!" << std::endl;
-    std::cout << "Member ID: " << newID << std::endl;
+    std::cout << "\n[SUCCESS] Member registered successfully!\n" << std::endl;
+    std::cout << "New member profile:\nMember ID: " << newID << std::endl;
     std::cout << "Username: " << username << std::endl;
     std::cout << "Email: " << email << std::endl;
     
@@ -606,7 +605,11 @@ bool LibraryService::removeMember()
 {
     std::string memberID;
     
-    std::cout << "\n========== Remove Member ==========" << std::endl;
+    std::cout << "\n";
+    std::cout << std::string(50, '=') << std::endl;
+    int padding = (50 + std::string("Remove Member").length()) / 2; // centered spacing
+    std::cout << std::setw(padding) << "Remove Member" << std::endl;
+    std::cout << std::string(50, '=') << std::endl;
     std::cin.ignore();
     std::cout << "Enter Member ID to remove: ";
     std::getline(std::cin, memberID);
