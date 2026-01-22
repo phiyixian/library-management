@@ -606,7 +606,7 @@ bool LibraryService::registerMember()
     outFile.close();
     
     std::cout << "\n[SUCCESS] Member registered successfully!\n" << std::endl;
-    std::cout << "New member profile:\nMember ID: " << newID << std::endl;
+    std::cout << "New member profile:\nUser ID: " << newID << std::endl;
     std::cout << "Username: " << username << std::endl;
     std::cout << "Email: " << email << std::endl;
     
