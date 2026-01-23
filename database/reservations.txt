@@ -1,1 +1,3 @@
 Member ID|Book ID|Reservation Date|
+M008|A001|1769178285|
+M008|C010|1769178314|
