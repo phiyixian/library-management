@@ -236,11 +236,8 @@ void ReservationQueue::displayReservations(const std::string &bookID) const
     
     std::cout << "\n";
     std::cout << std::string(50, '=') << std::endl;
-    int padding = (50 + std::string("Reservations for Book ID").length()) / 2; // centered spacing
-    std::cout << std::setw(padding) << "Reservations for Book ID " << bookID << std::endl;
+    std::cout << "  Reservations for Book ID" << bookID << std::endl;
     std::cout << std::string(50, '=') << std::endl;
-    //std::cout << "\nReservations for Book ID " << bookID << ":\n";
-    //std::cout << std::string(50, '-') << std::endl;
     
     int position = 1;
     while (current != nullptr)
