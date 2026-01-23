@@ -192,7 +192,14 @@ std::string borrowStatus(bool overdue){
 time_t parseTimeFromString(const std::string &dateTimeString) {
     std::tm tm = {};
     std::istringstream iss(dateTimeString);
-    iss >> std::get_time(&tm, "%Y-%m-%d %H:%M:%S");
+    // Try ISO 8601 format with T separator first (e.g., 2026-01-08T10:31:28)
+    iss >> std::get_time(&tm, "%Y-%m-%dT%H:%M:%S");
+    if (iss.fail()) {
+        // Fall back to space format for backward compatibility
+        iss.clear();
+        iss.str(dateTimeString);
+        iss >> std::get_time(&tm, "%Y-%m-%d %H:%M:%S");
+    }
     return std::mktime(&tm); // local time
 }
 

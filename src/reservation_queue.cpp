@@ -5,6 +5,7 @@
 #include <iostream>
 #include <iomanip>
 #include <filesystem>
+#include <cctype>
 
 ReservationQueue::ReservationQueue() : front(nullptr), rear(nullptr), count(0) {}
 
@@ -173,15 +174,38 @@ void ReservationQueue::loadFromFile(const std::string &filepath)
         std::getline(ss, bookID, '|');
         std::getline(ss, reservationDateStr, '|');
         
-        // Parse time_t from string (assuming format from utility functions)
+        // Parse time_t from ISO 8601 format string (e.g., 2026-01-08T10:31:28)
+        // Also supports Unix timestamp format for backward compatibility
         time_t reservationDate = 0;
         if (!reservationDateStr.empty())
         {
-            // Try to parse as time_t (seconds since epoch)
-            try {
-                reservationDate = std::stoll(reservationDateStr);
-            } catch (...) {
-                reservationDate = time(nullptr);  // Default to current time if parsing fails
+            // Check if it's a pure numeric string (Unix timestamp)
+            bool isNumeric = true;
+            for (char c : reservationDateStr) {
+                if (!std::isdigit(c)) {
+                    isNumeric = false;
+                    break;
+                }
+            }
+            
+            if (isNumeric && reservationDateStr.length() > 10) {
+                // Likely a Unix timestamp, parse directly
+                try {
+                    reservationDate = std::stoll(reservationDateStr);
+                } catch (...) {
+                    reservationDate = time(nullptr);  // Default to current time if parsing fails
+                }
+            } else {
+                // Try to parse as ISO 8601 format string
+                reservationDate = parseTimeFromString(reservationDateStr);
+                // If parsing failed (returns -1 or invalid), try Unix timestamp as fallback
+                if (reservationDate == -1 || reservationDate == 0) {
+                    try {
+                        reservationDate = std::stoll(reservationDateStr);
+                    } catch (...) {
+                        reservationDate = time(nullptr);  // Default to current time if parsing fails
+                    }
+                }
             }
         }
         
@@ -211,7 +235,7 @@ void ReservationQueue::saveToFile(const std::string &filepath)
     {
         file << current->memberID << "|"
              << current->bookID << "|"
-             << current->reservationDate << "|\n";
+             << parseTimeIntoString(current->reservationDate) << "|\n";
         
         current = current->next;
     }
