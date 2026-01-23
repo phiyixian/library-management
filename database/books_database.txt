@@ -1,15 +1,15 @@
 Title|Author|Genre|ID|Date Added|Last Updated|Borrow Count|Status
-1984|George Orwell|Dystopian|A001|2020-1-1|2026-01-21|5|Available
-To Kill a Mockingbird|Harper Lee|Fiction|A002|2020-1-1|2025-5-7|1|Available
-The Great Gatsby|F. Scott Fitzgerald|Classic|A003|2020-1-1|2024-12-25|3|Available
+1984|George Orwell|Dystopian|A001|2020-1-1|2026-01-23|8|Borrowed
+To Kill a Mockingbird|Harper Lee|Fiction|A002|2020-1-1|2026-01-23|4|Borrowed
+The Great Gatsby|F. Scott Fitzgerald|Classic|A003|2020-1-1|2026-01-23|6|Borrowed
 The Hobbit|J.R.R. Tolkien|Fantasy|B001|2020-1-1|2026-01-22|5|Available
 The Catcher in the Rye|J.D. Salinger|Classic|B003|2020-1-1|2024-12-25|3|Available
-Pride and Prejudice|Jane Austen|Romance|C001|2020-1-1|2025-1-3|4|Available
-The Alchemist|Paulo Coelho|Adventure|C002|2020-1-1|2026-01-22|2|Borrowed
-The Da Vinci Code|Dan Brown|Thriller|C003|2020-1-1|2026-01-08|5|Available
-Wuthering Heights|Emily Bronte|Romance|C004|2026-01-21|2026-01-21|0|Available
-Wuthering Heights|Emily Bronte|Romance|C005|2026-01-21|2026-01-22|1|Available
-Know My Name |Chanel Miller|Non-fiction|C006|2026-01-21|2026-01-21|0|Available
+Pride and Prejudice|Jane Austen|Romance|C001|2020-1-1|2026-01-23|7|Borrowed
+The Alchemist|Paulo Coelho|Adventure|C002|2020-1-1|2026-01-23|5|Borrowed
+The Da Vinci Code|Dan Brown|Thriller|C003|2020-1-1|2026-01-23|6|Available
+Wuthering Heights|Emily Bronte|Romance|C004|2026-01-21|2026-01-23|1|Available
+Wuthering Heights|Emily Bronte|Romance|C005|2026-01-21|2026-01-23|2|Available
+Know My Name |Chanel Miller|Non-fiction|C006|2026-01-21|2026-01-23|1|Available
 Demian|Herman Hesse|Classic|C008|2026-01-21|2026-01-22|2|Borrowed
-Portrait of Markov|Yuri |Horror|A011|2026-01-21|2026-01-22|4|Borrowed
+Portrait of Markov|Yuri |Horror|A011|2026-01-21|2026-01-23|4|Available
 Sense and Sensibility|Jane Austen|Romance|C010|2026-01-21|2026-01-21|1|Borrowed
