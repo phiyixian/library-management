@@ -32,6 +32,8 @@ LibraryService::LibraryService()
 {
     // Load books from database file
     books.loadFromFile("database/books_database.txt");
+    // Load reservations from database file
+    reservations.loadFromFile("database/reservations.txt");
 }
 
 //all users
@@ -136,11 +138,85 @@ bool LibraryService::borrowBook(Member &user)
         return false;
     }
     
+    // Check if book is reserved
+    if (book->status == "Reserved")
+    {
+        ReservationNode* nextReservation = reservations.getNextReservation(book_id_borrow);
+        if (nextReservation != nullptr && nextReservation->memberID == user.getID())
+        {
+            // User is first in queue, they can borrow
+            // Will proceed to borrow below (remove reservation will happen later)
+        }
+        else
+        {
+            std::cout << "[ERROR] This book is reserved for another member." << std::endl;
+            
+            // Check if member already has a reservation
+            if (reservations.hasReservation(user.getID(), book_id_borrow))
+            {
+                std::cout << "You have a reservation for this book, but you're not first in the queue." << std::endl;
+            }
+            else
+            {
+                // Offer to make a reservation
+                char reserveChoice;
+                std::cout << "Would you like to reserve this book? (Y/N): ";
+                std::cin >> reserveChoice;
+                std::cin.ignore();
+                
+                if (reserveChoice == 'Y' || reserveChoice == 'y')
+                {
+                    time_t reservationTime = time(nullptr);
+                    reservations.enqueue(user.getID(), book_id_borrow, reservationTime);
+                    saveReservationsToFile();
+                    std::cout << "[SUCCESS] You have successfully reserved this book!" << std::endl;
+                    std::cout << "You will be notified when the book becomes available." << std::endl;
+                }
+            }
+            return false;
+        }
+    }
+    
+    // Check if book is already borrowed
     if (book->is_borrowed == true)
     {
         std::cout << "[ERROR] This book is already being borrowed. :(" << std::endl;
-        std::cout <<"Take a look at our full catalogue for more choices!" << std::endl;
+        
+        // Check if member already has a reservation for this book
+        if (reservations.hasReservation(user.getID(), book_id_borrow))
+        {
+            std::cout << "You already have a reservation for this book." << std::endl;
+            return false;
+        }
+        
+        // Offer to make a reservation
+        char reserveChoice;
+        std::cout << "Would you like to reserve this book? (Y/N): ";
+        std::cin >> reserveChoice;
+        std::cin.ignore();
+        
+        if (reserveChoice == 'Y' || reserveChoice == 'y')
+        {
+            time_t reservationTime = time(nullptr);
+            reservations.enqueue(user.getID(), book_id_borrow, reservationTime);
+            saveReservationsToFile();
+            std::cout << "[SUCCESS] You have successfully reserved this book!" << std::endl;
+            std::cout << "You will be notified when the book becomes available." << std::endl;
+        }
+        else
+        {
+            std::cout << "Take a look at our full catalogue for more choices!" << std::endl;
+        }
         return false;
+    }
+    
+    // Check if user has a reservation for this book
+    bool hadReservation = reservations.hasReservation(user.getID(), book_id_borrow);
+    if (hadReservation)
+    {
+        // Remove reservation since they're now borrowing
+        reservations.removeReservation(user.getID(), book_id_borrow);
+        saveReservationsToFile();
     }
     
     // Actually borrowing the book
@@ -169,6 +245,10 @@ bool LibraryService::borrowBook(Member &user)
     user.borrowIncrement(); // Increment borrow count
 
     std::cout << "You have successfully borrowed this book!" << std::endl;
+    if (hadReservation)
+    {
+        std::cout << "Your reservation has been fulfilled." << std::endl;
+    }
     return true;
 }
 
@@ -235,13 +315,29 @@ bool LibraryService::returnBook(linkedRecords &borrowlist, Member &user)
             // Save updated active borrows
             borrowlist.save();
             
-            // Update book status in linked list
-            books.updateBookStatus(return_book_id, false, "Available");
+            // Check if there are reservations for this book
+            ReservationNode* nextReservation = reservations.getNextReservation(return_book_id);
+            
+            if (nextReservation != nullptr)
+            {
+                // Book is reserved, keep it as "Reserved" status
+                // Note: We don't remove the reservation here - it will be removed when the person borrows
+                books.updateBookStatus(return_book_id, true, "Reserved");
+                std::cout << "\nBook returned successfully!" << std::endl;
+                std::cout << "Note: This book has been reserved by Member ID: " << nextReservation->memberID << std::endl;
+                std::cout << "The book will be held for the next person in the reservation queue." << std::endl;
+            }
+            else
+            {
+                // No reservations, mark as available
+                books.updateBookStatus(return_book_id, false, "Available");
+                std::cout << "\nBook returned successfully!" << std::endl;
+            }
+            
             // Save changes to file
             books.saveToFile("database/books_database.txt");
             
             user.borrowDecrement(); // Decrement borrow count
-            std::cout << "\nBook returned successfully!" << std::endl;
             return true;
         }
         else
@@ -488,9 +584,19 @@ bool LibraryService::removeBook()
     // Remove book from linked list
     if (books.removeBook(book_id))
     {
+        // Remove all reservations for this book
+        ReservationNode* reservation = reservations.getNextReservation(book_id);
+        while (reservation != nullptr)
+        {
+            reservations.removeReservation(reservation->memberID, book_id);
+            reservation = reservations.getNextReservation(book_id);
+        }
+        saveReservationsToFile();
+        
         // Save to file
         books.saveToFile("database/books_database.txt");
         std::cout << "\n[SUCCESS] Book removed successfully!" << std::endl;
+        std::cout << "All reservations for this book have been cancelled." << std::endl;
         return true;
     }
     
@@ -780,4 +886,133 @@ void LibraryService::savePeopleToFile()
     // To be implemented
 
     ofs.close();
+}
+
+//--------------------------------
+// RESERVATION FUNCTIONS
+//--------------------------------
+
+bool LibraryService::reserveBook(Member &user)
+{
+    std::cout << "\n";
+    std::cout << std::string(50, '=') << std::endl;
+    std::cout << "  Reserve Book" << std::endl;
+    std::cout << std::string(50, '=') << std::endl;
+    
+    std::string book_id;
+    std::cout << "Enter Book ID to reserve: ";
+    std::getline(std::cin >> std::ws, book_id);
+    
+    // Validate book exists
+    BookNode *book = books.searchByID(book_id);
+    if (book == nullptr)
+    {
+        std::cout << "[ERROR] This book does not exist in our library. Try again." << std::endl;
+        std::cout << "Hint: Check for any typos." << std::endl;
+        return false;
+    }
+    
+    // Check if book is available
+    if (!book->is_borrowed && book->status == "Available")
+    {
+        std::cout << "[INFO] This book is currently available. You can borrow it directly!" << std::endl;
+        return false;
+    }
+    
+    // Check if member already has a reservation
+    if (reservations.hasReservation(user.getID(), book_id))
+    {
+        std::cout << "[ERROR] You already have a reservation for this book." << std::endl;
+        return false;
+    }
+    
+    // Add reservation
+    time_t reservationTime = time(nullptr);
+    reservations.enqueue(user.getID(), book_id, reservationTime);
+    saveReservationsToFile();
+    
+    std::cout << "[SUCCESS] You have successfully reserved this book!" << std::endl;
+    std::cout << "Book: " << book->title << " by " << book->author << std::endl;
+    std::cout << "You will be notified when the book becomes available." << std::endl;
+    
+    return true;
+}
+
+bool LibraryService::cancelReservation(Member &user)
+{
+    std::cout << "\n";
+    std::cout << std::string(50, '=') << std::endl;
+    std::cout << "  Cancel Reservation" << std::endl;
+    std::cout << std::string(50, '=') << std::endl;
+    
+    // Show user's reservations first
+    reservations.displayMemberReservations(user.getID());
+    
+    std::string book_id;
+    std::cout << "\nEnter Book ID to cancel reservation (or 'Q' to cancel): ";
+    std::getline(std::cin >> std::ws, book_id);
+    
+    if (book_id == "Q" || book_id == "q")
+    {
+        return false;
+    }
+    
+    // Check if reservation exists
+    if (!reservations.hasReservation(user.getID(), book_id))
+    {
+        std::cout << "[ERROR] You don't have a reservation for this book." << std::endl;
+        return false;
+    }
+    
+    // Remove reservation
+    if (reservations.removeReservation(user.getID(), book_id))
+    {
+        saveReservationsToFile();
+        std::cout << "[SUCCESS] Reservation cancelled successfully!" << std::endl;
+        return true;
+    }
+    
+    return false;
+}
+
+void LibraryService::viewMyReservations(Member &user)
+{
+    std::cout << "\n";
+    std::cout << std::string(50, '=') << std::endl;
+    std::cout << "  My Reservations" << std::endl;
+    std::cout << std::string(50, '=') << std::endl;
+    reservations.displayMemberReservations(user.getID());
+}
+
+void LibraryService::viewBookReservations()
+{
+    std::cout << "\n";
+    std::cout << std::string(50, '=') << std::endl;
+    std::cout << "  View Book Reservations" << std::endl;
+    std::cout << std::string(50, '=') << std::endl;
+    
+    std::string book_id;
+    std::cout << "Enter Book ID: ";
+    std::getline(std::cin >> std::ws, book_id);
+    
+    // Validate book exists
+    BookNode *book = books.searchByID(book_id);
+    if (book == nullptr)
+    {
+        std::cout << "[ERROR] This book does not exist in our library." << std::endl;
+        return;
+    }
+    
+    std::cout << "\nBook: " << book->title << " by " << book->author << std::endl;
+    reservations.displayReservations(book_id);
+}
+
+void LibraryService::loadReservationsFromFile()
+{
+    reservations.loadFromFile("database/reservations.txt");
+}
+
+void LibraryService::saveReservationsToFile()
+{
+    reservations.saveToFile("database/reservations.txt");
 }

@@ -112,16 +112,21 @@ void Member::showMenu(LibraryService &library)
         std::cout << "  6. Return Book" << std::endl;
         std::cout << "  7. View My Borrowed Books" << std::endl;
         
+        std::cout << "\nRESERVATIONS ✧⋆" << std::endl;
+        std::cout << "  8. Reserve Book" << std::endl;
+        std::cout << "  9. View My Reservations" << std::endl;
+        std::cout << "  10. Cancel Reservation" << std::endl;
+        
         std::cout << "\n  0. Logout" << std::endl;
         std::cout << std::string(50, '-') << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> choice;
 
-        if (std::cin.fail() || choice < 0 || choice > 7)
+        if (std::cin.fail() || choice < 0 || choice > 10)
         {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "\n[ERROR] Invalid option. Please choose from (1-7), or 0 to exit." << std::endl;
+            std::cout << "\n[ERROR] Invalid option. Please choose from (1-10), or 0 to exit." << std::endl;
             continue;
         }
         
@@ -156,7 +161,14 @@ void Member::showMenu(LibraryService &library)
                 borrowlist.printRecords();
                 break;
                 }
-                //library.displayCatalogue();
+            case 8:
+                library.reserveBook(*this);
+                break;
+            case 9:
+                library.viewMyReservations(*this);
+                break;
+            case 10:
+                library.cancelReservation(*this);
                 break;
             case 0:
                 std::cout << "\n[SUCCESS] Logging out. Thank you for using the Smart Library Management System!\n";

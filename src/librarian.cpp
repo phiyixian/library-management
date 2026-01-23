@@ -62,16 +62,19 @@ void Librarian::showMenu(LibraryService &library)
         std::cout << "  8. Register New Member" << std::endl;
         std::cout << "  9. Remove Member" << std::endl;
         
+        std::cout << "\nRESERVATIONS ✧⋆" << std::endl;
+        std::cout << "  10. View Book Reservations" << std::endl;
+        
         std::cout << "\n  0. Logout" << std::endl;
         std::cout << std::string(50, '-') << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> choice;
 
-        if (std::cin.fail() || choice < 0 || choice > 9)
+        if (std::cin.fail() || choice < 0 || choice > 10)
         {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "\n[ERROR] Invalid choice. Please enter from (1-9), or 0 to log out.\n";
+            std::cout << "\n[ERROR] Invalid choice. Please enter from (1-10), or 0 to log out.\n";
             continue;
         }
         
@@ -110,6 +113,9 @@ void Librarian::showMenu(LibraryService &library)
             break;
         case 9:
             library.removeMember();
+            break;
+        case 10:
+            library.viewBookReservations();
             break;
         case 0:
             std::cout << "\n[SUCCESS] Logging out. Thank you for using the Smart Library Management System!\n";
